@@ -1,19 +1,7 @@
 // 单个L形卡扣模块
-module corner_clip(clip_length=2, thickness=1, arm_height=1) {
-    // X方向臂
-    cube([clip_length, thickness, arm_height]);
-    // Y方向臂
-    cube([thickness, clip_length, arm_height]);
-}
-
-// 四角卡扣模块
-// chip_size: [长度, 宽度, 厚度]
-// chip_pos: [x, y, z] 左下角位置
-// clip_thickness: 卡扣臂厚度
-// arm_height: 卡扣臂高度
-// clip_length: 卡扣臂长度
 module four_corner_clips(chip_size=[10,8,1.5], chip_pos=[0,0,0], 
-                         clip_thickness=1, arm_height=1, clip_length=2) {
+                         clip_thickness=1, arm_height=1, clip_length=2,
+                         cylinders=[]) {
     chip_length = chip_size[0];
     chip_width  = chip_size[1];
     chip_thickness = chip_size[2];
@@ -40,8 +28,30 @@ module four_corner_clips(chip_size=[10,8,1.5], chip_pos=[0,0,0],
         rotate([0,0,270])
         corner_clip(clip_length, clip_thickness, arm_height);
 
-    // 芯片
+    // 创建圆柱体
+    for(i = [0:len(cylinders)-1]) {
+        cylinder_diameter = cylinders[i][0];
+        cylinder_height = cylinders[i][1];
+        // 相对位置：[x偏移, y偏移]，z使用芯片的z坐标
+        cylinder_offset = cylinders[i][2];
+        
+        x_pos = chip_x + cylinder_offset[0];
+        y_pos = chip_y + cylinder_offset[1];
+        z_pos = chip_z;  // 直接使用芯片的z坐标，不加偏移
+        
+        translate([x_pos, y_pos, z_pos])
+            cylinder(h=cylinder_height, d=cylinder_diameter, center=false, $fn=60);
+    }
+
+    // 芯片（可选显示）
     // color("blue", 0.3)
     // translate([chip_x, chip_y, chip_z])
     //     cube([chip_length, chip_width, chip_thickness]);
 }
+
+// corner_clip 辅助模块
+module corner_clip(length, thickness, height) {
+    cube([length + thickness, thickness, height]);
+    cube([thickness, length + thickness, height]);
+}
+
