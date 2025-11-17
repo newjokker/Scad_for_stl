@@ -41,7 +41,7 @@ module four_corner_clips(chip_size=[10,8,1.5], chip_pos=[0,0,0],
         corner_clip(clip_length, clip_thickness, arm_height);
 
     // 芯片
-    color("blue", 0.3)
-    translate([chip_x, chip_y, chip_z])
-        cube([chip_length, chip_width, chip_thickness]);
+    // color("blue", 0.3)
+    // translate([chip_x, chip_y, chip_z])
+    //     cube([chip_length, chip_width, chip_thickness]);
 }
