@@ -2,12 +2,13 @@
 use <lib/simple_box.scad>;
 use <lib/corner_clips.scad>;
 
-// // 调用示例
-// simple_box(
-//     size=[32.8 + 5, 16.6 + 5, 3], 
-//     wall_thickness=1,
-//     pos=[0, 0, 0]  // 在原点
-// );
+// 调用示例
+simple_box(
+    size=[32.8 + 5, 16.6 + 4, 3], 
+    wall_thickness=1,
+    corner_radius=4,
+    pos=[0, 0, 0]  // 在原点
+);
 
 
 clip_thickness = 1;
