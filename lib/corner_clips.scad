@@ -17,21 +17,21 @@ module four_corner_clips(chip_size, chip_pos,
     
     // 四个角卡扣 - 改进版：卡扣围绕芯片外部
     // 左下角
-    translate([chip_x - clip_length, chip_y - clip_length, chip_z])
+    translate([chip_x, chip_y , chip_z])
         external_corner_clip(clip_length, clip_thickness, arm_height);
 
     // 右下角
-    translate([chip_x + chip_length, chip_y - clip_length, chip_z])
+    translate([chip_x + chip_length, chip_y, chip_z])
         rotate([0,0,90])
         external_corner_clip(clip_length, clip_thickness, arm_height);
 
     // 右上角
-    translate([chip_x + chip_length, chip_y + chip_width, chip_z])
+    translate([chip_x + chip_length, chip_width + chip_y, chip_z])
         rotate([0,0,180])
         external_corner_clip(clip_length, clip_thickness, arm_height);
 
     // 左上角
-    translate([chip_x - clip_length, chip_y + chip_width, chip_z])
+    translate([chip_x, chip_width  + chip_y, chip_z])
         rotate([0,0,270])
         external_corner_clip(clip_length, clip_thickness, arm_height);
 
@@ -73,12 +73,11 @@ module wrapping_corner_clip(length, thickness, height) {
 }
 
 // 使用示例：
-/*
+
 four_corner_clips(
     chip_size = [20, 20, 2],      // 芯片尺寸
-    chip_pos = [0, 0, 0],         // 芯片位置
+    chip_pos = [15, 10, 10],         // 芯片位置
     clip_thickness = 1,           // 卡扣厚度
     arm_height = 3,               // 卡扣高度
     clip_length = 4               // 卡扣臂长
 );
-*/

@@ -10,7 +10,7 @@ simple_box(
     wall_thickness=1,
     corner_radius=0,
     pos=[0, 0, 0],
-    type_c_port=[true, 0, -1.5, 8.95, 3.15, "right"] 
+    type_c_port=[true, 0, -1, 8.95, 3.15, "right"] 
 );
 
 clip_thickness = 1;
@@ -23,7 +23,7 @@ four_corner_clips(
     clip_thickness=clip_thickness,
     arm_height=arm_height,
     clip_length=3,
-    chip_pos=[11,6.5,0],
+    chip_pos=[11,6,0],
     cylinders=[]
 );
 
@@ -32,12 +32,12 @@ four_corner_clips(
     clip_thickness=clip_thickness,
     arm_height=arm_height,
     clip_length=3,
-    chip_pos=[54,6,0],
+    chip_pos=[54,4.5,0],
     cylinders=[]
 );
 
-bolt_post(screw="m2", mode="self_tap", height=8.5, rib_height=4, rib_thickness=0.5, pos=[4.5, 13.5, 0], thick=2);
-bolt_post(screw="m2", mode="self_tap", height=8.5, rib_height=4, rib_thickness=0.5, pos=[48, 13.5, 0], thick=2);
+bolt_post(screw="m2", mode="self_tap", height=8.5, rib_height=4, rib_thickness=1, pos=[5.5, 14.5, 0], thick=3);
+bolt_post(screw="m2", mode="self_tap", height=8.5, rib_height=4, rib_thickness=1, pos=[49, 13.5, 0], thick=4);
 
 // 盖子调用示例
 translate([0, -35, 0])
@@ -46,26 +46,10 @@ translate([0, -35, 0])
         insert_start=1.5,
         insert_depth=1.5,
         insert_width=0.8,
-        handle_size=[8,2],
+        handle_size=[8,1],
         thick=1,
         holes = [
-            [4.5, 11.5, "m2"],      // M2自攻螺丝孔
-            [42, 11.5, "m2"]        // M2自攻螺丝孔
+            [5.5, 14.5, "m2"],      // M2自攻螺丝孔
+            [49, 13.5, "m2"]        // M2自攻螺丝孔
         ]
     );
-
-// // 盖子调用示例
-// translate([84, 0, 0])
-//     lid(
-//         lid_size=[34.8 + 43, 18.6 + 7],
-//         insert_start=1.5,
-//         insert_depth=1.5,
-//         insert_width=0.8,
-//         handle_size=[8,2],
-//         thick=1,
-//         holes = [
-//             [4.5, 11.5, "m2"],      // M2自攻螺丝孔
-//             [42, 11.5, "m2"]        // M2自攻螺丝孔
-//         ]
-//     );
-
