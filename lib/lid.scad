@@ -19,8 +19,8 @@ module lid(
     thick = 1,              // 侵入框壁厚
     holes = []              // 孔的列表，格式：[[x1, y1, "m2"], [x2, y2, "m3"], ...]
 ){
-    L = lid_size[0];
-    W = lid_size[1];
+    L = lid_size[0] + 2*thick;
+    W = lid_size[1] + 2*thick;
 
     // 螺丝对应的孔径（塑料用自攻螺丝的经验值）
     function get_hole_diameter(screw_type) = 
@@ -55,9 +55,9 @@ module lid(
         translate([insert_width + thick, insert_width + thick, insert_start])
             cube([L - insert_width*2 -2*thick , W - insert_width*2 - 2*thick, insert_depth + 2]);
     }
-    // =============================
-    // 3. 把手（厚度 = insert_start）
-    // =============================
+    // // =============================
+    // // 3. 把手（厚度 = insert_start）
+    // // =============================
     translate([
         (L - handle_size[0]) / 2,
         W,                        // 放在盖子外侧
