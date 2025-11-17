@@ -8,7 +8,7 @@ use <lib/lid.scad>;
 simple_box(
     size=[32.8 + 34.5, 16.6 + 5, 6], 
     wall_thickness=1,
-    corner_radius=1,
+    corner_radius=0,
     pos=[0, 0, 0]  // 在原点
 );
 
@@ -35,19 +35,22 @@ four_corner_clips(
     cylinders=[]
 );
 
-bolt_post(screw="m2", mode="self_tap", height=6, rib_height=4, rib_thickness=0.5, pos=[4.5, 11.5, 0]);
-bolt_post(screw="m2", mode="self_tap", height=6, rib_height=4, rib_thickness=0.5, pos=[42, 11.5, 0]);
+bolt_post(screw="m2", mode="self_tap", height=6, rib_height=4, rib_thickness=0, pos=[4.5, 11.5, 0]);
+bolt_post(screw="m2", mode="self_tap", height=6, rib_height=4, rib_thickness=0, pos=[42, 11.5, 0]);
 
 // 盖子调用示例
-
 
 translate([0, -25, 0])
     lid(
         lid_size=[32.8 + 34.5 + 2, 16.6 + 5, 6  + 2],
         insert_start=1.2,
-        insert_depth=1.5,
-        insert_width=1.5,
+        insert_depth=1,
+        insert_width=0.8,
         handle_size=[8,2],
-        thick=1
+        thick=1,
+        holes = [
+            [4.5, 11.5, "m2"],      // M2自攻螺丝孔
+            [42, 11.5, "m2"]        // M2自攻螺丝孔
+        ]
     );
 
