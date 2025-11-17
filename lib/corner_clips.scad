@@ -41,8 +41,9 @@ module four_corner_clips(chip_size, chip_pos,
             cylinder_diameter = actual_cylinders[i][0];
             cylinder_height = actual_cylinders[i][1];
             cylinder_offset = actual_cylinders[i][2];
-            
             translate([chip_x + cylinder_offset[0], chip_y + cylinder_offset[1], chip_z])
+
+            // translate([chip_x + cylinder_offset[0], chip_y, chip_z])
                 cylinder(h=cylinder_height, d=cylinder_diameter, center=false, $fn=60);
         }
     }
@@ -75,9 +76,15 @@ module wrapping_corner_clip(length, thickness, height) {
 // 使用示例：
 
 four_corner_clips(
-    chip_size = [20, 20, 2],      // 芯片尺寸
-    chip_pos = [15, 10, 10],         // 芯片位置
-    clip_thickness = 1,           // 卡扣厚度
-    arm_height = 3,               // 卡扣高度
-    clip_length = 4               // 卡扣臂长
+    chip_size = [20, 20, 2],
+    chip_pos = [0, 0, 0],
+    clip_thickness = 1,
+    arm_height = 3,
+    clip_length = 4,
+    cylinders = [
+        [3, 6, [10, 10]],     // 直径3mm，高度6mm，位置相对于芯片中心偏移 (10,10)
+        [3, 6, [10, -10]],
+        [3, 6, [-10, 10]],
+        [3, 6, [-10, -10]]
+    ]
 );
