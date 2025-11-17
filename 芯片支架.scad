@@ -10,7 +10,8 @@ four_corner_clips(
     chip_pos=[5, 5],
     clip_thickness=clip_thickness,
     arm_height=arm_height,
-    clip_length=3
+    clip_length=3,
+    chip_pos=[5,5,10]
 );
 
 
@@ -20,5 +21,6 @@ four_corner_clips(
     
     clip_thickness=clip_thickness,
     arm_height=arm_height,
-    clip_length=3
+    clip_length=3,
+    chip_pos=[25,5,10]
 );
