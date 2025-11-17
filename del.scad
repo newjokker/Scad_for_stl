@@ -1,67 +1,41 @@
-// 完善的开槽盒子，带倒角功能
-// size: [内部长, 内部宽, 高]
-// wall_thickness: 壁厚
-// corner_radius: 倒角半径
-// pos: [x, y, z] 盒子左上角底部的坐标
-module simple_box(size=[100, 60, 40], wall_thickness=2, corner_radius=0, pos=[0, 0, 0]) {
-    inner_length = size[0];
-    inner_width = size[1];
-    inner_height = size[2];
+// 完善的螺栓柱模块
+// diameter: 螺栓规格 ("m2" 或 "m3")
+// height: 螺栓柱总高度
+// rib_height: 圆柱形加强筋高度（从底部开始的高度）
+// rib_thickness: 加强筋厚度
+// pos: [x, y, z] 螺栓柱底部的坐标
+// fn: 圆柱面细分度（默认30）
+module bolt_post(diameter="m3", height=10, rib_height=5, rib_thickness=2, pos=[0, 0, 0], fn=60) {
+    // 设置螺栓直径
+    bolt_diameter = (diameter == "m3") ? 3.0 : (diameter == "m2") ? 2.0 : 3.0;
     
-    // 计算外部尺寸（内部尺寸+2倍壁厚）
-    outer_length = inner_length + 2 * wall_thickness;
-    outer_width = inner_width + 2 * wall_thickness;
-    height = inner_height + wall_thickness; // 高度包括底部壁厚
+    // 螺栓孔直径（略大于标准直径以便装配）
+    hole_diameter = bolt_diameter + 0.1;
     
-    // 确保倒角半径不超过最小尺寸的一半
-    max_corner_radius = min(outer_length, outer_width) / 2;
-    actual_corner_radius = min(corner_radius, max_corner_radius);
-    
-    // 内部倒角半径（不能为负）
-    inner_corner_radius = max(actual_corner_radius - wall_thickness, 0);
+    // 加强筋外径
+    rib_outer_diameter = bolt_diameter + rib_thickness * 2;
     
     // 移动到指定位置
     translate(pos) {
-        // 空心盒子
-        difference() {
-            // 外层盒子（带倒角）
-            rounded_cube([outer_length, outer_width, height], actual_corner_radius);
-            
-            // 内层挖空（带倒角）
-            translate([wall_thickness, wall_thickness, wall_thickness])
-            rounded_cube([inner_length, inner_width, height + 1], inner_corner_radius);
-        }
-    }
-}
-
-// 创建带倒角的长方体模块
-module rounded_cube(size, corner_radius) {
-    length = size[0];
-    width = size[1];
-    height = size[2];
-    
-    // 如果倒角半径为0，使用普通立方体
-    if (corner_radius <= 0) {
-        cube(size);
-    } else {
-        // 创建带倒角的长方体
-        hull() {
-            // 四个角柱
-            for (x = [corner_radius, length - corner_radius]) {
-                for (y = [corner_radius, width - corner_radius]) {
-                    translate([x, y, 0])
-                    cylinder(h = height, r = corner_radius, $fn = 60);
-                }
+        // 主要的螺栓孔（贯穿整个高度）
+        cylinder(h = height, d = hole_diameter, $fn = fn);
+        
+        // 圆柱形加强筋（如果设置了高度和厚度）
+        if (rib_height > 0 && rib_thickness > 0) {
+            // 加强筋从底部向上延伸指定高度
+            difference() {
+                // 外层圆柱（加强筋区域）
+                cylinder(h = rib_height, d = rib_outer_diameter, $fn = fn);
+                
+                // 内层圆柱（保持螺栓孔）
+                cylinder(h = rib_height, d = hole_diameter, $fn = fn);
             }
         }
     }
 }
 
-// 示例使用
-// 默认尺寸的盒子
-simple_box();
-
-// 大盒子，大倒角
-translate([120, 0, 0])
-simple_box(size=[80, 50, 30], wall_thickness=3, corner_radius=10);
+// 示例使用 - 展示不同配置的螺栓柱
+// M3螺栓柱，高度15mm，加强筋高度10mm，厚度2mm
+translate([-20, 0, 0])
+bolt_post(diameter="m2", height=15, rib_height=18, rib_thickness=2, pos=[0, 0, 0]);
 
