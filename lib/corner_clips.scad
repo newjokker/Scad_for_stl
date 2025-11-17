@@ -28,19 +28,22 @@ module four_corner_clips(chip_size=[10,8,1.5], chip_pos=[0,0,0],
         rotate([0,0,270])
         corner_clip(clip_length, clip_thickness, arm_height);
 
-    // 创建圆柱体
-    for(i = [0:len(cylinders)-1]) {
-        cylinder_diameter = cylinders[i][0];
-        cylinder_height = cylinders[i][1];
-        // 相对位置：[x偏移, y偏移]，z使用芯片的z坐标
-        cylinder_offset = cylinders[i][2];
-        
-        x_pos = chip_x + cylinder_offset[0];
-        y_pos = chip_y + cylinder_offset[1];
-        z_pos = chip_z;  // 直接使用芯片的z坐标，不加偏移
-        
-        translate([x_pos, y_pos, z_pos])
-            cylinder(h=cylinder_height, d=cylinder_diameter, center=false, $fn=60);
+    // 创建圆柱体, 如果不判断就会在原点画一个圆柱，这个要非常注意，是这个语言的坑
+    // cylinders参数格式：[[直径, 高度, [x偏移, y偏移]], ...]
+    if (len(cylinders) > 0) {
+        for(i = [0:len(cylinders)-1]) {
+            cylinder_diameter = cylinders[i][0];
+            cylinder_height = cylinders[i][1];
+            // 相对位置：[x偏移, y偏移]，z使用芯片的z坐标
+            cylinder_offset = cylinders[i][2];
+            
+            x_pos = chip_x + cylinder_offset[0];
+            y_pos = chip_y + cylinder_offset[1];
+            z_pos = chip_z;  // 直接使用芯片的z坐标，不加偏移
+            
+            translate([x_pos, y_pos, z_pos])
+                cylinder(h=cylinder_height, d=cylinder_diameter, center=false, $fn=60);
+        }
     }
 
     // 芯片（可选显示）
