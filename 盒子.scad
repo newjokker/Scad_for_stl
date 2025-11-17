@@ -2,6 +2,7 @@
 use <lib/simple_box.scad>;
 use <lib/corner_clips.scad>;
 use <lib/bolt_post.scad>;
+use <lib/lid.scad>;
 
 // 调用示例
 simple_box(
@@ -36,3 +37,17 @@ four_corner_clips(
 
 bolt_post(screw="m2", mode="self_tap", height=6, rib_height=4, rib_thickness=0.5, pos=[4.5, 11.5, 0]);
 bolt_post(screw="m2", mode="self_tap", height=6, rib_height=4, rib_thickness=0.5, pos=[42, 11.5, 0]);
+
+// 盖子调用示例
+
+
+translate([0, -25, 0])
+    lid(
+        lid_size=[32.8 + 34.5 + 2, 16.6 + 5, 6  + 2],
+        insert_start=1.2,
+        insert_depth=1.5,
+        insert_width=1.5,
+        handle_size=[8,2],
+        thick=1
+    );
+
