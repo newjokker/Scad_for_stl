@@ -6,7 +6,7 @@ use <lib/lid.scad>;
 
 // 调用示例
 simple_box(
-    size=[32.8 + 34.5, 16.6 + 5, 6], 
+    size=[32.8 + 34.5, 16.6 + 5, 8], 
     wall_thickness=1,
     corner_radius=0,
     pos=[0, 0, 0]  // 在原点
@@ -14,7 +14,7 @@ simple_box(
 
 clip_thickness = 1;
 arm_height = 3;
-offset = 0.3;
+offset = 0.5;
 
 // 调用示例
 four_corner_clips(
@@ -35,8 +35,8 @@ four_corner_clips(
     cylinders=[]
 );
 
-bolt_post(screw="m2", mode="self_tap", height=6, rib_height=4, rib_thickness=0, pos=[4.5, 11.5, 0]);
-bolt_post(screw="m2", mode="self_tap", height=6, rib_height=4, rib_thickness=0, pos=[42, 11.5, 0]);
+bolt_post(screw="m2", mode="self_tap", height=8.5, rib_height=4, rib_thickness=0.5, pos=[4.5, 11.5, 0], thick=2);
+bolt_post(screw="m2", mode="self_tap", height=8.5, rib_height=4, rib_thickness=0.5, pos=[42, 11.5, 0], thick=2);
 
 // 盖子调用示例
 

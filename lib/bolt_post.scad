@@ -8,7 +8,8 @@ module bolt_post(
     rib_height=5,
     rib_thickness=2,
     pos=[0,0,0],
-    fn=60
+    fn=60,
+    thick=2
 ){
     // 自攻螺丝专用尺寸表
     hole_table = [
@@ -25,7 +26,7 @@ module bolt_post(
     hole_d = (mode == "self_tap") ? self_tap : clearance;
     
     // 螺柱外径（根据孔径自动计算）
-    post_od = hole_d + 3; // 外径 = 孔径 + 3mm壁厚
+    post_od = hole_d + thick; // 外径 = 孔径 + 壁厚
     
     translate(pos) {
         difference() {
@@ -36,12 +37,6 @@ module bolt_post(
             cylinder(h = height, d = hole_d, $fn = fn);
         }
         
-        // 自攻螺丝导向倒角
-        if (mode == "self_tap") {
-            translate([0, 0, height])
-            cylinder(h = 1, d1 = hole_d, d2 = hole_d + 1, $fn = fn);
-        }
-
         // 加强筋（现在是在螺柱外部）
         actual_rib_height = min(rib_height, height * 0.8);
         if (actual_rib_height > 0 && rib_thickness > 0) {
