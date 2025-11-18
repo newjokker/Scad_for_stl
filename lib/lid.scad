@@ -17,15 +17,17 @@ module lid(
     insert_width=1.5,       // 侵入框宽度
     handle_size=[12, 6],     // 把手的长和宽
     thick = 1,              // 侵入框壁厚
+    pos = [0,0,0],          // 盖子位置
     holes = []              // 孔的列表，格式：[[x1, y1, "m2"], [x2, y2, "m3"], ...]
 ){
+    
     L = lid_size[0] + 2*thick;
     W = lid_size[1] + 2*thick;
 
     // 螺丝对应的孔径（塑料用自攻螺丝的经验值）
     function get_hole_diameter(screw_type) = 
-        screw_type == "m2" ? 1.6 :  // M2自攻螺丝用1.6mm孔径
-        screw_type == "m3" ? 2.4 :  // M3自攻螺丝用2.4mm孔径
+        screw_type == "m2" ? 2.2 :  // M2通孔径
+        screw_type == "m3" ? 3.2 :  // M3通孔径
         2.4; // 默认用M3孔径
 
     // 把手厚度 = 非侵入部分厚度 → insert_start
