@@ -1,5 +1,5 @@
 
-use <lib/corner_clips.scad>;
+use <../lib/corner_clips.scad>;
 
 // clip_thickness = 1;
 // arm_height = 3;
