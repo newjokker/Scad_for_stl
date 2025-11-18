@@ -13,7 +13,7 @@ esp32_chip_size = [22.76 + offset , 18.17 + offset, wall_thickness]; // ESP32芯
 mos_chip_size   = [32.8 + offset , 16.6 + offset, wall_thickness];    // M0S芯片尺寸（含偏移量）
 
 box_size = [
-    32.8 + 44,    // X方向尺寸（含ESP32和M0S芯片及间距）
+    32.8 + 42,    // X方向尺寸（含ESP32和M0S芯片及间距）
     16.6 + 8,     // Y方向尺寸（含ESP32和M0S芯片及间距）
     7             // Z方向尺寸（高度）
 ];
@@ -34,7 +34,7 @@ four_corner_clips(
     clip_thickness=clip_thickness,
     arm_height=arm_height,
     clip_length=3,
-    chip_pos=[6,5,0],
+    chip_pos=[4,5,0],
     cylinders=[
         // [1.8, 4, [1.25+1, 1.3+1, 0]],
         // [1.8, 4, [1.25+1, (16.6 + offset)-(1.3+1), 0]],
@@ -46,7 +46,7 @@ four_corner_clips(
     clip_thickness=clip_thickness,
     arm_height=arm_height,
     clip_length=3,
-    chip_pos=[54,4.5,0],
+    chip_pos=[52,4.5,0],
     cylinders=[]
 );
 
