@@ -51,7 +51,7 @@ four_corner_clips(
 );
 
 // bolt_post(screw="m3", mode="self_tap", height=8.5, rib_height=4, rib_thickness=1, pos=[5.5, 14.5, 0], thick=3);
-bolt_post(screw="m3", mode="self_tap", height=6.5, rib_height=4, rib_thickness=1, pos=[46.5, 13.5, wall_thickness], thick=4);
+bolt_post(screw="m3", mode="self_tap", height=6.5, rib_height=4, rib_thickness=1, pos=[45, box_size[1]/2 + wall_thickness, wall_thickness], thick=4);
 
 // 盖子调用示例
 lid(
@@ -64,21 +64,8 @@ lid(
     pos=[0, -40, 0],
     holes = [
         // [5.5, 14.5, "m3"],       // M2自攻螺丝孔
-        [46.5, 13.5, "m3"]          // M2自攻螺丝孔
+        // FIXME: 左右是镜像的，一定要小心，最好使用自动获取位置的方法
+        // [5.5, box_size[1]-14.5, "m3"],   // M2自攻螺丝孔
+        [45, box_size[1]/2 + wall_thickness, "m3"]          // M3通孔
     ]
 );
-
-// // 盖子调用示例
-// lid(
-//     lid_size=[box_size[0], box_size[1]],
-//     insert_start=2.5,
-//     insert_depth=2.5,
-//     insert_width=1.5,
-//     handle_size=[8,1],
-//     thick=wall_thickness,
-//     pos=[85, 0, 0],
-//     holes = [
-//         // [5.5, 14.5, "m3"],       // M2自攻螺丝孔
-//         [46.5, 13.5, "m3"]          // M2自攻螺丝孔
-//     ]
-// );
