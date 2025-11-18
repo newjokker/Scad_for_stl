@@ -7,10 +7,10 @@ use <lib/lid.scad>;
 wall_thickness = 1.5;   // 盒子的壁厚
 clip_thickness = 1.5;   // 卡扣的厚度
 arm_height = 5;         // 卡扣的臂高
-offset = 0.5;           // 芯片尺寸的额外偏移量
+chip_offset = 0.5;           // 芯片尺寸的额外偏移量
 
-esp32_chip_size = [22.76 + offset , 18.17 + offset, wall_thickness]; // ESP32芯片尺寸（含偏移量）
-mos_chip_size   = [32.8 + offset , 16.6 + offset, wall_thickness];    // M0S芯片尺寸（含偏移量）
+esp32_chip_size = [23 + chip_offset , 18.17 + chip_offset, wall_thickness]; // ESP32芯片尺寸（含偏移量）
+mos_chip_size   = [32 + chip_offset , 16.6 + chip_offset, wall_thickness];    // M0S芯片尺寸（含偏移量）
 
 box_size = [
     32.8 + 42,    // X方向尺寸（含ESP32和M0S芯片及间距）
@@ -63,9 +63,7 @@ lid(
     thick=wall_thickness,
     pos=[0, -40, 0],
     holes = [
-        // [5.5, 14.5, "m3"],       // M2自攻螺丝孔
         // FIXME: 左右是镜像的，一定要小心，最好使用自动获取位置的方法
-        // [5.5, box_size[1]-14.5, "m3"],   // M2自攻螺丝孔
         [45, box_size[1]/2 + wall_thickness, "m3"]          // M3通孔
     ]
 );
