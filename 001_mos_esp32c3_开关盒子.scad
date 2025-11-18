@@ -10,7 +10,7 @@ arm_height = 5;         // 卡扣的臂高
 chip_offset = 0.5;           // 芯片尺寸的额外偏移量
 
 esp32_chip_size = [23 + chip_offset , 18.17 + chip_offset, wall_thickness]; // ESP32芯片尺寸（含偏移量）
-mos_chip_size   = [32 + chip_offset , 16.6 + chip_offset, wall_thickness];    // M0S芯片尺寸（含偏移量）
+mos_chip_size   = [32.8 + chip_offset , 16.6 + chip_offset, wall_thickness];    // M0S芯片尺寸（含偏移量）
 
 box_size = [
     32.8 + 42,    // X方向尺寸（含ESP32和M0S芯片及间距）
@@ -28,8 +28,8 @@ simple_box(
         // Type-C
         ["type_c", 0, 0, 8.95, 3.15, "right"],
         // 圆孔
-        ["circle", -1.5, 0, 1.5, "left"],
-        ["circle", 1.5, 0, 1.5, "left"]
+        ["circle", -2, 0, 2.5, "left"],
+        ["circle", 2, 0, 2.5, "left"]
     ]
 );
 
@@ -63,12 +63,14 @@ bolt_post(screw="m3", mode="self_tap", height=7.5, rib_height=4, rib_thickness=1
 // 盖子
 lid(
     lid_size=[box_size[0], box_size[1]],
-    insert_start=2.5,
+    insert_start=2,
     insert_depth=2.5,
     insert_width=1.5,
     handle_size=[8,1],
     thick=wall_thickness,
     pos=[0, -40, 0],
+    n_bumps_per_side = 8,  // 每条边上的小凸起数量
+    bump_diameter = 2.2,    // 小凸起圆柱直径
     holes = [
         // FIXME: 左右是镜像的，一定要小心，最好使用自动获取位置的方法
         [46, box_size[1]/2 + wall_thickness, "m3"]                  // M3通孔
