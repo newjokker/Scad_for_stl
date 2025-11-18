@@ -1,11 +1,11 @@
-// 完善的开槽盒子，带倒角功能，支持 Type-C 开孔
+// 完善的开槽盒子，带倒角功能，支持多种开孔
 // size: [内部长, 内部宽, 高]
 // wall_thickness: 壁厚
 // corner_radius: 倒角半径
 // pos: [x, y, z] 盒子左上角底部的坐标
-// type_c_port: 是否添加 Type-C 接口开孔 [enable, x_offset, y_offset, width, height]
+// holes: 开孔数组，支持 Type-C 和圆孔
 module simple_box(size=[100, 60, 40], wall_thickness=2, corner_radius=0, pos=[0, 0, 0], 
-                  type_c_port=[false, 0, 0, 8.5, 3, "front"]) {
+                  holes=[]) {
     inner_length = size[0];
     inner_width = size[1];
     inner_height = size[2];
@@ -35,29 +35,28 @@ module simple_box(size=[100, 60, 40], wall_thickness=2, corner_radius=0, pos=[0,
                 rounded_cube([inner_length, inner_width, height + 1], inner_corner_radius);
             }
             
-            // 添加 Type-C 接口开孔
-            if (type_c_port[0]) {
-                type_c_hole(outer_length, outer_width, height, wall_thickness, type_c_port);
+            // 添加所有开孔
+            for (hole = holes) {
+                if (hole[0] == "type_c") {
+                    type_c_hole(outer_length, outer_width, height, wall_thickness, hole);
+                } else if (hole[0] == "circle") {
+                    circle_hole(outer_length, outer_width, height, wall_thickness, hole);
+                }
             }
         }
     }
 }
 
 // Type-C 接口开孔模块（带圆角，可指定面）
-module type_c_hole(outer_length, outer_width, height, wall_thickness, type_c_port) {
-    // type_c_port 参数: [enable, x_offset, y_offset, width, height, face]
-    x_offset = type_c_port[1];
-    y_offset = type_c_port[2];
-    hole_width = type_c_port[3];
-    hole_height = type_c_port[4];
-    face = type_c_port[5]; // "front", "back", "left", "right", "top", "bottom"
+module type_c_hole(outer_length, outer_width, height, wall_thickness, hole_params) {
+    // hole_params: ["type_c", x_offset, y_offset, width, height, face]
+    x_offset = hole_params[1];
+    y_offset = hole_params[2];
+    hole_width = hole_params[3];
+    hole_height = hole_params[4];
+    face = hole_params[5]; // "front", "back", "left", "right", "top", "bottom"
 
     corner_radius = min(hole_width, hole_height)/4;
-
-    // 默认位置
-    hole_x = outer_length/2 + x_offset;
-    hole_y = outer_width/2 + y_offset;
-    hole_z = height/2 + y_offset;
 
     // 根据面调整位置和旋转
     if (face == "front") {
@@ -87,6 +86,45 @@ module type_c_hole(outer_length, outer_width, height, wall_thickness, type_c_por
     }
 }
 
+// 圆孔开孔模块
+module circle_hole(outer_length, outer_width, height, wall_thickness, hole_params) {
+    // hole_params: ["circle", x_offset, y_offset, diameter, face]
+    x_offset = hole_params[1];
+    y_offset = hole_params[2];
+    diameter = hole_params[3];
+    face = hole_params[4]; // "front", "back", "left", "right", "top", "bottom"
+
+    // 根据面调整位置和旋转
+    if (face == "front") {
+        translate([outer_length/2 + x_offset, -0.5, height/2 + y_offset])
+        rotate([-90, 0, 0])
+        cylinder(h = wall_thickness + 1, d = diameter, center = false, $fn = 60);
+    } 
+    else if (face == "back") {
+        translate([outer_length/2 + x_offset, outer_width + 0.5, height/2 + y_offset])
+        rotate([90, 0, 0])
+        cylinder(h = wall_thickness + 1, d = diameter, center = false, $fn = 60);
+    }
+    else if (face == "left") {
+        translate([-0.5, outer_width/2 + x_offset, height/2 + y_offset])
+        rotate([0, 90, 0])
+        cylinder(h = wall_thickness + 1, d = diameter, center = false, $fn = 60);
+    }
+    else if (face == "right") {
+        translate([outer_length + 0.5, outer_width/2 + x_offset, height/2 + y_offset])
+        rotate([0, -90, 0])
+        cylinder(h = wall_thickness + 1, d = diameter, center = false, $fn = 60);
+    }
+    else if (face == "top") {
+        translate([outer_length/2 + x_offset, outer_width/2 + y_offset, height + 0.5])
+        cylinder(h = wall_thickness + 1, d = diameter, center = false, $fn = 60);
+    }
+    else if (face == "bottom") {
+        translate([outer_length/2 + x_offset, outer_width/2 + y_offset, -0.5])
+        rotate([0, 0, 180])
+        cylinder(h = wall_thickness + 1, d = diameter, center = false, $fn = 60);
+    }
+}
 
 // 圆角矩形开孔模块
 module rounded_rectangle_slot(width, height, depth, corner_radius) {
@@ -94,13 +132,17 @@ module rounded_rectangle_slot(width, height, depth, corner_radius) {
     if (corner_radius <= 0) {
         cube([width, height, depth], center=true);
     } else {
+        // 确保圆角半径不超过最小尺寸的一半
+        max_r = min(width, height) / 2;
+        actual_r = min(corner_radius, max_r);
+        
         // 创建圆角矩形
         hull() {
             // 四个角柱
-            for (x = [-width/2 + corner_radius, width/2 - corner_radius]) {
-                for (y = [-height/2 + corner_radius, height/2 - corner_radius]) {
+            for (x = [-width/2 + actual_r, width/2 - actual_r]) {
+                for (y = [-height/2 + actual_r, height/2 - actual_r]) {
                     translate([x, y, 0])
-                    cylinder(h = depth, r = corner_radius, center=true, $fn = 30);
+                    cylinder(h = depth, r = actual_r, center=true, $fn = 30);
                 }
             }
         }
@@ -117,15 +159,37 @@ module rounded_cube(size, corner_radius) {
     if (corner_radius <= 0) {
         cube(size);
     } else {
+        // 确保倒角半径不超过最小尺寸的一半
+        max_r = min(length, width) / 2;
+        actual_r = min(corner_radius, max_r);
+        
         // 创建带倒角的长方体
         hull() {
             // 四个角柱
-            for (x = [corner_radius, length - corner_radius]) {
-                for (y = [corner_radius, width - corner_radius]) {
+            for (x = [actual_r, length - actual_r]) {
+                for (y = [actual_r, width - actual_r]) {
                     translate([x, y, 0])
-                    cylinder(h = height, r = corner_radius, $fn = 60);
+                    cylinder(h = height, r = actual_r, $fn = 60);
                 }
             }
         }
     }
 }
+
+// 示例使用
+
+simple_box(
+    size = [100, 60, 40],
+    wall_thickness = 2,
+    corner_radius = 5,
+    holes = [
+        // Type-C 接口在前面板
+        ["type_c", 0, 0, 8.5, 3, "front"],
+        // 圆孔在右侧
+        ["circle", 10, 0, 5, "right"],
+        // 圆孔在顶部
+        ["circle", -10, 10, 3, "top"],
+        // 圆孔在左侧
+        ["circle", 0, -10, 4, "left"]
+    ]
+);

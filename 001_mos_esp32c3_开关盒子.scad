@@ -15,26 +15,32 @@ mos_chip_size   = [32 + chip_offset , 16.6 + chip_offset, wall_thickness];    //
 box_size = [
     32.8 + 42,    // X方向尺寸（含ESP32和M0S芯片及间距）
     16.6 + 8,     // Y方向尺寸（含ESP32和M0S芯片及间距）
-    7             // Z方向尺寸（高度）
+    8             // Z方向尺寸（高度）
 ];
 
-// 调用示例
+// 盒子
 simple_box(
     size=box_size, 
     wall_thickness=wall_thickness,
     corner_radius=0,
     pos=[0, 0, 0],
-    type_c_port=[true, 0, 0, 8.95, 3.15, "right"] 
+    holes = [
+        // Type-C
+        ["type_c", 0, 0, 8.95, 3.15, "right"],
+        // 圆孔
+        ["circle", -1.5, 0, 1.5, "left"],
+        ["circle", 1.5, 0, 1.5, "left"]
+    ]
 );
 
 
-// // 调用示例
+// 芯片卡扣
 four_corner_clips(
     chip_size=mos_chip_size,
     clip_thickness=clip_thickness,
     arm_height=arm_height,
     clip_length=3,
-    chip_pos=[4,5,0],
+    chip_pos=[7.5,5.2,clip_thickness],
     cylinders=[
         // [1.8, 4, [1.25+1, 1.3+1, 0]],
         // [1.8, 4, [1.25+1, (16.6 + offset)-(1.3+1), 0]],
@@ -46,14 +52,15 @@ four_corner_clips(
     clip_thickness=clip_thickness,
     arm_height=arm_height,
     clip_length=3,
-    chip_pos=[52,4.5,0],
+    chip_pos=[52,4.5,clip_thickness],
     cylinders=[]
 );
 
+// 螺柱
 // bolt_post(screw="m3", mode="self_tap", height=8.5, rib_height=4, rib_thickness=1, pos=[5.5, 14.5, 0], thick=3);
-bolt_post(screw="m3", mode="self_tap", height=6.5, rib_height=4, rib_thickness=1, pos=[45, box_size[1]/2 + wall_thickness, wall_thickness], thick=4);
+bolt_post(screw="m3", mode="self_tap", height=7.5, rib_height=4, rib_thickness=1, pos=[46, box_size[1]/2 + wall_thickness, wall_thickness], thick=4);
 
-// 盖子调用示例
+// 盖子
 lid(
     lid_size=[box_size[0], box_size[1]],
     insert_start=2.5,
@@ -64,6 +71,21 @@ lid(
     pos=[0, -40, 0],
     holes = [
         // FIXME: 左右是镜像的，一定要小心，最好使用自动获取位置的方法
-        [45, box_size[1]/2 + wall_thickness, "m3"]          // M3通孔
+        [46, box_size[1]/2 + wall_thickness, "m3"]                  // M3通孔
     ]
 );
+
+// // 盖子
+// lid(
+//     lid_size=[box_size[0], box_size[1]],
+//     insert_start=2.5,
+//     insert_depth=2.5,
+//     insert_width=1.5,
+//     handle_size=[8,1],
+//     thick=wall_thickness,
+//     pos=[85, 0, 0],
+//     holes = [
+//         // FIXME: 左右是镜像的，一定要小心，最好使用自动获取位置的方法
+//         [46, box_size[1]/2 + wall_thickness, "m3"]                  // M3通孔
+//     ]
+// );
