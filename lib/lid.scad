@@ -8,6 +8,7 @@
 // handle_size = [L, W]      → 把手长宽
 // holes = []                → 孔的列表，每个元素为 [x, y, screw_type]
 // screw_type: "m2" 或 "m3" → 螺丝类型，自动计算合适孔径
+// pos = [x, y, z]          → 盖子位置坐标
 ////////////////////////////////////////////////////////////
 
 module lid(
@@ -33,41 +34,46 @@ module lid(
     // 把手厚度 = 非侵入部分厚度 → insert_start
     handle_thickness = insert_start;
 
-    // =============================
-    // 1. 盖子上层（不侵入部分）
-    // =============================
-    difference() {
-        cube([L, W, insert_start]);
-        
-        // 打孔
-        for(hole = holes) {
-            hole_diameter = get_hole_diameter(hole[2]);
-            translate([hole[0], hole[1], -0.1])
-                cylinder(h = insert_start + 0.2, d = hole_diameter, $fn = 30);
+    // 应用位置变换
+    translate(pos) {
+        // =============================
+        // 1. 盖子上层（不侵入部分）
+        // =============================
+        difference() {
+            cube([L, W, insert_start]);
+            
+            // 打孔
+            for(hole = holes) {
+                hole_diameter = get_hole_diameter(hole[2]);
+                translate([hole[0], hole[1], -0.1])
+                    cylinder(h = insert_start + 0.2, d = hole_diameter, $fn = 30);
+            }
         }
-    }
 
-    // =============================
-    // 2. 侵入框（从 insert_start 开始）
-    // =============================
-    difference() {
-        translate([thick, thick, insert_start])
-            cube([L-2*thick, W-2*thick, insert_depth]);
+        // =============================
+        // 2. 侵入框（从 insert_start 开始）
+        // =============================
+        difference() {
+            translate([thick, thick, insert_start])
+                cube([L-2*thick, W-2*thick, insert_depth]);
+            
+            translate([insert_width + thick, insert_width + thick, insert_start])
+                cube([L - insert_width*2 -2*thick , W - insert_width*2 - 2*thick, insert_depth + 2]);
+        }
         
-        translate([insert_width + thick, insert_width + thick, insert_start])
-            cube([L - insert_width*2 -2*thick , W - insert_width*2 - 2*thick, insert_depth + 2]);
+        // =============================
+        // 3. 把手（厚度 = insert_start）
+        // =============================
+        translate([
+            (L - handle_size[0]) / 2,
+            W,                        // 放在盖子外侧
+            0        // 居中厚度
+        ])
+            cube([handle_size[0], handle_size[1], insert_start]);
     }
-    // // =============================
-    // // 3. 把手（厚度 = insert_start）
-    // // =============================
-    translate([
-        (L - handle_size[0]) / 2,
-        W,                        // 放在盖子外侧
-        0        // 居中厚度
-    ])
-        cube([handle_size[0], handle_size[1], insert_start]);
 }
 
+// 使用示例
 lid(
     lid_size = [60, 30],
     insert_start = 1.2,
@@ -75,6 +81,7 @@ lid(
     insert_width = 1.5,
     handle_size = [12, 6],
     thick = 1,
+    pos = [10, 20, 5],  // 移动到新位置
     holes = [
         [10, 10, "m2"],    // M2自攻螺丝孔
         [50, 10, "m3"],    // M3自攻螺丝孔
