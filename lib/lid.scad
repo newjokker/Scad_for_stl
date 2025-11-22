@@ -19,6 +19,8 @@ module lid(
     handle_size=[12, 6],     // 把手的长和宽
     thick = 1,              // 侵入框壁厚
     pos = [0,0,0],          // 盖子位置
+    n_bumps_per_side = 8,  // 每条边上的小凸起数量
+    bump_diameter = 1,    // 小凸起圆柱直径
     holes = []              // 孔的列表，格式：[[x1, y1, "m2"], [x2, y2, "m3"], ...]
 ){
     
@@ -57,8 +59,8 @@ module lid(
             translate([thick, thick, insert_start])
                 cube([L-2*thick, W-2*thick, insert_depth]);
             
-            translate([insert_width + thick, insert_width + thick, insert_start])
-                cube([L - insert_width*2 -2*thick , W - insert_width*2 - 2*thick, insert_depth + 2]);
+            translate([insert_width + thick + bump_diameter/2 , insert_width + thick + bump_diameter/2, insert_start])
+                cube([L - insert_width*2 -2*thick -bump_diameter, W - insert_width*2 - 2*thick - bump_diameter, insert_depth + 2]);
         }
         
         // =============================
@@ -70,6 +72,62 @@ module lid(
             0        // 居中厚度
         ])
             cube([handle_size[0], handle_size[1], insert_start]);
+
+        // // =============================
+        // // 4. 侵入立墙侧边的小凸起（沿着四条垂直边均匀分布）
+        // // =============================
+
+        // // === 参数设置 ===
+        // // bump_diameter = 1;        // 小凸起圆柱直径
+        // // bump_height = insert_depth;  // 小凸起高度 == 侵入深度（从底到顶）
+        // // bump_radius = bump_diameter / 2;
+
+        // // 每条边上的小凸起数量
+        // // n_bumps_per_side = 8;     // 每条边放几个小凸起
+
+        // // 侵入立墙的位置和尺寸
+        // wall_x_start = thick;       // 控制球突出的深浅
+        // wall_x_end   = thick + (L - 2*thick);  // 即 L - thick
+        // wall_y_start = thick;
+        // wall_y_end   = thick + (W - 2*thick);  // 即 W - thick
+        // wall_z_start = insert_start;
+        // wall_z_end   = insert_start + insert_depth;
+
+        // wall_width_x = wall_x_end - wall_x_start;  // L - 2*thick
+        // wall_width_y = wall_y_end - wall_y_start;  // W - 2*thick
+
+        // // 均匀分布的计算
+        // spacing_x = wall_width_x / (n_bumps_per_side + 1);
+        // spacing_y = wall_width_y / (n_bumps_per_side + 1);
+
+        // // 1. 左侧边 (x = wall_x_start, y 从 y_start 到 y_end)
+        // for (i = [1:n_bumps_per_side]) {
+        //     y = wall_y_start + (i * spacing_y);
+        //     translate([wall_x_start, y, wall_z_start + insert_depth/(9/5)])
+        //         sphere(r = bump_diameter / 2, $fn=16);
+        // }
+
+        // // 2. 右侧边 (x = wall_x_end, y 从 y_start 到 y_end)
+        // for (i = [1:n_bumps_per_side]) {
+        //     y = wall_y_start + (i * spacing_y);
+        //     translate([wall_x_end, y, wall_z_start + insert_depth/(9/5)])
+        //         sphere(r = bump_diameter / 2, $fn=16);
+        // }
+
+        // // 3. 下侧边 (y = wall_y_start, x 从 x_start 到 x_end)
+        // for (i = [1:n_bumps_per_side]) {
+        //     x = wall_x_start + (i * spacing_x);
+        //     translate([x, wall_y_start, wall_z_start + insert_depth/(9/5)])
+        //         sphere(r = bump_diameter / 2, $fn=16);
+        // }
+
+        // // 4. 上侧边 (y = wall_y_end, x 从 x_start 到 x_end)
+        // for (i = [1:n_bumps_per_side]) {
+        //     x = wall_x_start + (i * spacing_x);
+        //     translate([x, wall_y_end, wall_z_start + insert_depth/(9/5)])
+        //         sphere(r = bump_diameter / 2, $fn=16);
+        // }
+
     }
 }
 
