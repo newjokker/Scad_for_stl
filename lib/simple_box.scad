@@ -1,3 +1,6 @@
+
+include <BOSL2/std.scad>
+
 // 完善的开槽盒子，带倒角功能，支持多种开孔
 // size: [内部长, 内部宽, 高]
 // wall_thickness: 壁厚
@@ -150,7 +153,7 @@ module rounded_rectangle_slot(width, height, depth, corner_radius) {
 }
 
 // 创建带倒角的长方体模块
-module rounded_cube(size, corner_radius) {
+module rounded_cube(size, corner_radius, chamfer=0.5) {
     length = size[0];
     width = size[1];
     height = size[2];

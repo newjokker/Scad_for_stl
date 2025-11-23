@@ -1,5 +1,7 @@
+
+include <BOSL2/std.scad>
+
 ////////////////////////////////////////////////////////////
-// 参数化盖子模块（符合你的四点要求）
 //
 // lid_size = [L, W]         → 盖子的长宽
 // insert_start              → 从盖子底部往上多少开始侵入, 就是盖子外侧部分的厚度
@@ -57,10 +59,10 @@ module lid(
         // =============================
         difference() {
             translate([thick, thick, insert_start])
-                cube([L-2*thick, W-2*thick, insert_depth]);
+                cuboid([L-2*thick, W-2*thick, insert_depth], anchor=FRONT+LEFT+BOT, chamfer=0.5, edges=[TOP]);
             
             translate([insert_width + thick + bump_diameter/2 , insert_width + thick + bump_diameter/2, insert_start])
-                cube([L - insert_width*2 -2*thick -bump_diameter, W - insert_width*2 - 2*thick - bump_diameter, insert_depth + 2]);
+                cuboid([L - insert_width*2 -2*thick -bump_diameter, W - insert_width*2 - 2*thick - bump_diameter, insert_depth + 2], anchor=FRONT+LEFT+BOT);
         }
         
         // =============================
