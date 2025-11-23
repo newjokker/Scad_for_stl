@@ -70,7 +70,7 @@ module lid(
         // =============================
         translate([
             (L - handle_size[0]) / 2,
-            W,                        // 放在盖子外侧
+            -handle_size[1],                        // 放在盖子外侧
             0        // 居中厚度
         ])
             cube([handle_size[0], handle_size[1], insert_start]);
@@ -141,7 +141,7 @@ lid(
     insert_width = 1.5,
     handle_size = [12, 6],
     thick = 1,
-    pos = [10, 20, 5],  // 移动到新位置
+    pos = [0, 0, 0],  // 移动到新位置
     holes = [
         [10, 10, "m2"],    // M2自攻螺丝孔
         [50, 10, "m3"],    // M3自攻螺丝孔
