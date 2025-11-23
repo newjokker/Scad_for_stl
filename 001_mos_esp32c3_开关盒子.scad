@@ -10,7 +10,7 @@ include <BOSL2/std.scad>
 wall_thickness = 1.5;   // 盒子的壁厚
 clip_thickness = 1.5;   // 卡扣的厚度
 arm_height = 5;         // 卡扣的臂高
-chip_offset = 0.5;           // 芯片尺寸的额外偏移量
+chip_offset = 0.8;           // 芯片尺寸的额外偏移量
 
 esp32_chip_size = [23 + chip_offset , 18.17 + chip_offset, wall_thickness]; // ESP32芯片尺寸（含偏移量）
 mos_chip_size   = [32.8 + chip_offset , 16.6 + chip_offset, wall_thickness];    // M0S芯片尺寸（含偏移量）
@@ -31,8 +31,8 @@ simple_box(
         // Type-C
         ["type_c", 0, 0, 8.95, 3.15, "right"],
         // 圆孔
-        ["circle", -2, 0, 2.5, "left"],
-        ["circle", 2, 0, 2.5, "left"]
+        ["circle", 2, 0, 2.5, "left"],
+        ["circle", 7, 0, 2.5, "left"]
     ]
 );
 
@@ -60,14 +60,14 @@ four_corner_clips(
 // 电源设备柱
 translate([25 + 1 + 1.5, 3 + 8.15/2, wall_thickness]) {  
     color("yellow", 0.8)  // 绿色
-    cylinder(h=3.5, r=1.4, $fn = 30);
-    cylinder(h=1, r2=1.4, r1=1.4+1, $fn = 30);
+    cylinder(h=2.5, r=1.45, $fn = 30);
+    cylinder(h=1, r2=1.45, r1=1.4+1, $fn = 30);
 }
 
 translate([25 + 1 + 1.5 + 14.2 + 3, 3 + 8.15/2, wall_thickness]) {  
     color("yellow", 0.8)  // 绿色
-    cylinder(h=3.5, r=1.4, $fn = 30);
-    cylinder(h=1, r2=1.4, r1=1.4+1, $fn = 30);
+    cylinder(h=2.5, r=1.45, $fn = 30);
+    cylinder(h=1, r2=1.45, r1=1.4+1, $fn = 30);
 }
 
 
