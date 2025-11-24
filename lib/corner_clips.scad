@@ -1,3 +1,6 @@
+
+include <BOSL2/std.scad>
+
 // 改进版L形卡扣模块 - 不占用芯片空间
 module four_corner_clips(chip_size, chip_pos, 
                          clip_thickness=1, arm_height=1, clip_length=2,
@@ -73,18 +76,53 @@ module wrapping_corner_clip(length, thickness, height) {
     cube([thickness, length, height]);
 }
 
-// 使用示例：
 
-four_corner_clips(
-    chip_size = [20, 20, 2],
-    chip_pos = [0, 0, 0],
-    clip_thickness = 1,
-    arm_height = 3,
-    clip_length = 4,
-    cylinders = [
-        [3, 6, [10, 10]],     // 直径3mm，高度6mm，位置相对于芯片中心偏移 (10,10)
-        [3, 6, [10, -10]],
-        [3, 6, [-10, 10]],
-        [3, 6, [-10, -10]]
-    ]
-);
+// 芯片的卡扣
+module test(
+    chip_size = [20, 10, 4],    // 芯片的长宽高
+    clip_length=2,              // 卡扣的边长
+    clip_thick=1.5,              // 卡扣的厚度
+    pos=[0,0,0]                 // 中心点所在的位置
+){
+    
+    // 对中心点进行移动
+    translate(pos){
+        // 先将中心点移动到原点
+        translate([-(chip_size[0]/2 + clip_thick), -(chip_size[1]/2 + clip_thick), 0]){
+
+            difference(){
+                // 原始的矩形
+                cuboid([chip_size[0]+2*clip_thick,chip_size[1]+2*clip_thick,chip_size[2]], anchor=[-1, -1, -1]);
+                // 中间部分
+                translate([clip_thick, clip_thick, -0.5])
+                    cuboid([chip_size[0], chip_size[1], chip_size[2] + 1], anchor=[-1, -1, -1]);
+                // 四个边
+                translate([clip_thick + clip_length, -0.5, -0.5])
+                            cuboid([chip_size[0]-2*clip_length, chip_size[1] + clip_thick*2 + 1, chip_size[2] + 1], anchor=[-1, -1, -1]);
+
+                translate([-0.5, clip_thick + clip_length, -0.5])
+                            cuboid([chip_size[0]+2*clip_thick + 1, chip_size[1]-2*clip_length, chip_size[2] + 1], anchor=[-1, -1, -1]);
+
+            }
+        }
+    }
+}
+
+
+// // 使用示例：
+// four_corner_clips(
+//     chip_size = [20, 20, 2],
+//     chip_pos = [0, 0, 0],
+//     clip_thickness = 1,
+//     arm_height = 3,
+//     clip_length = 4,
+//     cylinders = [
+//         [3, 6, [10, 10]],     // 直径3mm，高度6mm，位置相对于芯片中心偏移 (10,10)
+//         [3, 6, [10, -10]],
+//         [3, 6, [-10, 10]],
+//         [3, 6, [-10, -10]]
+//     ]
+// );
+
+
+test(clip_thick=1.5, pos=[20,20,0]);
