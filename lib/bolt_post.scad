@@ -77,7 +77,8 @@ module magnet_holder(
 
 
 // 螺丝柱
-boss(screw="m3", mode="through", height=10, rib_height= 4, rib_thickness=1, thick=2, pos=[0,0,0]);
+// boss(screw="m3", mode="through", height=10, rib_height= 4, rib_thickness=1, thick=2, pos=[0,0,0]);
+
 
 // 磁铁柱
 magnet_holder(
@@ -85,5 +86,5 @@ magnet_holder(
     magnet_thickness = 3,
     holder_height = 6,    
     wall_thickness = 1,
-    pos = [15, 0, 0]       
+    pos = [0, 0, 0]       
 );

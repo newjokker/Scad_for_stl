@@ -133,19 +133,61 @@ module lid(
     }
 }
 
-// 使用示例
-lid(
-    lid_size = [60, 30],
-    insert_start = 1.2,
-    insert_depth = 2.5,
-    insert_width = 1.5,
-    handle_size = [12, 6],
-    thick = 1,
-    pos = [0, 0, 0],  // 移动到新位置
-    holes = [
-        [10, 10, "m2"],    // M2自攻螺丝孔
-        [50, 10, "m3"],    // M3自攻螺丝孔
-        [10, 20, "m3"],    // M3自攻螺丝孔
-        [50, 20, "m2"]     // M2自攻螺丝孔
-    ]
-);
+
+module lid_new(
+    lid_size = [10, 10, 2],
+    plug_thickness = 1,
+    plug_depth = 1,
+    wall_thickness = 1,
+    chamfer=0.5
+){
+    // 盖子的主体
+    cuboid(lid_size, anchor=[-1, -1, -1]);
+
+    // 公口部分
+    difference(){
+        outer_size = [
+            lid_size[0] - 2*wall_thickness,
+            lid_size[1] - 2*wall_thickness, 
+            plug_depth
+        ];
+        
+        inner_size = [
+            lid_size[0] - 2*wall_thickness - 2*plug_thickness,
+            lid_size[1] - 2*wall_thickness - 2*plug_thickness,
+            plug_depth + 0.01  // 关键：高度略大
+        ];
+        
+        translate([wall_thickness, wall_thickness, lid_size[2]])
+            cuboid(outer_size, anchor=[-1, -1, -1], chamfer=chamfer, edges=[TOP, LEFT+FRONT, RIGHT+FRONT, LEFT+BACK, RIGHT+BACK]);
+        
+        // 让被减去的立方体在高度上略微超出主体，确保完全、干净地切割
+        translate([wall_thickness + plug_thickness, wall_thickness + plug_thickness, lid_size[2] - 0.005])
+            cuboid(inner_size, anchor=[-1, -1, -1]);
+    }
+}
+
+
+// // 使用示例
+// lid(
+//     lid_size = [60, 30],
+//     insert_start = 1.2,
+//     insert_depth = 2.5,
+//     insert_width = 1.5,
+//     handle_size = [12, 6],
+//     thick = 1,
+//     pos = [0, 0, 0],  // 移动到新位置
+//     holes = [
+//         [10, 10, "m2"],    // M2自攻螺丝孔
+//         [50, 10, "m3"],    // M3自攻螺丝孔
+//         [10, 20, "m3"],    // M3自攻螺丝孔
+//         [50, 20, "m2"]     // M2自攻螺丝孔
+//     ]
+// );
+
+lid_new(
+    lid_size=[30, 20, 1.5],
+    plug_thickness=1.5,
+    plug_depth=1.5,
+    wall_thickness=1);
+
