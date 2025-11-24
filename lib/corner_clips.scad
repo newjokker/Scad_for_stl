@@ -78,7 +78,7 @@ module wrapping_corner_clip(length, thickness, height) {
 
 
 // 芯片的卡扣
-module test(
+module four_corner_clips_new(
     chip_size = [20, 10, 4],    // 芯片的长宽高
     clip_length=2,              // 卡扣的边长
     clip_thick=1.5,              // 卡扣的厚度
@@ -96,7 +96,7 @@ module test(
                 // 中间部分
                 translate([clip_thick, clip_thick, -0.5])
                     cuboid([chip_size[0], chip_size[1], chip_size[2] + 1], anchor=[-1, -1, -1]);
-                // 四个边
+                // 使用两个矩形剪切出四个边
                 translate([clip_thick + clip_length, -0.5, -0.5])
                             cuboid([chip_size[0]-2*clip_length, chip_size[1] + clip_thick*2 + 1, chip_size[2] + 1], anchor=[-1, -1, -1]);
 
@@ -125,4 +125,4 @@ module test(
 // );
 
 
-test(clip_thick=1.5, pos=[20,20,0]);
+four_corner_clips_new(clip_thick=1.5, pos=[20,20,0]);
