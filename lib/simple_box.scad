@@ -179,7 +179,14 @@ module rounded_cube(size, corner_radius, chamfer=0.5) {
     }
 }
 
-// 示例使用
+
+module simple_box_new(){
+
+    // 
+
+}
+
+
 
 simple_box(
     size = [100, 60, 40],
