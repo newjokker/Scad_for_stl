@@ -22,6 +22,12 @@ module type_c_hole(offset=0.2, depth=3, pos=[0, 0, 0]) {
     }
 }
 
+// 输入电线的尺寸，得到对应的电线孔
+module wire_hole(r=3, depth=3, pos=[0, 0, 0]){
+    
+}
+
+
 
 type_c_hole(offset=0.2, depth=1, pos=[10,10,1]);
 

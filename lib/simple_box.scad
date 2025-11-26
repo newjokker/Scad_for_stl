@@ -180,26 +180,45 @@ module rounded_cube(size, corner_radius, chamfer=0.5) {
 }
 
 
-module simple_box_new(){
+module simple_box_new(
+    box_size=[100, 60, 40],     // 盒子的大小，包括墙的部分
+    wall_thickness=2,           // 墙的厚度
+    corner_radius=0, 
+    pos=[0, 0, 0]){
 
     // 
-
+    translate(pos)
+    {
+        // 物体移动到中心
+        translate([-box_size[0]/2, -box_size[1]/2, 0])
+        {
+            difference(){
+                // 外边的立方体
+                cuboid(box_size, anchor=[-1, -1, -1]);
+                // 盒子里面的立方体
+                translate([wall_thickness, wall_thickness, wall_thickness])
+                    cuboid([box_size[0] - 2*wall_thickness, box_size[1] - 2*wall_thickness, box_size[2] - wall_thickness + 0.01], anchor=[-1, -1, -1]);
+            }
+        }
+    }
 }
 
 
+// simple_box(
+//     size = [100, 60, 40],
+//     wall_thickness = 2,
+//     corner_radius = 5,
+//     holes = [
+//         // Type-C 接口在前面板
+//         ["type_c", 0, 0, 8.5, 3, "front"],
+//         // 圆孔在右侧
+//         ["circle", 10, 0, 5, "right"],
+//         // 圆孔在顶部
+//         ["circle", -10, 10, 3, "top"],
+//         // 圆孔在左侧
+//         ["circle", 0, -10, 4, "left"]
+//     ]
+// );
 
-simple_box(
-    size = [100, 60, 40],
-    wall_thickness = 2,
-    corner_radius = 5,
-    holes = [
-        // Type-C 接口在前面板
-        ["type_c", 0, 0, 8.5, 3, "front"],
-        // 圆孔在右侧
-        ["circle", 10, 0, 5, "right"],
-        // 圆孔在顶部
-        ["circle", -10, 10, 3, "top"],
-        // 圆孔在左侧
-        ["circle", 0, -10, 4, "left"]
-    ]
-);
+simple_box_new(box_size=[80, 50, 20], wall_thickness=1, pos=[0,0, 20]);
+
