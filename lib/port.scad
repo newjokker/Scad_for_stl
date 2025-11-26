@@ -29,5 +29,5 @@ module wire_hole(r=3, depth=3, pos=[0, 0, 0]){
 
 
 
-type_c_hole(offset=0.2, depth=1, pos=[10,10,1]);
+// type_c_hole(offset=0.2, depth=1, pos=[10,10,1]);
 
