@@ -10,9 +10,9 @@ include <BOSL2/std.scad>
 box_size=[80, 35, 10];                              // 盒子的长宽
 wall_thickness = 1.5;                               // 盒子的厚度
 magnet_boss_diameter = 9.5;                         // 磁铁柱加强筋的直径
-chip_size_offset = 0.5
-mos_size = [32.8 + offset, 16.6 + offset, 2 + wall_thickness];        // mos管的尺寸
-esp32_c3_size = [22.76 + offset, 18.17 + offset, 2 + wall_thickness];    // esp32-c3 的尺寸
+chip_size_offset = 0.5;
+mos_size = [32.8 + chip_size_offset, 16.6 + chip_size_offset, 2 + wall_thickness];        // mos管的尺寸
+esp32_c3_size = [22.76 + chip_size_offset, 18.17 + chip_size_offset, 2 + wall_thickness];    // esp32-c3 的尺寸
 type_c_hole_height = wall_thickness + 3;            // typec 孔的中心点的高度
 
 // 盒子
