@@ -55,6 +55,7 @@ module magnet_holder(
     magnet_thickness,   // 磁铁的厚度
     holder_height,      // 托住磁铁部分的厚度
     wall_thickness = 2, // 有磁铁部分的墙厚度
+    boss_diameter = 5,   // 加强筋的直径
     fn = 60,            // 圆柱面分段数
     pos = [0, 0, 0]     // 放置位置
 ) {
@@ -62,9 +63,13 @@ module magnet_holder(
     translate(pos){
 
         difference(){
-            // 整体的柱子
-            cylinder(h=holder_height + magnet_thickness, r=(magnet_diameter + wall_thickness)/2 , anchor=DOWN);
-            
+            union(){
+                // 整体的柱子
+                cylinder(h=holder_height, r=max(magnet_diameter + wall_thickness, boss_diameter)/2, anchor=DOWN);
+                translate([0, 0, holder_height])
+                    cylinder(h=magnet_thickness, r=(magnet_diameter + wall_thickness)/2, anchor=DOWN);
+            }
+
             // 磁铁所在位置
             translate([0, 0, holder_height])
             cylinder(h=magnet_thickness + 0.01, r=magnet_diameter/2, anchor=DOWN);
@@ -81,7 +86,8 @@ module magnet_holder(
 magnet_holder(
     magnet_diameter = 6 + 0.3,
     magnet_thickness = 3,
-    holder_height = 0,    
+    holder_height = 3,    
     wall_thickness = 1,
+    boss_diameter = 8,
     pos = [0, 0, 0]       
 );
