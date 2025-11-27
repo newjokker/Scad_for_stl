@@ -140,6 +140,9 @@ module lid_new(
     plug_depth = 1,
     wall_thickness = 1,
     chamfer=0.5,
+    hand_width=8,
+    hand_height=3,
+    hand_direction="right",
     pos=[0,0,0]
 ){
 
@@ -149,6 +152,11 @@ module lid_new(
         translate([-lid_size[0]/2, -lid_size[1]/2, 0]){
             // 盖子的主体
             cuboid(lid_size, anchor=[-1, -1, -1]);
+
+            // 盖子的把手
+            translate([lid_size[0]/2 - hand_width/2, -hand_height, 0]){
+                cuboid([hand_width, hand_height, lid_size[2]], anchor=[-1, -1, -1]);
+            }
 
             // 公口部分
             difference(){
