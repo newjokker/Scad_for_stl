@@ -57,6 +57,7 @@ module magnet_holder(
     wall_thickness = 2, // 有磁铁部分的墙厚度
     boss_diameter = 5,   // 加强筋的直径
     fn = 60,            // 圆柱面分段数
+    show_magnet=false,
     pos = [0, 0, 0]     // 放置位置
 ) {
 
@@ -72,7 +73,13 @@ module magnet_holder(
 
             // 磁铁所在位置
             translate([0, 0, holder_height])
-            cylinder(h=magnet_thickness + 0.01, r=magnet_diameter/2, anchor=DOWN);
+                cylinder(h=magnet_thickness + 0.01, r=magnet_diameter/2, anchor=DOWN);
+        }
+
+        if(show_magnet){
+            color("red") # 
+            translate([0, 0, holder_height])
+                cylinder(h=magnet_thickness + 0.01, r=magnet_diameter/2, anchor=DOWN);
         }
     }
 }

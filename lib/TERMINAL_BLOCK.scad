@@ -23,6 +23,7 @@ module TERMINAL_BLOCK_B(pos=[0, 0, 0], show_chip=false, show_pins=false, pin_hei
 
             // 芯片
             if(show_chip){
+                color("green") # 
                 difference() {
                     cuboid(size, anchor = BOTTOM+LEFT+FRONT);
                     

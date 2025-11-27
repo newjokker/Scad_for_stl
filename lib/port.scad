@@ -23,11 +23,13 @@ module type_c_hole(offset=0.2, depth=3, pos=[0, 0, 0]) {
 }
 
 // 输入电线的尺寸，得到对应的电线孔
-module wire_hole(r=3, depth=3, pos=[0, 0, 0]){
-    
+module wire_hole(d=3, depth=3, pos=[0, 0, 0]){
+    cylinder(r=d/2, h=depth, anchor=DOWN);
 }
 
 
 
 // type_c_hole(offset=0.2, depth=1, pos=[10,10,1]);
 
+
+wire_hole(d=5, depth=2);
