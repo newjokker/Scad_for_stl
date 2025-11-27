@@ -3,7 +3,7 @@ include <BOSL2/std.scad>
 $fn = 24;
 
 // 简化版 Type-C 接口开孔模块
-module type_c_hole(offset=0.2, depth=3, pos=[0, 0, 0]) {
+module type_c_hole(offset=0.8, depth=3, pos=[0, 0, 0]) {
     
     // Type-C 接口标准尺寸
     hole_width = 8.4 + offset;                  // 标准宽度
