@@ -30,6 +30,9 @@ mos_pos = [18, -5, wall_thickness-0.05];                       // MOS 的位置
 esp32c3_pos = [-25,-5, wall_thickness-0.05];                   // 芯片板的位置
 terminal_pos = [0, 11, wall_thickness-0.01];    // 接线板的位置
 
+wire_hole_left_pos = [box_size[0]/2 - wall_thickness -0.01, -2.5, 5];    // 左边的电线孔的位置
+wire_hole_right_pos = [ box_size[0]/2 - wall_thickness -0.01, -8, 5];    // 左边的电线孔的位置
+
 magnet_down_height = 1.8;               // 下面磁铁的支架的高度
 magnet_upper_height = box_size[2] - wall_thickness - magnet_down_height - magnet_thickness*2 -0.3;       // 上面磁铁的支架的高度
 
@@ -53,15 +56,14 @@ module box_A(){
                 type_c_hole( offset=0.8, depth=wall_thickness+0.02, pos=[0,0,0]);
 
         // 电线孔
-        translate([ box_size[0]/2 - wall_thickness -0.01, -2, 5])
+        translate(wire_hole_left_pos)
             rotate([0, 90, 0])
                 wire_hole(d=3, depth=wall_thickness+0.02, pos=[0,0,0]);
 
-        translate([ box_size[0]/2 - wall_thickness -0.01, -9, 5])
+        translate(wire_hole_right_pos)
             rotate([0, 90, 0])
                 wire_hole(d=3, depth=wall_thickness+0.02, pos=[0,0,0]);
     }
-
 }
 
 module magnet_down(){
@@ -109,7 +111,7 @@ module lid_A(){
         lid_size=[box_size[0], box_size[1], wall_thickness],
         plug_thickness=lid_plug_thickness,
         plug_depth=lid_plug_depth,
-        wall_thickness=wall_thickness+0.2,
+        wall_thickness=wall_thickness+0.1,
         chamfer=0.4,
         hand_direction="left",
         pos=[0, 0, 0]
