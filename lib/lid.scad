@@ -149,13 +149,21 @@ module lid_new(
     translate(pos){
 
         // 移动到中心点
-        translate([-lid_size[0]/2, -lid_size[1]/2, 0]){
+        translate([-lid_size[0]/2, -lid_size[1]/2, 0])
+        {
             // 盖子的主体
-            cuboid(lid_size, anchor=[-1, -1, -1]);
+            cuboid(lid_size, anchor=[-1, -1, -1], chamfer=chamfer);
 
             // 盖子的把手
-            translate([lid_size[0]/2 - hand_width/2, -hand_height, 0]){
-                cuboid([hand_width, hand_height, lid_size[2]], anchor=[-1, -1, -1]);
+            if(hand_direction == "right"){
+                translate([lid_size[0]/2 - hand_width/2, -hand_height+1, 0]){
+                    cuboid([hand_width, hand_height, lid_size[2]], chamfer=chamfer, anchor=[-1, -1, -1], edges=[FRONT]);
+                }
+            }
+            else{
+                translate([lid_size[0]/2 - hand_width/2, lid_size[1] -1, 0]){
+                    cuboid([hand_width, hand_height, lid_size[2]], chamfer=chamfer, anchor=[-1, -1, -1], edges=[BACK]);
+                }  
             }
 
             // 公口部分
@@ -208,6 +216,8 @@ lid_new(
     plug_depth=1.5,
     wall_thickness=1,
     chamfer=0.5,
+    // hand_direction="right",
+    hand_direction="left",
     pos=[0, 0, 5]
     );
 

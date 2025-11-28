@@ -109,8 +109,9 @@ module lid_A(){
         lid_size=[box_size[0], box_size[1], wall_thickness],
         plug_thickness=lid_plug_thickness,
         plug_depth=lid_plug_depth,
-        wall_thickness=wall_thickness,
-        chamfer=0.5,
+        wall_thickness=wall_thickness+0.2,
+        chamfer=0.4,
+        hand_direction="left",
         pos=[0, 0, 0]
         );
 
