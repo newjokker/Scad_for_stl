@@ -48,7 +48,7 @@ magnet_upper_pos = [magnet_down_pos[0], -magnet_down_pos[1], wall_thickness - 0.
 module box_A(){
     // 盒子主体
     difference(){
-        simple_box_new(box_size=box_size, wall_thickness=wall_thickness, pos=[0,0,0]);
+        simple_box(box_size=box_size, wall_thickness=wall_thickness, pos=[0,0,0]);
         
         // typec 孔
         translate([-box_size[0]/2- 0.01, -5, type_c_hole_height])
@@ -84,13 +84,13 @@ module clip_A(){
     // 芯片的支架
     union(){
         // mos 管
-        four_corner_clips_new(chip_size = mos_size, 
+        four_corner_clips(chip_size = mos_size, 
                     clip_length=clip_length,
                     clip_thick=clip_thick,
                     pos=mos_pos, 
                     show_chip=false);
         // esp32-c3 supermini
-        four_corner_clips_new(chip_size = esp32_c3_size, 
+        four_corner_clips(chip_size = esp32_c3_size, 
                     clip_length=clip_length,
                     clip_thick=clip_thick,
                     pos=esp32c3_pos, 
@@ -107,7 +107,7 @@ module clip_A(){
 module lid_A(){
 
     // 盖子
-    lid_new(
+    lid(
         lid_size=[box_size[0], box_size[1], wall_thickness],
         plug_thickness=lid_plug_thickness,
         plug_depth=lid_plug_depth,
