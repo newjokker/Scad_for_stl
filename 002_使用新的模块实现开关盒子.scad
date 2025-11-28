@@ -50,7 +50,7 @@ module box_A(){
         // typec 孔
         translate([-box_size[0]/2- 0.01, -5, type_c_hole_height])
             rotate([90, 0, 90])
-                type_c_hole( offset=0.2, depth=wall_thickness+0.02, pos=[0,0,0]);
+                type_c_hole( offset=0.8, depth=wall_thickness+0.02, pos=[0,0,0]);
 
         // 电线孔
         translate([ box_size[0]/2 - wall_thickness -0.01, -3, 6])
