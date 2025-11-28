@@ -53,11 +53,11 @@ module box_A(){
                 type_c_hole( offset=0.8, depth=wall_thickness+0.02, pos=[0,0,0]);
 
         // 电线孔
-        translate([ box_size[0]/2 - wall_thickness -0.01, -3, 6])
+        translate([ box_size[0]/2 - wall_thickness -0.01, -2, 5])
             rotate([0, 90, 0])
                 wire_hole(d=3, depth=wall_thickness+0.02, pos=[0,0,0]);
 
-        translate([ box_size[0]/2 - wall_thickness -0.01, -8, 6])
+        translate([ box_size[0]/2 - wall_thickness -0.01, -9, 5])
             rotate([0, 90, 0])
                 wire_hole(d=3, depth=wall_thickness+0.02, pos=[0,0,0]);
     }
