@@ -1,5 +1,6 @@
 
-import("./stls/18650_battery_shell.stl");
+%import("./stls/18650_battery_shell.stl");
+
 
 
 // 展示电池电量的指示灯 + 指示灯的开关
