@@ -2,17 +2,22 @@ include <BOSL2/std.scad>
 
 $fn = 36;
 
-module TERMINAL_BLOCK_A() {
+module TERMINAL_BLOCK_A(pos=[0,0,0]) {
     size=[31, 12, 1.5];
     hole_diameter = 3;
     
-    difference() {
-        cuboid(size, anchor = BOTTOM+LEFT+FRONT);
-        
-        // 自动计算中心位置
-        translate([9.3 + hole_diameter/2, size[1]/2, size[2]/2])
-        cylinder(h = size[2] + 1, d = hole_diameter, center = true, $fn = 36);
+    translate(pos){
+        translate([-size[0]/2, -size[1]/2, 0]){
+            difference() {
+                cuboid(size, anchor = [-1,-1,-1]);
+                
+                // 自动计算中心位置
+                translate([9.3 + hole_diameter/2, size[1]/2, size[2]/2])
+                cylinder(h = size[2] + 1, d = hole_diameter, center = true);
+            }
+        }
     }
+
 }
 
 module TERMINAL_BLOCK_B(pos=[0, 0, 0], show_chip=false, show_pins=false, pin_height=3, offset=0.2) {
@@ -54,20 +59,136 @@ module TERMINAL_BLOCK_B(pos=[0, 0, 0], show_chip=false, show_pins=false, pin_hei
 
 }
 
-module TERMINAL_BLOCK_C() {
+module TERMINAL_BLOCK_C(pos=[0,0,0]) {
     size=[25, 8.15, 1.5]; hole_diameter = 3; hole_disstance = 17.2 + hole_diameter; hole_start = 1;
     
-    difference() {
-        cuboid(size, anchor = BOTTOM+LEFT+FRONT);
-        
-        // 一个洞
-        translate([hole_start+ hole_diameter/2, size[1]/2, size[2]/2])
-        cylinder(h = size[2] + 1, d = hole_diameter, center = true, $fn = 36);
-        
-        // 另外一个洞
-        translate([hole_start + hole_disstance + hole_diameter/2, size[1]/2, size[2]/2])
-            cylinder(h = size[2] + 1, d = hole_diameter, center = true, $fn = 36);
+    translate(pos){
+        translate([-size[0]/2, -size[1]/2, 0]){
+            difference() {
+                cuboid(size, anchor = BOTTOM+LEFT+FRONT);
+                
+                // 一个洞
+                translate([hole_start+ hole_diameter/2, size[1]/2, size[2]/2])
+                cylinder(h = size[2] + 1, d = hole_diameter, center = true);
+                
+                // 另外一个洞
+                translate([hole_start + hole_disstance + hole_diameter/2, size[1]/2, size[2]/2])
+                    cylinder(h = size[2] + 1, d = hole_diameter, center = true);
+            }
+        }
     }
+}
+
+module TP4056(pos=[0,0,0], show_clip=false){
+    height = 17;
+    width = 28;
+    thick = 2;
+
+    translate(pos){
+        translate([-width/2, -height/2, 0]){
+            cuboid([width, height, thick], anchor = [-1,-1,-1]);
+        }
+        translate([0,0,thick + 0.01])
+        color("black") {
+            text("TP4056", size = 3, halign = "center", valign = "center");
+        }
+    } 
+}
+
+module LD2401(pos=[0,0,0], show_clip=false){
+    height = 18;
+    width = 22;
+    thick = 2;
+
+    translate(pos){
+        translate([-width/2, -height/2, 0]){
+            cuboid([width, height, thick], anchor = [-1,-1,-1]);
+        }
+        translate([0,0,thick + 0.01])
+        color("black") {
+            text("LD2401", size = 3, halign = "center", valign = "center");
+        }
+    } 
+}
+
+module DCDC_A(pos, show_clip=true){
+    height = 12.6;
+    width = 15;
+    thick = 2;
+
+    translate(pos){
+        translate([-width/2, -height/2, 0]){
+            cuboid([width, height, thick], anchor = [-1,-1,-1]);
+        }
+        translate([0,0,thick + 0.01])
+        color("black") {
+            text("DCDC_A", size = 2.3, halign = "center", valign = "center");
+        }
+    } 
+}
+
+module Battery_18650(pos){
+    // 18650 电池
+    r = 18.15;
+    height = 65;
+
+    translate(pos){
+        cylinder(r=r, h=height, anchor=[0,0,-1]);
+    }
+
+}
+
+module BatteryLevelIndicator(pos){
+    // 电池电量指示灯
+    
+    width = 9.5;
+    height = 5;
+    thick = 2;
+
+    led_width = 6;      // 4 个 显示的 led 灯的宽度 和 高度 
+    led_height = 1.9;    // 
+
+
+    translate(pos){
+        translate([-width/2, -height/2, 0]){
+            difference(){
+                cuboid([width, height, thick], anchor=[-1,-1,-1]);
+                translate([width/2, height/2, -0.01]){
+                    cuboid([width - 2, led_height, thick + 5], anchor=[0,0,0]);
+                }
+            }
+        }
+    } 
+} 
+
+module ESP32_C3_supermini(pos=[0, 0, 0]){
+    width = 1;
+    height = 1;
+    thick = 2;
+    translate(pos){
+        translate([-width/2, -height/2, 0]){
+            cuboid([width, height, thick], anchor = [-1,-1,-1]);
+        }
+        translate([0,0,thick + 0.01])
+        color("black") {
+            text("ESP_MINI", size = 2.3, halign = "center", valign = "center");
+        }
+    } 
+}
+
+module ESP32_C3_supermini_pro(){
+    width = 1;
+    height = 1;
+    thick = 2;
+    translate(pos){
+        translate([-width/2, -height/2, 0]){
+            cuboid([width, height, thick], anchor = [-1,-1,-1]);
+        }
+        translate([0,0,thick + 0.01])
+        color("black") {
+            text("ESP_MINI_PRO", size = 2.3, halign = "center", valign = "center");
+        }
+    } 
 }
 
 
@@ -92,4 +213,18 @@ module TERMINAL_BLOCK_C() {
 // translate([40, -5, 0]) linear_extrude(1) text("B", size=3);
 // translate([70, -5, 0]) linear_extrude(1) text("C", size=3);
 
-TERMINAL_BLOCK_B(pos=[0, 0, 0], show_chip=false, show_pins=true, pin_height=3);
+// TERMINAL_BLOCK_B(pos=[0, 0, 0], show_chip=false, show_pins=true, pin_height=3);
+
+TP4056();
+
+LD2401(pos=[30, 0, 0]);
+
+TERMINAL_BLOCK_A(pos=[60, 0, 0]);
+
+DCDC_A(pos=[0, 30, 0]);
+
+BatteryLevelIndicator(pos=[30, 30, 0]);
+
+Battery_18650(pos = [60, 30, 0]);
+
+TERMINAL_BLOCK_C(pos=[0, 60, 0]);
