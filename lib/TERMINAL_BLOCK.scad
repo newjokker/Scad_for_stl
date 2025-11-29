@@ -129,11 +129,11 @@ module DCDC_A(pos, show_clip=true){
 
 module Battery_18650(pos){
     // 18650 电池
-    r = 18.15;
+    d = 18.15;
     height = 65;
 
     translate(pos){
-        cylinder(r=r, h=height, anchor=[0,0,-1]);
+        cylinder(r=d/2, h=height, anchor=[0,0,-1]);
     }
 
 }
