@@ -132,10 +132,10 @@ module Battery_18650(pos){
     d = 18.15;
     height = 65;
 
-    translate(pos){
-        cylinder(r=d/2, h=height, anchor=[0,0,-1]);
-    }
-
+    translate(pos)
+        translate([0, 0, d/2])
+            rotate([0, 90, 0])
+                cylinder(r=d/2, h=height, anchor=[0,0,0]);
 }
 
 module BatteryLevelIndicator(pos){
@@ -215,16 +215,16 @@ module ESP32_C3_supermini_pro(){
 
 // TERMINAL_BLOCK_B(pos=[0, 0, 0], show_chip=false, show_pins=true, pin_height=3);
 
-TP4056();
+// TP4056();
 
-LD2401(pos=[30, 0, 0]);
+// LD2401(pos=[30, 0, 0]);
 
-TERMINAL_BLOCK_A(pos=[60, 0, 0]);
+// TERMINAL_BLOCK_A(pos=[60, 0, 0]);
 
-DCDC_A(pos=[0, 30, 0]);
+// DCDC_A(pos=[0, 30, 0]);
 
-BatteryLevelIndicator(pos=[30, 30, 0]);
+// BatteryLevelIndicator(pos=[30, 30, 0]);
 
-Battery_18650(pos = [60, 30, 0]);
+Battery_18650(pos = [0, 0, 0]);
 
-TERMINAL_BLOCK_C(pos=[0, 60, 0]);
+// TERMINAL_BLOCK_C(pos=[0, 60, 0]);
