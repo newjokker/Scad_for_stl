@@ -8,7 +8,7 @@ module four_corner_clips(
     clip_thick=1.5,              // 卡扣的厚度
     show_chip = false,          // 
     show_clip = true,          // 
-    pos=[0,0,0]                 // 中心点所在的位置
+    pos=[0,0,0],                 // 中心点所在的位置
 ){
     
     if(show_clip)
