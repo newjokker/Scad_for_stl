@@ -14,7 +14,7 @@ module A(){
         simple_box(
             box_size=[battery_length, battery_width, battery_height], 
             wall_thickness=2, 
-            chamfer=0.5);
+            chamfer=0.2);
 }
 
 module B(){
@@ -37,7 +37,7 @@ module C(){
     difference() {
         cuboid([1.5, 19, 18/2], anchor=[-1,-1,-1]);
 
-        r = 20/2;   // 切割圆的半径
+        r = 19.5/2;   // 切割圆的半径
         translate([-0.01, 19/2, r])
             rotate([0, 90, 0])
                 cylinder(r=r, h=2); 
