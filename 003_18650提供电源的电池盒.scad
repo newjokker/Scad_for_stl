@@ -3,9 +3,17 @@ use <lib/simple_box.scad>;
 use <lib/corner_clips.scad>;
 use <lib/bolt_post.scad>;
 use <lib/lid.scad>;
-use <lib/TERMINAL_BLOCK.scad>;
+include <lib/TERMINAL_BLOCK.scad>;
 use <lib/port.scad>;
+use <lib/utils.scad>;
 include <BOSL2/std.scad>
+
+wall_thickness = 2;         // 电池盒壁厚
+bottom_thickness = 1.5;     // 电池盒底部厚度
+lid_thickness = 1.5;        // 电池盒盖子厚度
+chip_offset = 0.3;
+show_chip = true;
+
 
 
 module Battery(pos=[0,0,0]){
@@ -15,15 +23,13 @@ module Battery(pos=[0,0,0]){
     height = 18;
 
     translate(pos){
-        translate([-length/2, -width/2, 0]){
-            union(){
-                import("./stls/18650_battery_shell.stl");
-                color("red")
+
+        import("./stls/18650_battery_shell.stl");
+            if(show_chip){
+                color("red") #
                     Battery_18650(pos = [38,18.15/2 + 0.5 + 2, 1.5]);
             }
-        }
     }
-
 }
 
 
@@ -52,3 +58,31 @@ module Battery(pos=[0,0,0]){
 
 
 Battery();
+
+// TP4056
+four_corner_clips(chip_size = size_offset(TP4056_size, chip_offset), pos=[17, -14, 0], show_chip=show_chip, clip_thick=1.5, clip_length=2);
+
+// DCDC_A
+four_corner_clips(chip_size = size_offset(DCDC_A_size, chip_offset), pos=[47, -10, 0], show_chip=show_chip, clip_thick=1.5, clip_length=2);
+
+// 接线柱
+translate([67, -25, 0])
+    rotate([0, 0, -90])
+        TERMINAL_BLOCK_A(show_chip=show_chip, pin_height=6);
+
+// ESP32_C3_supermini
+four_corner_clips(chip_size = size_offset(ESP32_C3_supermini_size, chip_offset), pos=[17, -38, 0], show_chip=show_chip, clip_thick=1.5, clip_length=2);
+
+// 毫米波雷达
+four_corner_clips(chip_size = size_offset(LD2401_size, chip_offset), pos=[45, -38, 0], show_chip=show_chip, clip_thick=1.5, clip_length=2);
+
+// 磁力柱
+magnet_holder(
+    magnet_diameter = 6,
+    magnet_thickness = 3,
+    holder_height = 4,    
+    wall_thickness = 2,
+    boss_diameter = 9,
+    show_magnet=show_chip,
+    pos = [43, -23, 0]       
+);

@@ -1,22 +1,36 @@
 include <BOSL2/std.scad>
 
+
 $fn = 36;
 
-module TERMINAL_BLOCK_A(pos=[0,0,0]) {
+module TERMINAL_BLOCK_A(pos=[0,0,0], show_chip=false, pin_height=3) {
     size=[31, 12, 1.5];
     hole_diameter = 3;
     
+
     translate(pos){
         translate([-size[0]/2, -size[1]/2, 0]){
-            difference() {
-                cuboid(size, anchor = [-1,-1,-1]);
-                
-                // 自动计算中心位置
-                translate([9.3 + hole_diameter/2, size[1]/2, size[2]/2])
-                cylinder(h = size[2] + 1, d = hole_diameter, center = true);
+
+            color("red") #
+                if(show_chip){
+                    difference() {
+                        cuboid(size, anchor = [-1,-1,-1]);
+                        
+                        // 自动计算中心位置
+                        translate([9.3 + hole_diameter/2, size[1]/2, size[2]/2])
+                        cylinder(h = size[2] + 1, d = hole_diameter, center = true);
+                    }
+
             }
+
+            translate([9.3 + hole_diameter/2, size[1]/2, -0.01])
+                cylinder(h = pin_height, d = hole_diameter, anchor=[0,0,-1]);
+
         }
+
+
     }
+    
 
 }
 
@@ -79,10 +93,13 @@ module TERMINAL_BLOCK_C(pos=[0,0,0]) {
     }
 }
 
+TP4056_size = [28, 17, 2];
+
 module TP4056(pos=[0,0,0], show_clip=false){
-    height = 17;
-    width = 28;
-    thick = 2;
+
+    height = TP4056_size[1];
+    width = TP4056_size[0];
+    thick = TP4056_size[2];
 
     translate(pos){
         translate([-width/2, -height/2, 0]){
@@ -95,10 +112,12 @@ module TP4056(pos=[0,0,0], show_clip=false){
     } 
 }
 
+LD2401_size = [22, 18, 2];
+
 module LD2401(pos=[0,0,0], show_clip=false){
-    height = 18;
-    width = 22;
-    thick = 2;
+    height = LD2401_size[1];
+    width = LD2401_size[0];
+    thick = LD2401_size[2];
 
     translate(pos){
         translate([-width/2, -height/2, 0]){
@@ -111,10 +130,12 @@ module LD2401(pos=[0,0,0], show_clip=false){
     } 
 }
 
+DCDC_A_size = [15, 12.6, 2];
+
 module DCDC_A(pos, show_clip=true){
-    height = 12.6;
-    width = 15;
-    thick = 2;
+    height = DCDC_A_size[1];
+    width = DCDC_A_size[0];
+    thick = DCDC_A_size[2];
 
     translate(pos){
         translate([-width/2, -height/2, 0]){
@@ -161,10 +182,12 @@ module BatteryLevelIndicator(pos){
     } 
 } 
 
+ESP32_C3_supermini_size = [23, 18.5, 2];
+
 module ESP32_C3_supermini(pos=[0, 0, 0]){
-    width = 1;
-    height = 1;
-    thick = 2;
+    width = ESP32_C3_supermini_size[0];
+    height = ESP32_C3_supermini_size[1];
+    thick = ESP32_C3_supermini_size[2];
     translate(pos){
         translate([-width/2, -height/2, 0]){
             cuboid([width, height, thick], anchor = [-1,-1,-1]);
@@ -175,6 +198,8 @@ module ESP32_C3_supermini(pos=[0, 0, 0]){
         }
     } 
 }
+
+
 
 module ESP32_C3_supermini_pro(){
     width = 1;
@@ -225,6 +250,6 @@ module ESP32_C3_supermini_pro(){
 
 // BatteryLevelIndicator(pos=[30, 30, 0]);
 
-Battery_18650(pos = [0, 0, 0]);
+// Battery_18650(pos = [0, 0, 0]);
 
 // TERMINAL_BLOCK_C(pos=[0, 60, 0]);
