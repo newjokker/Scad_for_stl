@@ -7,12 +7,11 @@ module TERMINAL_BLOCK_A(pos=[0,0,0], show_chip=false, pin_height=3) {
     size=[31, 12, 1.5];
     hole_diameter = 3;
     
-
     translate(pos){
         translate([-size[0]/2, -size[1]/2, 0]){
-
-            color("red") #
-                if(show_chip){
+            color("red") # 
+            
+                if(true){
                     difference() {
                         cuboid(size, anchor = [-1,-1,-1]);
                         
@@ -20,18 +19,13 @@ module TERMINAL_BLOCK_A(pos=[0,0,0], show_chip=false, pin_height=3) {
                         translate([9.3 + hole_diameter/2, size[1]/2, size[2]/2])
                         cylinder(h = size[2] + 1, d = hole_diameter, center = true);
                     }
-
-            }
+                }
+            
 
             translate([9.3 + hole_diameter/2, size[1]/2, -0.01])
                 cylinder(h = pin_height, d = hole_diameter, anchor=[0,0,-1]);
-
         }
-
-
     }
-    
-
 }
 
 module TERMINAL_BLOCK_B(pos=[0, 0, 0], show_chip=false, show_pins=false, pin_height=3, offset=0.2) {
@@ -253,3 +247,8 @@ module ESP32_C3_supermini_pro(){
 // Battery_18650(pos = [0, 0, 0]);
 
 // TERMINAL_BLOCK_C(pos=[0, 60, 0]);
+
+
+
+
+// TERMINAL_BLOCK_A(show_chip=true, pin_height=6);

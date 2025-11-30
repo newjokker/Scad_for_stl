@@ -14,6 +14,9 @@ lid_thickness = 1.5;        // 电池盒盖子厚度
 chip_offset = 0.3;
 show_chip = true;
 
+clip_length = 4;                    // 支架的长度
+clip_thick = 2;                     // 支架的厚度
+clip_height = 4;                    // 支架的高度
 
 
 module Battery(pos=[0,0,0]){
@@ -42,47 +45,39 @@ module Battery(pos=[0,0,0]){
 // 将人在传感器信息上传到网络的 esp32-c3 模块
 
 
-// TP4056();
-
-// LD2401(pos=[30, 0, 0]);
-
-// TERMINAL_BLOCK_A(pos=[60, 0, 0]);
-
-// DCDC_A(pos=[0, 30, 0]);
-
-// BatteryLevelIndicator(pos=[30, 30, 0]);
-
-
-
-// TERMINAL_BLOCK_C(pos=[0, 60, 0]);
-
-
+// 电池部分
 Battery();
 
 // TP4056
-four_corner_clips(chip_size = size_offset(TP4056_size, chip_offset), pos=[17, -14, 0], show_chip=show_chip, clip_thick=1.5, clip_length=2);
+four_corner_clips(chip_size = size_offset(TP4056_size, chip_offset), pos=[17, -14, wall_thickness-0.01], show_chip=show_chip, clip_thick=clip_thick, clip_length=clip_length);
 
 // DCDC_A
-four_corner_clips(chip_size = size_offset(DCDC_A_size, chip_offset), pos=[47, -10, 0], show_chip=show_chip, clip_thick=1.5, clip_length=2);
+four_corner_clips(chip_size = size_offset(DCDC_A_size, chip_offset), pos=[47, -10, wall_thickness-0.01], show_chip=show_chip, clip_thick=clip_thick, clip_length=clip_length);
 
 // 接线柱
-translate([67, -25, 0])
+translate([67, -25, wall_thickness-0.01]){
     rotate([0, 0, -90])
-        TERMINAL_BLOCK_A(show_chip=show_chip, pin_height=6);
+        TERMINAL_BLOCK_A(show_chip=true, pin_height=6);
+}
+
 
 // ESP32_C3_supermini
-four_corner_clips(chip_size = size_offset(ESP32_C3_supermini_size, chip_offset), pos=[17, -38, 0], show_chip=show_chip, clip_thick=1.5, clip_length=2);
+four_corner_clips(chip_size = size_offset(ESP32_C3_supermini_size, chip_offset), pos=[17, -38, wall_thickness-0.01], show_chip=show_chip, clip_thick=clip_thick, clip_length=clip_length);
 
 // 毫米波雷达
-four_corner_clips(chip_size = size_offset(LD2401_size, chip_offset), pos=[45, -38, 0], show_chip=show_chip, clip_thick=1.5, clip_length=2);
+four_corner_clips(chip_size = size_offset(LD2401_size, chip_offset), pos=[45, -38, wall_thickness-0.01], show_chip=show_chip, clip_thick=clip_thick, clip_length=clip_length);
 
 // 磁力柱
 magnet_holder(
     magnet_diameter = 6,
     magnet_thickness = 3,
-    holder_height = 4,    
+    holder_height = 10,    
     wall_thickness = 2,
     boss_diameter = 9,
     show_magnet=show_chip,
-    pos = [43, -23, 0]       
+    pos = [43, -23, wall_thickness-0.01]       
 );
+
+// 外壳
+box_size = [77, 54, 20];
+simple_box(box_size=box_size, pos=[box_size[0]/2, -box_size[1]/2], chamfer=0, wall_thickness=wall_thickness);
