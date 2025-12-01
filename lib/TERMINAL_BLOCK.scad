@@ -11,7 +11,7 @@ module TERMINAL_BLOCK_A(pos=[0,0,0], show_chip=false, pin_height=3) {
         translate([-size[0]/2, -size[1]/2, 0]){
             color("red") # 
             
-                if(true){
+                if(show_chip){
                     difference() {
                         cuboid(size, anchor = [-1,-1,-1]);
                         

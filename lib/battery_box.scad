@@ -16,7 +16,7 @@ module A(){
         simple_box(
             box_size=[battery_length, battery_width, battery_height], 
             wall_thickness=2, 
-            chamfer=0.2);
+            chamfer=0);
 }
 
 module B(){
