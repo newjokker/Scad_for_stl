@@ -1,6 +1,7 @@
 
 
 use <simple_box.scad>;
+use <port.scad>;
 include <BOSL2/std.scad>;
 
 $fn=60;
@@ -79,9 +80,42 @@ module battery_box(){
 
     // 支撑部分
     translate([wall_thickness + 0.7 + 0.8 + 13.5, wall_thickness, wall_thickness])
-        C();
+    {
+        difference(){
+            {
+                // 支撑
+                C();
+                
+                // 开孔
+                translate([-1, 1.5, 1.5])
+                    rotate([0, 90, 0])
+                        wire_hole(d=1.5, depth=5);
+                
+                translate([-1, battery_width -1.5 - 2 * wall_thickness, 1.5])
+                    rotate([0, 90, 0])
+                        wire_hole(d=1.5, depth=5);
+            }
+        }
+    }
 
     translate([battery_length - wall_thickness- 0.7 - 0.8 - 13.5 -1.5, wall_thickness, wall_thickness])
-        C();
+    {
+        difference(){
+            {
+                // 支撑
+                C();
+                
+                // 开孔
+                translate([-1, 1.5, 1.5])
+                    rotate([0, 90, 0])
+                        wire_hole(d=1.5, depth=5);
+                
+                translate([-1, battery_width -1.5 - 2 * wall_thickness, 1.5])
+                    rotate([0, 90, 0])
+                        wire_hole(d=1.5, depth=5);
+            }
+        }
+    }
+
 }
 

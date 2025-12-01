@@ -39,7 +39,18 @@ module Battery(pos=[0,0,0]){
 }
 
 // 电池部分
-Battery(pos=[0,  0, 0]);
+difference(){
+    Battery(pos=[0,  0, 0]);
+
+    // 电线孔
+    translate([6, 3, 2 + box_size[2]/2])
+        rotate([90,0,0])
+            wire_hole(d=3, depth=6, pos=[0, 0, 0]);
+
+    translate([13, 3, 2 + box_size[2]/2])
+        rotate([90,0,0])
+            wire_hole(d=3, depth=6, pos=[0, 0, 0]);
+}
 
 // TP4056
 four_corner_clips(chip_size = size_offset(TP4056_size, chip_offset), pos=[17, -14, wall_thickness-0.01], show_chip=show_chip, clip_thick=clip_thick, clip_length=clip_length);
@@ -64,7 +75,7 @@ four_corner_clips(chip_size = size_offset(LD2401_size, chip_offset), pos=[45, -3
 magnet_holder(
     magnet_diameter = 6,
     magnet_thickness = 3,
-    holder_height = 3,    
+    holder_height = 2,    
     wall_thickness = 2,
     boss_diameter = 9,
     show_magnet=show_chip,
@@ -76,10 +87,21 @@ difference(){
     // 内部空间
     simple_box(box_size=box_size, pos=[box_size[0]/2, -box_size[1]/2], chamfer=0, wall_thickness=wall_thickness);
 
+    // Type-C 开孔
     rotate([90,0,90])
-        type_c_hole(offset=0.8, depth=4, pos=[-14, wall_thickness + 2, -1]);
+        type_c_hole(offset=0.8, depth=4, pos=[-14, wall_thickness + 3, -1]);
+
+    // 电线孔
+    translate([6, 3, 2 + box_size[2]/2])
+        rotate([90,0,0])
+            wire_hole(d=3, depth=6, pos=[0, 0, 0]);
+
+    translate([13, 3, 2 + box_size[2]/2])
+        rotate([90,0,0])
+            wire_hole(d=3, depth=6, pos=[0, 0, 0]);
 
 }
+
 
 // 现在人在传感器只能输入高压低压，但是如何让 esp32 状态改变之后再去发送数据，这样是不是要一直开着 esp32 
 
