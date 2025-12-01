@@ -33,7 +33,7 @@ module Battery(pos=[0,0,0]){
         battery_box();
             if(show_chip){
                 color("red") #
-                    Battery_18650(pos = [38,18.15/2 + 0.5 + 2, 1.5]);
+                    Battery_18650(pos = [38, 18.15/2 + 0.5 + 2, 1.5]);
             }
     }
 }
