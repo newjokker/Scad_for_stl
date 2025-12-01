@@ -133,12 +133,16 @@ difference(){
 
 // translate([0, -box_size[1], box_size[2] + 1.5]){
 //     rotate([180, 0, 0]){
+//         lid_A();
+//     }
+// }
 
-translate([0, 78, 0]){
-    rotate([0, 0, 0]){
-        lid_A();
-    }
-}
+
+// translate([0, 78, 0]){
+//     rotate([0, 0, 0]){
+//         lid_A();
+//     }
+// }
 
 
 
