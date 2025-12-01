@@ -38,6 +38,33 @@ module Battery(pos=[0,0,0]){
     }
 }
 
+module lid_A(){
+    translate([box_size[0]/2, -box_size[1]/2, 0]){
+        rotate([0, 0, 0]){
+            union(){
+                lid(
+                    lid_size=[box_size[0], box_size[1], 1.5],
+                    plug_thickness=1.5,
+                    plug_depth=1.5,
+                    wall_thickness=wall_thickness + 0.1,  // 盖子内侧稍微大一点点，确保能盖上
+                    chamfer=0.1,
+                    hand_direction="left"
+                    );
+            }
+        }
+    }
+
+    magnet_holder(
+        magnet_diameter = 6,
+        magnet_thickness = 2,
+        holder_height = 1,    
+        wall_thickness = 2,
+        boss_diameter = 9,
+        show_magnet=show_chip,
+        pos = [45.5, -(box_size[1]-23.5), wall_thickness-0.01]       
+    );
+}
+
 // 电池部分
 difference(){
     Battery(pos=[0,  0, 0]);
@@ -75,7 +102,7 @@ four_corner_clips(chip_size = size_offset(LD2401_size, chip_offset), pos=[45, -3
 magnet_holder(
     magnet_diameter = 6,
     magnet_thickness = 3,
-    holder_height = 2,    
+    holder_height = 1.3,    
     wall_thickness = 2,
     boss_diameter = 9,
     show_magnet=show_chip,
@@ -102,10 +129,16 @@ difference(){
 
 }
 
+// 盖子
 
-// 现在人在传感器只能输入高压低压，但是如何让 esp32 状态改变之后再去发送数据，这样是不是要一直开着 esp32 
+// translate([0, -box_size[1], box_size[2] + 1.5]){
+//     rotate([180, 0, 0]){
 
-// 
+translate([0, 78, 0]){
+    rotate([0, 0, 0]){
+        lid_A();
+    }
+}
 
 
 

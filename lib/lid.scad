@@ -6,7 +6,7 @@ module lid(
     plug_thickness = 1,
     plug_depth = 1,
     wall_thickness = 1,
-    chamfer=0.5,
+    chamfer=0.1,
     hand_width=8,
     hand_height=3,
     hand_direction="right",
