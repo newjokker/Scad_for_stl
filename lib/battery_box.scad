@@ -1,7 +1,6 @@
 
 
 use <simple_box.scad>;
-// use <lib/simple_box.scad>;
 include <BOSL2/std.scad>;
 
 $fn=60;
