@@ -17,10 +17,8 @@ show_chip = false;
 
 clip_length = 4;                    // 支架的长度
 clip_thick = 2;                     // 支架的厚度
-clip_height = 4;                    // 支架的高度
 
 box_size = [77, 52, 10];            // 电池盒的尺寸
-
 
 module Battery(pos=[0,0,0]){
     // 电池盒子模块，先这么用，后面再去转为 stl 吧
@@ -39,12 +37,15 @@ module Battery(pos=[0,0,0]){
 }
 
 module lid_A(){
+
+    plug_thickness = 1.5;
+
     translate([box_size[0]/2, -box_size[1]/2, 0]){
         rotate([0, 0, 0]){
             union(){
                 lid(
                     lid_size=[box_size[0], box_size[1], 1.5],
-                    plug_thickness=1.5,
+                    plug_thickness=plug_thickness,
                     plug_depth=1.5,
                     wall_thickness=wall_thickness + 0.1,  // 盖子内侧稍微大一点点，确保能盖上
                     chamfer=0.1,
@@ -55,13 +56,13 @@ module lid_A(){
     }
 
     magnet_holder(
-        magnet_diameter = 6,
+        magnet_diameter = 6 + 0.2,
         magnet_thickness = 2,
         holder_height = 1,    
         wall_thickness = 2,
         boss_diameter = 9,
         show_magnet=show_chip,
-        pos = [45.5, -(box_size[1]-23.5), wall_thickness-0.01]       
+        pos = [45.5, -(box_size[1]-23.5), plug_thickness-0.01]       
     );
 }
 
@@ -100,9 +101,9 @@ four_corner_clips(chip_size = size_offset(LD2401_size, chip_offset), pos=[45, -3
 
 // 磁力柱
 magnet_holder(
-    magnet_diameter = 6,
+    magnet_diameter = 6 + 0.3,
     magnet_thickness = 3,
-    holder_height = 1.3,    
+    holder_height = 1.8,    
     wall_thickness = 2,
     boss_diameter = 9,
     show_magnet=show_chip,
@@ -110,7 +111,7 @@ magnet_holder(
 );
 
 // 外壳
-difference(){
+%difference(){
     // 内部空间
     simple_box(box_size=box_size, pos=[box_size[0]/2, -box_size[1]/2], chamfer=0, wall_thickness=wall_thickness);
 
@@ -130,12 +131,11 @@ difference(){
 }
 
 // 盖子
-
-// translate([0, -box_size[1], box_size[2] + 1.5]){
-//     rotate([180, 0, 0]){
-//         lid_A();
-//     }
-// }
+translate([0, -box_size[1], box_size[2] + 1.5]){
+    rotate([180, 0, 0]){
+        lid_A();
+    }
+}
 
 
 // translate([0, 78, 0]){

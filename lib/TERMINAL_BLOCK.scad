@@ -3,6 +3,8 @@ include <BOSL2/std.scad>
 
 $fn = 36;
 
+chip_thick = 3;          // 芯片的厚度
+
 module TERMINAL_BLOCK_A(pos=[0,0,0], show_chip=false, pin_height=3) {
     size=[31, 12, 1.5];
     hole_diameter = 3;
@@ -87,7 +89,7 @@ module TERMINAL_BLOCK_C(pos=[0,0,0]) {
     }
 }
 
-TP4056_size = [28, 17, 2];
+TP4056_size = [28, 17, chip_thick];
 
 module TP4056(pos=[0,0,0], show_clip=false){
 
@@ -106,7 +108,7 @@ module TP4056(pos=[0,0,0], show_clip=false){
     } 
 }
 
-LD2401_size = [22, 18, 2];
+LD2401_size = [22, 18, chip_thick];
 
 module LD2401(pos=[0,0,0], show_clip=false){
     height = LD2401_size[1];
@@ -124,7 +126,7 @@ module LD2401(pos=[0,0,0], show_clip=false){
     } 
 }
 
-DCDC_A_size = [15, 12.6, 2];
+DCDC_A_size = [15, 12.6, chip_thick];
 
 module DCDC_A(pos, show_clip=true){
     height = DCDC_A_size[1];
@@ -176,7 +178,7 @@ module BatteryLevelIndicator(pos){
     } 
 } 
 
-ESP32_C3_supermini_size = [23, 18.5, 2];
+ESP32_C3_supermini_size = [23, 18.5, chip_thick];
 
 module ESP32_C3_supermini(pos=[0, 0, 0]){
     width = ESP32_C3_supermini_size[0];
