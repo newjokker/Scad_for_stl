@@ -6,6 +6,7 @@ use <lib/lid.scad>;
 include <lib/TERMINAL_BLOCK.scad>;
 use <lib/port.scad>;
 use <lib/utils.scad>;
+use <lib/battery_box.scad>;
 include <BOSL2/std.scad>
 
 wall_thickness = 2;         // 电池盒壁厚
@@ -18,6 +19,8 @@ clip_length = 4;                    // 支架的长度
 clip_thick = 2;                     // 支架的厚度
 clip_height = 4;                    // 支架的高度
 
+box_size = [77, 54, 20];            // 电池盒的尺寸
+
 
 module Battery(pos=[0,0,0]){
     // 电池盒子模块，先这么用，后面再去转为 stl 吧
@@ -27,7 +30,7 @@ module Battery(pos=[0,0,0]){
 
     translate(pos){
 
-        import("./stls/18650_battery_shell.stl");
+        battery_box();
             if(show_chip){
                 color("red") #
                     Battery_18650(pos = [38,18.15/2 + 0.5 + 2, 1.5]);
@@ -79,5 +82,13 @@ magnet_holder(
 );
 
 // 外壳
-box_size = [77, 54, 20];
-simple_box(box_size=box_size, pos=[box_size[0]/2, -box_size[1]/2], chamfer=0, wall_thickness=wall_thickness);
+difference(){
+    // 内部空间
+    simple_box(box_size=box_size, pos=[box_size[0]/2, -box_size[1]/2], chamfer=0, wall_thickness=wall_thickness);
+
+    color("red")
+    rotate([90,0,90])
+        type_c_hole(offset=0.8, depth=4, pos=[-14, wall_thickness + 2, -1]);
+
+}
+
