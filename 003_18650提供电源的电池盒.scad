@@ -37,36 +37,6 @@ module Battery(pos=[0,0,0]){
     }
 }
 
-module lid_A(){
-
-    plug_thickness = 1.5;
-
-    translate([box_size[0]/2, -box_size[1]/2, 0]){
-        rotate([0, 0, 0]){
-            union(){
-                lid(
-                    lid_size=[box_size[0], box_size[1], 1.5],
-                    plug_thickness=plug_thickness,
-                    plug_depth=1.5,
-                    wall_thickness=wall_thickness + 0.1,  // 盖子内侧稍微大一点点，确保能盖上
-                    chamfer=0.1,
-                    hand_direction="left"
-                    );
-            }
-        }
-    }
-
-    magnet_holder(
-        magnet_diameter = 6 + 0.2,
-        magnet_thickness = 2,
-        holder_height = 1,    
-        wall_thickness = 2,
-        boss_diameter = 9,
-        show_magnet=show_chip,
-        pos = [45.5, -(box_size[1]-23.5), plug_thickness-0.01]       
-    );
-}
-
 module battery_A(){
     // 电池部分
     difference(){
@@ -165,13 +135,43 @@ module box_B(){
 
     // 磁力柱
     magnet_holder(
-        magnet_diameter = 6 + 0.3,
+        magnet_diameter = 6 + 0.2,
         magnet_thickness = 3,
         holder_height = 1.8,    
         wall_thickness = 2,
         boss_diameter = 9,
         show_magnet=show_chip,
         pos = [45.5, -23.5, wall_thickness-0.01]       
+    );
+}
+
+module lid_A(){
+
+    plug_thickness = 1.5;
+
+    translate([box_size[0]/2, -box_size[1]/2, 0]){
+        rotate([0, 0, 0]){
+            union(){
+                lid(
+                    lid_size=[box_size[0], box_size[1], 1.5],
+                    plug_thickness=plug_thickness,
+                    plug_depth=1.5,
+                    wall_thickness=wall_thickness + 0.1,  // 盖子内侧稍微大一点点，确保能盖上
+                    chamfer=0.1,
+                    hand_direction="left"
+                    );
+            }
+        }
+    }
+
+    magnet_holder(
+        magnet_diameter = 6 + 0.2,
+        magnet_thickness = 2,
+        holder_height = 1,    
+        wall_thickness = 2,
+        boss_diameter = 9,
+        show_magnet=show_chip,
+        pos = [45.5, -(box_size[1]-23.5), plug_thickness-0.01]       
     );
 }
 
@@ -192,7 +192,6 @@ module lid_A2(){
         }
     }
 }
-
 
 
 
