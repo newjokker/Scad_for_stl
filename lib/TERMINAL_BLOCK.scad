@@ -13,7 +13,7 @@ module TERMINAL_BLOCK_A(pos=[0,0,0], show_chip=false, pin_height=3) {
         translate([-size[0]/2, -size[1]/2, 0]){
             color("red") # 
             
-                if(show_chip){
+                if($show_chip){
                     difference() {
                         cuboid(size, anchor = [-1,-1,-1]);
                         
@@ -30,14 +30,14 @@ module TERMINAL_BLOCK_A(pos=[0,0,0], show_chip=false, pin_height=3) {
     }
 }
 
-module TERMINAL_BLOCK_B(pos=[0, 0, 0], show_chip=false, show_pins=false, pin_height=3, offset=0.2) {
+module TERMINAL_BLOCK_B(pos=[0, 0, 0], show_pins=false, pin_height=3, offset=0.2) {
     size=[22, 8.15, 1.5]; hole_diameter = 3; hole_disstance = 14.2 + hole_diameter; hole_start = 1;
     
     translate(pos){
         translate([-size[0]/2, -size[1]/2, 0]){
 
             // 芯片
-            if(show_chip){
+            if($show_chip){
                 color("green") # 
                 difference() {
                     cuboid(size, anchor = BOTTOM+LEFT+FRONT);
@@ -216,7 +216,7 @@ module ESP32_C3_supermini_pro(){
 // translate([40, -5, 0]) linear_extrude(1) text("B", size=3);
 // translate([70, -5, 0]) linear_extrude(1) text("C", size=3);
 
-// TERMINAL_BLOCK_B(pos=[0, 0, 0], show_chip=false, show_pins=true, pin_height=3);
+// TERMINAL_BLOCK_B(pos=[0, 0, 0], show_pins=true, pin_height=3);
 
 // TP4056();
 
@@ -235,4 +235,4 @@ module ESP32_C3_supermini_pro(){
 
 
 
-// TERMINAL_BLOCK_A(show_chip=true, pin_height=6);
+// TERMINAL_BLOCK_A(pin_height=6);

@@ -19,7 +19,7 @@ module four_corner_clips(
             translate([-(chip_size[0]/2 + clip_thick), -(chip_size[1]/2 + clip_thick), 0]){
 
                 color("red") #
-                if(show_chip){
+                if($show_chip){
                     translate([clip_thick, clip_thick, 0])
                         cuboid(chip_size, anchor=[-1, -1, -1]);
                 }

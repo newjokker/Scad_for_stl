@@ -86,7 +86,7 @@ module C(){
 }
 
 
-module battery_box(show_chip=false){
+module battery_box(){
 
     wall_thickness = 2;
     battery_width = 19 + 2*wall_thickness;
@@ -150,23 +150,23 @@ module battery_box(show_chip=false){
         }
     }
 
-    if(show_chip){
+    if($show_chip){
         color("red") #
             Battery_18650(pos = [38, 18.15/2 + 0.5 + 2, 1.5]);
     }
 
 }
 
-module Battery_box_base_18650(show_chip=false, pos=[0,0,0]){
+module Battery_box_base_18650(pos=[0,0,0]){
     translate(pos){
-        battery_box(show_chip=show_chip);
+        battery_box();
     }
 }
 
-module Battery_box_18650(show_chip=false, pos=[0,0,0]){
+module Battery_box_18650(pos=[0,0,0]){
     // 电池部分
     difference(){
-        Battery_box_base_18650(show_chip=show_chip, pos=[0,  0, 0]);
+        Battery_box_base_18650(pos=[0,  0, 0]);
 
         // 电线孔
         translate([6, 3, 2 + 5])
@@ -182,7 +182,7 @@ module Battery_box_18650(show_chip=false, pos=[0,0,0]){
         {
             // 开关主体
             color("red") #
-            if(show_chip)
+            if($show_chip)
             {
                 translate([10, 24, 2])
                     rotate([90,0,0]){

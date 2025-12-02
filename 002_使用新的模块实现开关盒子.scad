@@ -7,6 +7,8 @@ use <lib/TERMINAL_BLOCK.scad>;
 use <lib/port.scad>;
 include <BOSL2/std.scad>
 
+$show_chip = true;                                  // 展示对应的模块信息
+
 box_size=[80, 35, 10];                              // 盒子的长宽
 wall_thickness = 1.5;                               // 盒子的厚度
 magnet_boss_diameter = 9.5;                         // 磁铁柱加强筋的直径
@@ -87,19 +89,16 @@ module clip_A(){
         four_corner_clips(chip_size = mos_size, 
                     clip_length=clip_length,
                     clip_thick=clip_thick,
-                    pos=mos_pos, 
-                    show_chip=false);
+                    pos=mos_pos);
         // esp32-c3 supermini
         four_corner_clips(chip_size = esp32_c3_size, 
                     clip_length=clip_length,
                     clip_thick=clip_thick,
-                    pos=esp32c3_pos, 
-                    show_chip=false);
+                    pos=esp32c3_pos);
         // 接线板
         TERMINAL_BLOCK_B(pos=terminal_pos, 
                     show_pins=true, 
-                    pin_height=pin_height, 
-                    show_chip=false);
+                    pin_height=pin_height);
     }
 }
 

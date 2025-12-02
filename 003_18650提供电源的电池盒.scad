@@ -13,7 +13,7 @@ include <BOSL2/std.scad>
 
 // 全局的参数
 wall_thickness      = 2;            // 电池盒壁厚
-show_chip           = true;         // 是否显示需要安装的内容       TODO: 将 show_chip 改为 全局参数
+$show_chip          = false;         // 是否显示需要安装的内容 
 $fn=60;
 
 // 芯片的支架
@@ -85,22 +85,22 @@ module box_A(){
 module box_B(){
 
     // TP4056
-    four_corner_clips(chip_size = size_offset(TP4056_size, chip_offset), pos=TP4056_pos, show_chip=show_chip, clip_thick=clip_thick, clip_length=clip_length);
+    four_corner_clips(chip_size = size_offset(TP4056_size, chip_offset), pos=TP4056_pos, clip_thick=clip_thick, clip_length=clip_length);
 
     // DCDC_A
-    four_corner_clips(chip_size = size_offset(DCDC_A_size, chip_offset), pos=DCDC_A_pos, show_chip=show_chip, clip_thick=clip_thick, clip_length=clip_length);
+    four_corner_clips(chip_size = size_offset(DCDC_A_size, chip_offset), pos=DCDC_A_pos, clip_thick=clip_thick, clip_length=clip_length);
 
     // 接线柱
     translate(TERMINAL_BLOCK_A_pos){
         rotate([0, 0, -90])
-            TERMINAL_BLOCK_A(show_chip=show_chip, pin_height=3);
+            TERMINAL_BLOCK_A(pin_height=3);
     }
 
     // ESP32_C3_supermini
-    four_corner_clips(chip_size = size_offset(ESP32_C3_supermini_size, chip_offset), pos=ESP32_C3_supermini_pos, show_chip=show_chip, clip_thick=clip_thick, clip_length=clip_length);
+    four_corner_clips(chip_size = size_offset(ESP32_C3_supermini_size, chip_offset), pos=ESP32_C3_supermini_pos, clip_thick=clip_thick, clip_length=clip_length);
 
     // 毫米波雷达
-    four_corner_clips(chip_size = size_offset(LD2410s_size, chip_offset), pos=LD2410s_pos, show_chip=show_chip, clip_thick=clip_thick, clip_length=clip_length);
+    four_corner_clips(chip_size = size_offset(LD2410s_size, chip_offset), pos=LD2410s_pos, clip_thick=clip_thick, clip_length=clip_length);
 
     // 磁力柱
     magnet_holder(
@@ -109,7 +109,6 @@ module box_B(){
         holder_height = down_magnet_holder_height,    
         wall_thickness = down_magnet_wall_thickness,
         boss_diameter = down_magnet_boss_diameter,
-        show_magnet=show_chip,
         pos = down_magnet_pos    
     );
 }
@@ -137,7 +136,6 @@ module lid_A(){
         holder_height = upper_magnet_holder_height,    
         wall_thickness = upper_magnet_wall_thickness,
         boss_diameter = upper_magnet_boss_diameter,
-        show_magnet=show_chip,
         pos = upper_magnet_pos       
     );
 }
@@ -162,7 +160,7 @@ module lid_A2(){
 
 
 
-Battery_box_18650(show_chip=show_chip, pos=[0,0,0]);
+Battery_box_18650(pos=[0,0,0]);
 box_A();
 box_B();
 // lid_A1();
