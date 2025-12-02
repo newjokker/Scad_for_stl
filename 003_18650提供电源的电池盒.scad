@@ -9,86 +9,39 @@ use <lib/utils.scad>;
 use <lib/battery_box.scad>;
 include <BOSL2/std.scad>
 
-wall_thickness = 2;         // 电池盒壁厚
-bottom_thickness = 1.5;     // 电池盒底部厚度
-lid_thickness = 1.5;        // 电池盒盖子厚度
-chip_offset = 0.3;
-show_chip = false;
-
-clip_length = 4;                    // 支架的长度
-clip_thick = 2;                     // 支架的厚度
-
-box_size = [77, 52, 10];            // 电池盒的尺寸
 
 
-module Battery(pos=[0,0,0]){
-    // 电池盒子模块，先这么用，后面再去转为 stl 吧
-    width = 23;
-    length = 77;
-    height = 18;
+// 全局的参数
+wall_thickness      = 2;            // 电池盒壁厚
+show_chip           = false;        // 是否显示需要安装的内容       TODO: 将 show_chip 改为 全局参数
+$fn=60;
 
-    translate(pos){
+// 芯片的支架
+chip_offset         = 0.3;
+clip_length         = 4;                    // 支架的长度
+clip_thick          = 2;                    // 支架的厚度
 
-        battery_box();
-            if(show_chip){
-                color("red") #
-                    Battery_18650(pos = [38, 18.15/2 + 0.5 + 2, 1.5]);
-            }
-    }
-}
+// 盒子的尺寸
+box_size            = [77, 52, 10];            // 电池盒的尺寸
 
-module battery_A(){
-    // 电池部分
-    difference(){
-        Battery(pos=[0,  0, 0]);
+// 盖子
+plug_thickness      = 1.5;
 
-        // 电线孔
-        translate([6, 3, 2 + box_size[2]/2])
-            rotate([90,0,0])
-                wire_hole(d=3, depth=6, pos=[0, 0, 0]);
+// 磁铁柱
+down_magnet_diameter = 6 + 0.2;
+down_magnet_thickness = 3;
+down_magnet_holder_height = 1.8;
+down_magnet_wall_thickness = 2;
+down_magnet_boss_diameter = 9;
+down_magnet_pos = [45.5, -23.5, wall_thickness-0.01];
 
-        translate([13, 3, 2 + box_size[2]/2])
-            rotate([90,0,0])
-                wire_hole(d=3, depth=6, pos=[0, 0, 0]);
+upper_magnet_diameter = 6 + 0.2;
+upper_magnet_thickness = 2;
+upper_magnet_holder_height = 1;
+upper_magnet_wall_thickness = 2;
+upper_magnet_boss_diameter = 9;
+upper_magnet_pos = [45.5, -(box_size[1]-23.5), plug_thickness-0.01];
 
-        // 开关孔
-        translate([-3, 0, 1])
-        {
-            // 开关主体
-            color("red") #
-            if(show_chip)
-            {
-                translate([10, 24, 2])
-                    rotate([90,0,0]){
-                        cuboid([6, 3.7, 5], anchor=[-1,-1,-1]);
-                    }
-            }
-
-            // 两个引脚线孔
-            translate([9, 24, 3])
-                rotate([90,0,0]){
-                    cylinder(r=1, h=5, anchor=[-1,-1,-1]);
-                }
-
-            translate([15.5, 24, 3])
-                rotate([90,0,0]){
-                    cylinder(r=1, h=5, anchor=[-1,-1,-1]);
-                }
-        }
-
-        // 电量显示孔
-        // color("red")
-        translate([39, 22, 4.8])
-            rotate([90,0,0])
-                BatteryLevelIndicator(pos=[0,0,0]);
-
-    }
-    
-
-
-
-
-}
 
 module box_A(){
     // 外壳
@@ -135,19 +88,17 @@ module box_B(){
 
     // 磁力柱
     magnet_holder(
-        magnet_diameter = 6 + 0.2,
-        magnet_thickness = 3,
-        holder_height = 1.8,    
-        wall_thickness = 2,
-        boss_diameter = 9,
+        magnet_diameter = down_magnet_diameter,
+        magnet_thickness = down_magnet_thickness,
+        holder_height = down_magnet_holder_height,    
+        wall_thickness = down_magnet_wall_thickness,
+        boss_diameter = down_magnet_boss_diameter,
         show_magnet=show_chip,
-        pos = [45.5, -23.5, wall_thickness-0.01]       
+        pos = down_magnet_pos    
     );
 }
 
 module lid_A(){
-
-    plug_thickness = 1.5;
 
     translate([box_size[0]/2, -box_size[1]/2, 0]){
         rotate([0, 0, 0]){
@@ -165,13 +116,13 @@ module lid_A(){
     }
 
     magnet_holder(
-        magnet_diameter = 6 + 0.2,
-        magnet_thickness = 2,
-        holder_height = 1,    
-        wall_thickness = 2,
-        boss_diameter = 9,
+        magnet_diameter = upper_magnet_diameter,
+        magnet_thickness = upper_magnet_thickness,
+        holder_height = upper_magnet_holder_height,    
+        wall_thickness = upper_magnet_wall_thickness,
+        boss_diameter = upper_magnet_boss_diameter,
         show_magnet=show_chip,
-        pos = [45.5, -(box_size[1]-23.5), plug_thickness-0.01]       
+        pos = upper_magnet_pos       
     );
 }
 
@@ -195,11 +146,11 @@ module lid_A2(){
 
 
 
-battery_A();
-box_A();
-box_B();
+Battery_box_18650(show_chip=show_chip, pos=[0,0,0]);
+// box_A();
+// box_B();
 // lid_A1();
-lid_A2();
+// lid_A2();
 
 
 
