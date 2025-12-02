@@ -7,8 +7,8 @@ module lid(
     plug_depth = 1,
     wall_thickness = 1,
     chamfer=0.1,
-    hand_width=8,
-    hand_height=3,
+    hand_width=8,               // 把手的宽度
+    hand_height=3,              // 把手的高度
     hand_direction="right",
     pos=[0,0,0]
 ){

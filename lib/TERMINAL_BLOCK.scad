@@ -126,6 +126,24 @@ module LD2401(pos=[0,0,0], show_clip=false){
     } 
 }
 
+LD2410s_size = [20, 20, chip_thick];
+
+module LD2410s(pos=[0,0,0], show_clip=false){
+    height = LD2401_size[1];
+    width = LD2401_size[0];
+    thick = LD2401_size[2];
+
+    translate(pos){
+        translate([-width/2, -height/2, 0]){
+            cuboid([width, height, thick], anchor = [-1,-1,-1]);
+        }
+        translate([0,0,thick + 0.01])
+        color("black") {
+            text("LD2410s", size = 3, halign = "center", valign = "center");
+        }
+    } 
+}
+
 DCDC_A_size = [15, 12.6, chip_thick];
 
 module DCDC_A(pos, show_clip=true){
