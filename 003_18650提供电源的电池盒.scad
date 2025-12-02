@@ -20,6 +20,7 @@ clip_thick = 2;                     // 支架的厚度
 
 box_size = [77, 52, 10];            // 电池盒的尺寸
 
+
 module Battery(pos=[0,0,0]){
     // 电池盒子模块，先这么用，后面再去转为 stl 吧
     width = 23;
@@ -66,83 +67,143 @@ module lid_A(){
     );
 }
 
-// 电池部分
-difference(){
-    Battery(pos=[0,  0, 0]);
+module battery_A(){
+    // 电池部分
+    difference(){
+        Battery(pos=[0,  0, 0]);
 
-    // 电线孔
-    translate([6, 3, 2 + box_size[2]/2])
-        rotate([90,0,0])
-            wire_hole(d=3, depth=6, pos=[0, 0, 0]);
+        // 电线孔
+        translate([6, 3, 2 + box_size[2]/2])
+            rotate([90,0,0])
+                wire_hole(d=3, depth=6, pos=[0, 0, 0]);
 
-    translate([13, 3, 2 + box_size[2]/2])
-        rotate([90,0,0])
-            wire_hole(d=3, depth=6, pos=[0, 0, 0]);
-}
+        translate([13, 3, 2 + box_size[2]/2])
+            rotate([90,0,0])
+                wire_hole(d=3, depth=6, pos=[0, 0, 0]);
 
-// TP4056
-four_corner_clips(chip_size = size_offset(TP4056_size, chip_offset), pos=[17, -14, wall_thickness-0.01], show_chip=show_chip, clip_thick=clip_thick, clip_length=clip_length);
+        // 开关孔
+        translate([-3, 0, 1])
+        {
+            // 开关主体
+            color("red") #
+            if(show_chip)
+            {
+                translate([10, 24, 2])
+                    rotate([90,0,0]){
+                        cuboid([6, 3.7, 5], anchor=[-1,-1,-1]);
+                    }
+            }
 
-// DCDC_A
-four_corner_clips(chip_size = size_offset(DCDC_A_size, chip_offset), pos=[47, -10, wall_thickness-0.01], show_chip=show_chip, clip_thick=clip_thick, clip_length=clip_length);
+            // 两个引脚线孔
+            translate([9, 24, 3])
+                rotate([90,0,0]){
+                    cylinder(r=1, h=5, anchor=[-1,-1,-1]);
+                }
 
-// 接线柱
-translate([67, -25, wall_thickness-0.01]){
-    rotate([0, 0, -90])
-        TERMINAL_BLOCK_A(show_chip=show_chip, pin_height=3);
-}
+            translate([15.5, 24, 3])
+                rotate([90,0,0]){
+                    cylinder(r=1, h=5, anchor=[-1,-1,-1]);
+                }
+        }
+
+        // 电量显示孔
+        // color("red")
+        translate([29, 22, 4.8])
+            rotate([90,0,0])
+                BatteryLevelIndicator(pos=[0,0,0]);
+
+    }
+    
 
 
-// ESP32_C3_supermini
-four_corner_clips(chip_size = size_offset(ESP32_C3_supermini_size, chip_offset), pos=[17, -38, wall_thickness-0.01], show_chip=show_chip, clip_thick=clip_thick, clip_length=clip_length);
 
-// 毫米波雷达
-four_corner_clips(chip_size = size_offset(LD2401_size, chip_offset), pos=[45, -38, wall_thickness-0.01], show_chip=show_chip, clip_thick=clip_thick, clip_length=clip_length);
-
-// 磁力柱
-magnet_holder(
-    magnet_diameter = 6 + 0.3,
-    magnet_thickness = 3,
-    holder_height = 1.8,    
-    wall_thickness = 2,
-    boss_diameter = 9,
-    show_magnet=show_chip,
-    pos = [45.5, -23.5, wall_thickness-0.01]       
-);
-
-// 外壳
-%difference(){
-    // 内部空间
-    simple_box(box_size=box_size, pos=[box_size[0]/2, -box_size[1]/2], chamfer=0, wall_thickness=wall_thickness);
-
-    // Type-C 开孔
-    rotate([90,0,90])
-        type_c_hole(offset=0.8, depth=4, pos=[-14, wall_thickness + 3, -1]);
-
-    // 电线孔
-    translate([6, 3, 2 + box_size[2]/2])
-        rotate([90,0,0])
-            wire_hole(d=3, depth=6, pos=[0, 0, 0]);
-
-    translate([13, 3, 2 + box_size[2]/2])
-        rotate([90,0,0])
-            wire_hole(d=3, depth=6, pos=[0, 0, 0]);
 
 }
 
-// 盖子
-translate([0, -box_size[1], box_size[2] + 1.5]){
-    rotate([180, 0, 0]){
-        lid_A();
+module box_A(){
+    // 外壳
+    difference(){
+        // 内部空间
+        simple_box(box_size=box_size, pos=[box_size[0]/2, -box_size[1]/2], chamfer=0, wall_thickness=wall_thickness);
+
+        // Type-C 开孔
+        rotate([90,0,90])
+            type_c_hole(offset=0.8, depth=4, pos=[-14, wall_thickness + 3, -1]);
+
+        // 电线孔
+        translate([6, 3, 2 + box_size[2]/2])
+            rotate([90,0,0])
+                wire_hole(d=3, depth=6, pos=[0, 0, 0]);
+
+        translate([13, 3, 2 + box_size[2]/2])
+            rotate([90,0,0])
+                wire_hole(d=3, depth=6, pos=[0, 0, 0]);
+
+    }
+}
+
+module box_B(){
+
+    // TP4056
+    four_corner_clips(chip_size = size_offset(TP4056_size, chip_offset), pos=[17, -14, wall_thickness-0.01], show_chip=show_chip, clip_thick=clip_thick, clip_length=clip_length);
+
+    // DCDC_A
+    four_corner_clips(chip_size = size_offset(DCDC_A_size, chip_offset), pos=[47, -10, wall_thickness-0.01], show_chip=show_chip, clip_thick=clip_thick, clip_length=clip_length);
+
+    // 接线柱
+    translate([67, -25, wall_thickness-0.01]){
+        rotate([0, 0, -90])
+            TERMINAL_BLOCK_A(show_chip=show_chip, pin_height=3);
+    }
+
+
+    // ESP32_C3_supermini
+    four_corner_clips(chip_size = size_offset(ESP32_C3_supermini_size, chip_offset), pos=[17, -38, wall_thickness-0.01], show_chip=show_chip, clip_thick=clip_thick, clip_length=clip_length);
+
+    // 毫米波雷达
+    four_corner_clips(chip_size = size_offset(LD2401_size, chip_offset), pos=[45, -38, wall_thickness-0.01], show_chip=show_chip, clip_thick=clip_thick, clip_length=clip_length);
+
+    // 磁力柱
+    magnet_holder(
+        magnet_diameter = 6 + 0.3,
+        magnet_thickness = 3,
+        holder_height = 1.8,    
+        wall_thickness = 2,
+        boss_diameter = 9,
+        show_magnet=show_chip,
+        pos = [45.5, -23.5, wall_thickness-0.01]       
+    );
+}
+
+module lid_A1(){
+    // 盖子
+    translate([0, -box_size[1], box_size[2] + 1.5]){
+        rotate([180, 0, 0]){
+            lid_A();
+        }
+    }
+}
+
+module lid_A2(){
+    // 盖子
+    translate([0, 78, 0]){
+        rotate([0, 0, 0]){
+            lid_A();
+        }
     }
 }
 
 
-// translate([0, 78, 0]){
-//     rotate([0, 0, 0]){
-//         lid_A();
-//     }
-// }
+
+
+battery_A();
+box_A();
+box_B();
+// lid_A1();
+lid_A2();
+
+
+
 
 
 

@@ -155,7 +155,7 @@ module Battery_18650(pos){
                 cylinder(r=d/2, h=height, anchor=[0,0,0]);
 }
 
-module BatteryLevelIndicator(pos){
+module BatteryLevelIndicator(pos=[0,0,0]){
     // 电池电量指示灯
     
     width = 9.5;
@@ -165,10 +165,9 @@ module BatteryLevelIndicator(pos){
     led_width = 6;      // 4 个 显示的 led 灯的宽度 和 高度 
     led_height = 1.9;    // 
 
-
     translate(pos){
         translate([-width/2, -height/2, 0]){
-            difference(){
+            union(){
                 cuboid([width, height, thick], anchor=[-1,-1,-1]);
                 translate([width/2, height/2, -0.01]){
                     cuboid([width - 2, led_height, thick + 5], anchor=[0,0,0]);
@@ -194,8 +193,6 @@ module ESP32_C3_supermini(pos=[0, 0, 0]){
         }
     } 
 }
-
-
 
 module ESP32_C3_supermini_pro(){
     width = 1;
