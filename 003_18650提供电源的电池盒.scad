@@ -108,7 +108,7 @@ module battery_A(){
 
         // 电量显示孔
         // color("red")
-        translate([29, 22, 4.8])
+        translate([39, 22, 4.8])
             rotate([90,0,0])
                 BatteryLevelIndicator(pos=[0,0,0]);
 
