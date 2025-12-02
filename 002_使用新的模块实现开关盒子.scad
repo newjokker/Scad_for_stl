@@ -76,7 +76,6 @@ module magnet_down(){
         holder_height = magnet_down_height,    
         wall_thickness = magnet_wall_thickness,
         boss_diameter = magnet_boss_diameter,
-        show_magnet=false,
         pos = magnet_down_pos       
     );
 }
