@@ -68,7 +68,7 @@ module box_A(){
             // Type-C 开孔
             translate([-0.01, box_size[1] - wall_thickness - 12, 5])
                 rotate([90, 0, 90])
-                    type_c_hole(offset=0.8, depth=4, pos=[0, 0, 0]);
+                    type_c_hole(offset=0.3, depth=4, pos=[0, 0, 0]);
 
             // 电线孔
             translate([6, 3 + box_size[1], 2 + box_size[2]/2])
