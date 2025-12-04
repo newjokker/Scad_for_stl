@@ -41,14 +41,14 @@ hand_width              = 6;
 lid_chamfer             = 0.1;
 
 // 磁铁柱
-down_magnet_diameter        = 6 + 0.2;
+down_magnet_diameter        = 6 + 0.5;    // 测试了一下要是只是加 0.2 还是很容易卡住拿不出来
 down_magnet_thickness       = 3;
 down_magnet_holder_height   = 1.8;
 down_magnet_wall_thickness  = 2;
 down_magnet_boss_diameter   = 9;
 down_magnet_pos             = [45.5, -23.5, wall_thickness-0.01];
 
-upper_magnet_diameter       = 6 + 0.2;
+upper_magnet_diameter       = 6 + 0.5;
 upper_magnet_thickness      = 2;
 upper_magnet_holder_height  = 1;
 upper_magnet_wall_thickness = 2;

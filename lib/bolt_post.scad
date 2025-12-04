@@ -51,9 +51,9 @@ module boss(
 
 // 磁铁固定座
 module magnet_holder(
-    magnet_diameter,    // 磁铁的直径
-    magnet_thickness,   // 磁铁的厚度
-    holder_height,      // 托住磁铁部分的厚度
+    magnet_diameter = 6,    // 磁铁的直径
+    magnet_thickness = 3,   // 磁铁的厚度
+    holder_height = 1,      // 托住磁铁部分的厚度
     wall_thickness = 2, // 有磁铁部分的墙厚度
     boss_diameter = 5,   // 加强筋的直径
     fn = 60,            // 圆柱面分段数
