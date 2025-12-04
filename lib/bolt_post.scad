@@ -1,6 +1,5 @@
 
 include <BOSL2/std.scad>
-$fn = 60;
 
 // 螺栓柱
 module boss(
@@ -51,12 +50,11 @@ module boss(
 
 // 磁铁固定座
 module magnet_holder(
-    magnet_diameter = 6,    // 磁铁的直径
+    magnet_diameter = 6,    // 磁铁的直径，φ6+0.2 不需要胶水也不容易拿下来
     magnet_thickness = 3,   // 磁铁的厚度
     holder_height = 1,      // 托住磁铁部分的厚度
     wall_thickness = 2, // 有磁铁部分的墙厚度
     boss_diameter = 5,   // 加强筋的直径
-    fn = 60,            // 圆柱面分段数
     pos = [0, 0, 0]     // 放置位置
 ) {
 

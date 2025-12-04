@@ -18,7 +18,7 @@ $fn=60;
 
 // 芯片的支架
 chip_offset         = 0.5;                  // 直接误差大小
-clip_length         = 4;                    // 支架的长度
+clip_length         = 2;                    // 支架的长度
 clip_thick          = 2;                    // 支架的厚度
 
 // 芯片
