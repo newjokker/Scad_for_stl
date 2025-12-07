@@ -1,6 +1,6 @@
 
 include <BOSL2/std.scad>
-
+use <lib/battery_box.scad>;
 
 include <NopSCADlib/core.scad>
 use <NopSCADlib/utils/layout.scad>
@@ -9,8 +9,9 @@ include <NopSCADlib/vitamins/displays.scad>
 use <NopSCADlib/vitamins/pcb.scad>
 
 $fn = 60;
+$show_chip = true;
 
-offset = 0.5;
+offset = 0.2;
 displat_length = 71;
 displat_width = 24;
 displat_height = 7.4;
@@ -20,6 +21,9 @@ displat_size = [displat_length + offset, displat_width + offset, displat_height]
 // translate([0, 0, 0 ]) display(LCD1602A);
 
 module display_A(size=[90, 43, 20]){
+
+    translate([size[0]/2, -size[1]/2, 0]) 
+
     difference(){
 
         cuboid(size, anchor = [0,0,-1]);
@@ -50,9 +54,61 @@ module display_A(size=[90, 43, 20]){
     }
 }
 
-display_A();
+module display_B() {
+
+    // 盒子的主体
+    difference() {
+
+        height = size[1] * sin(abs(angle));
+        display_size_b = [size[0], 100, height];
+
+        translate([0, 0, 0]){
+            wall_thick = 2;
+            difference() {
+                cuboid(size = [size[0], display_size_b[1], height], anchor=[-1, -1, -1]);
+                translate([wall_thick, wall_thick, wall_thick]) cuboid(size = [90 - wall_thick * 2, display_size_b[1] - wall_thick * 2, height - 2 * wall_thick], anchor=[-1, -1, -1]);
+            }
+        }
+
+        // 切割同样形状的立方体
+        translate([0, (size[2] + 100) * sin(angle),  (size[2] + 100) * -cos(angle)])
+        {
+            rotate([angle, 0, 0])
+            {
+                translate([size[0]/2, -size[1]/2, 0])  cuboid(size = [size[0] + 100, size[1] + 100, size[2] + 100], anchor=[0, 0, -1]);
+            }
+        }
+
+        // 顶盖
+        translate([-0.01, 0.01, height - 0.01])  cuboid(size = [100, 100, 4], anchor=[-1, -1, 0]);
+
+    }
+
+    // 电池仓
 
 
+
+}
+
+size = [90, 43, 15];
+angle = -135;
+
+%translate([0, size[2] * sin(angle),  size[2] * -cos(angle)])
+{
+    rotate([angle, 0, 0])
+    {
+        display_A(size=size);
+    }
+}
+
+display_B();
+
+
+translate([25, 21, 0]){
+    rotate([0, 0, 90]) 
+        Battery_box_18650();
+
+    }
 
 
 
