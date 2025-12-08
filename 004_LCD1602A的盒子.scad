@@ -101,14 +101,21 @@ angle = -135;
     }
 }
 
+// 盒子
 display_B();
 
-
+// 电池
 translate([25, 21, 0]){
     rotate([0, 0, 90]) 
         Battery_box_18650();
 
     }
+
+// type c 充电口
+
+
+
+
 
 
 
