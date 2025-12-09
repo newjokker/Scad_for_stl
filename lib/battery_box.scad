@@ -96,6 +96,7 @@ module battery_box(){
     // 边框和对应的孔
     difference(){
         A();
+        
         // 电池的插孔
         translate([wall_thickness, wall_thickness + 6.750, -0.01])
             cuboid([0.7 + 0.02, 5.5, 2 + 0.02], anchor=[-1,-1,-1]);
@@ -122,11 +123,11 @@ module battery_box(){
                 // 开孔
                 translate([-1, 1.5, 1.5])
                     rotate([0, 90, 0])
-                        wire_hole(d=1.5, depth=5);
+                        wire_hole(d=2, depth=5);
                 
                 translate([-1, battery_width -1.5 - 2 * wall_thickness, 1.5])
                     rotate([0, 90, 0])
-                        wire_hole(d=1.5, depth=5);
+                        wire_hole(d=2, depth=5);
             }
         }
     }
@@ -169,11 +170,11 @@ module Battery_box_18650(pos=[0,0,0]){
         Battery_box_base_18650(pos=[0,  0, 0]);
 
         // 电线孔
-        translate([6, 3, 2 + 5])
+        translate([39, 3, 2 + 3])
             rotate([90,0,0])
                 wire_hole(d=3, depth=6, pos=[0, 0, 0]);
 
-        translate([13, 3, 2 + 5])
+        translate([33, 3, 2 + 3])
             rotate([90,0,0])
                 wire_hole(d=3, depth=6, pos=[0, 0, 0]);
 
