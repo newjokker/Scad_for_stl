@@ -20,7 +20,7 @@ displat_size = [displat_length + offset, displat_width + offset, displat_height]
 // 显示器模块，旁边的一个三角形没显示出来，需要注意
 // translate([0, 0, 0 ]) display(LCD1602A);
 
-module display_A(size=[90, 43, 20]){
+module display_A(size=[89, 43, 20]){
 
     translate([size[0]/2, -size[1]/2, 0]) 
 
@@ -38,7 +38,8 @@ module display_A(size=[90, 43, 20]){
         translate([13, 15, 2]) cuboid([42, 7, 100], anchor = [0,0,-1]);
 
         // 凸出来的背光板
-        translate([-displat_size[0] - 2, 0, 3]) cuboid([5, 14, 100], anchor = [0,0,-1]);
+        translate([-71.5/2 - 2, 0, 3]) cuboid([5, 14, 100], anchor = [0,0,-1]);
+
 
         // 螺丝孔
         r1 = 2.5;
@@ -56,11 +57,12 @@ module display_A(size=[90, 43, 20]){
 
 module display_B() {
 
+    height = size[1] * sin(abs(angle));
+    display_size_b = [size[0], 100, height];
+
     // 盒子的主体
     difference() {
 
-        height = size[1] * sin(abs(angle));
-        display_size_b = [size[0], 100, height];
 
         translate([0, 0, 0]){
             wall_thick = 2;
@@ -80,20 +82,17 @@ module display_B() {
         }
 
         // 顶盖
-        translate([-0.01, 0.01, height - 0.01])  cuboid(size = [100, 100, 4], anchor=[-1, -1, 0]);
+        translate([-0.01, 45, height - 0.01])  cuboid(size = [100, 100, 4], anchor=[-1, -1, 0]);
 
     }
-
-    // 电池仓
-
-
+        // translate([-0.01, 50, height - 0.01])  cuboid(size = [100, 100, 4], anchor=[-1, -1, 0]);
 
 }
 
-size = [90, 43, 15];
+size = [89, 43, 15];
 angle = -135;
 
-%translate([0, size[2] * sin(angle),  size[2] * -cos(angle)])
+translate([0, size[2] * sin(angle),  size[2] * -cos(angle)])
 {
     rotate([angle, 0, 0])
     {
