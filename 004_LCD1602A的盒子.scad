@@ -9,7 +9,7 @@ include <NopSCADlib/vitamins/displays.scad>
 use <NopSCADlib/vitamins/pcb.scad>
 
 $fn = 60;
-$show_chip = true;
+$show_chip = false;
 
 offset = 0.2;
 displat_length = 71;
@@ -17,6 +17,9 @@ displat_width = 24;
 displat_height = 7.4;
 displat_size = [displat_length + offset, displat_width + offset, displat_height];
 
+
+size = [89, 43, 20];
+angle = -135;
 
 module display_A(size=[89, 43, 20]){
 
@@ -63,6 +66,7 @@ module display_A(size=[89, 43, 20]){
 
 module display_B() {
 
+
     height = size[1] * sin(abs(angle));
     display_size_b = [size[0], 100, height];
 
@@ -88,43 +92,40 @@ module display_B() {
         }
 
         // 顶盖
-        translate([-0.01, 45, height - 0.01])  cuboid(size = [100, 100, 4], anchor=[-1, -1, 0]);
+        // translate([-0.01, 45, height - 0.01])  cuboid(size = [100, 100, 4], anchor=[-1, -1, 0]);
+        translate([-50, -20, height - 0.01])  cuboid(size = [200, 100, 4], anchor=[-1, -1, 0]);
 
     }
-        // translate([-0.01, 50, height - 0.01])  cuboid(size = [100, 100, 4], anchor=[-1, -1, 0]);
+        // translate([-50, -20, height - 0.01])  cuboid(size = [200, 100, 4], anchor=[-1, -1, 0]);
 
 }
 
-size = [89, 43, 20];
-angle = -135;
 
-translate([0, size[2] * sin(angle),  size[2] * -cos(angle)])
-{
-    rotate([angle, 0, 0])
+module box(){
+
+    translate([0, size[2] * sin(angle),  size[2] * -cos(angle)])
     {
-        display_A(size=size);
+        rotate([angle, 0, 0])
+        {
+            display_A(size=size);
+        }
     }
+
+    // 盒子
+    display_B();
+
+    // // 电池
+    // translate([25, 21, 0]){
+    //     rotate([0, 0, 90]) 
+    //         Battery_box_18650();
+
 }
 
-// 盒子
+// box();
+
 display_B();
 
-// 电池
-translate([25, 21, 0]){
-    rotate([0, 0, 90]) 
-        Battery_box_18650();
-
-    }
-
-// type c 充电口
-
-// display_A(size=size);
-
-
-
-
-
-
+translate([0, -10, 0]) display_A();
 
 
 
