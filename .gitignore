@@ -1,6 +1,7 @@
 
 
 del.scad
+del.py
 
 *.stl
 
