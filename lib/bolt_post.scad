@@ -1,6 +1,9 @@
 
 include <BOSL2/std.scad>
 
+$fn = 60;
+
+
 // 螺栓柱
 module boss(
     screw="m3",
@@ -81,17 +84,46 @@ module magnet_holder(
     }
 }
 
+// 三角形的承托结构
+module triangle_holder(triangle_a, depth=2, r=2.3, multi_z=1.3){
+
+    points = [
+        [0, 0, 0],      // 原点：三条直角边交点
+        [triangle_a, 0, 0],   // X轴上
+        [0, triangle_a, 0],   // Y轴上  
+        [0, 0, triangle_a * multi_z]    // Z轴上
+    ];
+
+    faces = [
+        [1, 2, 0],  // 底面 (X-Y平面)
+        [3, 1, 0],  // 侧面1 (X-Z平面)
+        [3, 0, 2],  // 侧面2 (Y-Z平面)  
+        [3, 2, 1]   // 斜面（最大的面）
+    ];
+
+    difference(){
+        polyhedron(points, faces, convexity=3);
+        // 内心的坐标，距离三个边的距离是一致的
+        translate([triangle_a*0.2929, triangle_a*0.2929, 0.01])
+            cylinder(r=r, h=depth, anchor=[0,0,0]);
+    }
+
+}
+
 
 // 螺丝柱
 // boss(screw="m3", mode="through", height=10, rib_height= 4, rib_thickness=1, thick=2, pos=[0,0,0]);
 
 
-// 磁铁柱
-magnet_holder(
-    magnet_diameter = 6 + 0.3,
-    magnet_thickness = 3,
-    holder_height = 3,    
-    wall_thickness = 1,
-    boss_diameter = 8,
-    pos = [0, 0, 0]       
-);
+// // 磁铁柱
+// magnet_holder(
+//     magnet_diameter = 6 + 0.3,
+//     magnet_thickness = 3,
+//     holder_height = 3,    
+//     wall_thickness = 1,
+//     boss_diameter = 8,
+//     pos = [0, 0, 0]       
+// );
+
+
+// triangle_holder(triangle_a=25, depth=2.2, r=6);
