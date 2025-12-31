@@ -88,6 +88,12 @@ module display_B() {
                 translate([size[0]/2, -size[1]/2, 0])  cuboid(size = [size[0] + display_size_b[1], size[1] + display_size_b[1], size[2] + display_size_b[1]], anchor=[0, 0, -1]);
             }
         }
+
+        // type c 孔
+        translate([size[0]/2, 34, -1])
+            type_c_hole(offset=1.5, depth=6, pos=[0,0,0]);
+
+
     }
 
     // // 芯片支架
@@ -97,24 +103,24 @@ module display_B() {
     //     }
     // }
 
-    // 承托盖子的支撑
-    translate([wall_thick, box_depth - wall_thick, wall_thick])
-        rotate([90, 0, 0])
-            triangle_holder(triangle_a=11, depth=1.3, r=5/2, multi_z=0.8);
+    // // 承托盖子的支撑
+    // translate([wall_thick, box_depth - wall_thick, wall_thick])
+    //     rotate([90, 0, 0])
+    //         triangle_holder(triangle_a=11, depth=1.3, r=5/2, multi_z=0.8);
     
-    translate([wall_thick, box_depth - wall_thick , height - wall_thick])
-        rotate([90, 90, 0])
-            triangle_holder(triangle_a=11, depth=1.3, r=5/2, multi_z=0.8);
+    // translate([wall_thick, box_depth - wall_thick , height - wall_thick])
+    //     rotate([90, 90, 0])
+    //         triangle_holder(triangle_a=11, depth=1.3, r=5/2, multi_z=0.8);
 
-    translate([size[0] - wall_thick, box_depth - wall_thick , height - wall_thick])
-        mirror([1, 0, 0])
-            rotate([90, 90, 0])
-                triangle_holder(triangle_a=11, depth=1.3, r=5/2, multi_z=0.8);
+    // translate([size[0] - wall_thick, box_depth - wall_thick , height - wall_thick])
+    //     mirror([1, 0, 0])
+    //         rotate([90, 90, 0])
+    //             triangle_holder(triangle_a=11, depth=1.3, r=5/2, multi_z=0.8);
     
-    translate([size[0] - wall_thick, box_depth - wall_thick , wall_thick])
-        mirror([1, 0, 0])
-            rotate([90, 0, 0])
-                triangle_holder(triangle_a=11, depth=1.3, r=5/2, multi_z=0.8);
+    // translate([size[0] - wall_thick, box_depth - wall_thick , wall_thick])
+    //     mirror([1, 0, 0])
+    //         rotate([90, 0, 0])
+    //             triangle_holder(triangle_a=11, depth=1.3, r=5/2, multi_z=0.8);
 
 }
 
@@ -148,7 +154,6 @@ module box(){
 box();
 
 // display_B();
-
 
 
 
