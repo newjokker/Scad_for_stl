@@ -16,8 +16,8 @@ displat_height = 7.4;
 displat_size = [displat_length + offset, displat_width + offset, displat_height];
 
 
-size = [89, 43, 20];
-angle = -135;
+size = [93, 43, 20];
+angle = -115;
 
 module display_A(size=[89, 43, 20]){
 
@@ -64,7 +64,7 @@ module display_A(size=[89, 43, 20]){
 module display_B() {
 
     height = size[1] * sin(abs(angle));
-    display_size_b = [size[0], 80, height];
+    display_size_b = [size[0], 40, height];
 
     // 盒子的主体
     difference() {
@@ -135,9 +135,9 @@ module box(){
 }
 
 
-// box();
+box();
 
-display_B();
+// display_B();
 
 
 
