@@ -15,6 +15,8 @@ displat_width = 24;
 displat_height = 7.4;
 displat_size = [displat_length + offset, displat_width + offset, displat_height];
 
+wall_thick = 2.5;
+
 
 size = [93, 43, 20];
 angle = -115;
@@ -66,7 +68,6 @@ module display_B() {
     box_depth = 40;
     height = size[1] * sin(abs(angle));
     display_size_b = [size[0], box_depth, height];
-    wall_thick = 2;
 
     // 盒子的主体
     difference() {
@@ -90,7 +91,7 @@ module display_B() {
         }
 
         // type c 孔
-        translate([size[0]/2, 34, -1])
+        translate([size[0]/2, 32, -1])
             type_c_hole(offset=1.5, depth=6, pos=[0,0,0]);
 
 
