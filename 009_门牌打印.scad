@@ -3,22 +3,22 @@ $fn = 64;
 // =====================
 // 全局参数（两部分共用）
 // =====================
-plate_w = 140;
-plate_h = 45;
+plate_w = 150;
+plate_h = 50;
 plate_t = 1.2;
 corner_r = 4;
 
 text_str  = "知行室";
-text_size = 28;
+text_size = 35;
 font_name = "Heiti SC:style=Regular";
 
-text_height = 1.2;
+text_height = 3.2;
 
 // 笔画连接（防止中文断裂）
 stroke_join = 0.35;
 
 // 装配间隙（阴文孔 > 阳文字）
-fit_gap = 0.10;
+fit_gap = 1;
 
 // 阴阳文之间的展示间距
 spacing = 160;
@@ -83,5 +83,5 @@ translate([0, 0, 0])
     yin_plate();
 
 // 右：阳文
-translate([ 0, 45, 0])
+translate([ 0, 0, 0])
     yang_text();
