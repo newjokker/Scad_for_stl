@@ -3,13 +3,13 @@ $fn = 64;
 // =====================
 // 全局参数（两部分共用）
 // =====================
-plate_w = 150;
-plate_h = 50;
+plate_w = 250;
+plate_h = 100;
 plate_t = 1.2;
 corner_r = 4;
 
 text_str  = "知行室";
-text_size = 35;
+text_size = 50;
 font_name = "Heiti SC:style=Regular";
 
 text_height = 3.2;
