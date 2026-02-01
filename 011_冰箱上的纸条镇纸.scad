@@ -2,9 +2,9 @@ include <BOSL2/std.scad>
 
 $fn = 60;
 
-L = 150;
+L = 120;
 W = 15;
-H = 8;
+H = 10;
 R = 3.1;
 magnet_height = 2.1;
 
@@ -13,7 +13,7 @@ magnet_count = 8;
 
 difference() {
     color("lightblue") {
-        cuboid([L, W, H], anchor=[-1, -1, -1]);
+        cuboid([L, W, H], anchor=[-1, -1, -1], rounding=2, edges="Z");
     }
     
     if (magnet_count > 0) {
