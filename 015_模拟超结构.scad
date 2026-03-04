@@ -1,86 +1,91 @@
-// 使用 linear_extrude + twist 生成螺旋带结构
-$fn = 90;   // 圆柱等圆形的分段数（越大越圆滑）
 
+$fn = 200;              // 圆形细分精度
+
+
+height      = 49.65;    // 模型高度
+d_out       = 99.3;
+d_in        = 44;
+wall_thick  = 2.5;      // 壁厚
+
+
+// 螺旋带结构
 module A(){
-    H       = 50;   // 螺旋结构高度
-    turns   = 1;    // 螺旋圈数（总共旋转多少圈）
-    R       = 36;    // x + strip_w/2;   // 螺旋半径（从中心到带状结构的中心的距离）
-    strip_w = (100 - 44)/2;   // 带状结构宽度（沿半径方向）
-    strip_t = 1;    // 带状结构厚度（切向方向）
 
-    // 通过扭转挤出生成螺旋
+    turns   = 2;                    // 螺旋圈数
+    // R       = 36;                   // 螺旋半径
+    strip_w = (d_out - d_in)/2;     // 螺旋带宽度
+    strip_t = wall_thick;           // 螺旋带厚度
+    R       = (strip_w/2) + d_in/2;                   // 螺旋半径
+
+    // 扭转挤出生成螺旋带
     linear_extrude(
-        height = H,             // 挤出高度
-        twist = 360 * turns,    // 总扭转角度
-        slices = 300            // 分层数（越大螺旋越平滑）
+        height = height,
+        twist = -360 * turns,
+        slices = 3000
     )
-    translate([R, 0])           // 将截面移动到半径 R 的位置
-    square([strip_w, strip_t], center = true);   // 螺旋带的截面
+    translate([R, 0])
+    square([strip_w, strip_t], center = true);
 }
 
+
+// 外壳结构
 module B(){
 
-    // 一个半透明圆柱体，用作参考外壳
-    color([1, 0.5, 0.5, 0.5]){
+    // 内侧圆环
+    difference(){
 
-        difference(){
+        cylinder(h = height, d = d_in + wall_thick, center = false);
 
-            cylinder(
-                h = 50,   // 圆柱高度
-                d = 46,   // 圆柱直径
-                center = false
-            );
-
-            translate([0, 0, -2]){
-                cylinder(
-                    h = 100,   // 圆柱高度
-                    d = 44,   // 圆柱直径
-                    center = false
-                );
-            }
-
-        }
-
-
-        difference(){
-
-            cylinder(
-                h = 50,   // 圆柱高度
-                d = 100,   // 圆柱直径
-                center = false
-            );
-
-            translate([0, 0, 2]){
-                cylinder(
-                    h = 50 + 20,   // 圆柱高度
-                    d = 99,   // 圆柱直径
-                    center = false
-                );
-            }
-
-            translate([0, 0, -20]){
-                cylinder(
-                    h = 100,   // 圆柱高度
-                    d = 44,   // 圆柱直径
-                    center = false
-                );
-            }
-
-        }
-
+        translate([0, 0, -20])
+            cylinder(h = height + 50, d = d_in, center = false);
     }
 
+    // 外侧圆环
+    difference(){
+
+        cylinder(h = height, d = d_out,center = false);
+
+        translate([0, 0, wall_thick])
+            cylinder(h = height + 20, d =d_out-wall_thick, center = false);
+
+        translate([0, 0, -20])
+            cylinder(h = height + 50, d = d_in, center = false);
+    }
+}
+
+
+// 四分之一圆环切割结构
+module C(){
+
+    intersection(){
+
+        // 圆环
+        translate([0,0,1])
+        difference(){
+
+            cylinder(h = 3,d = d_in + 10,center = false);
+
+            translate([0,0,-2])
+                cylinder(h = 10, d = d_in -10, center = false);
+        }
+
+        // 使用方块裁剪为 1/4
+        rotate([0, 0, -25])
+            translate([0, 0, -10])
+                cube([50, 50, 30]);
+    }
 
 }
 
-module D(){
-// 做一个开窗
 
+// 用四分之一圆环切掉外壳一部分
+difference(){
+
+    B();
+
+    C();
 }
 
-
+// 添加螺旋结构
 A();
-
-
-B();
 
