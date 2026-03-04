@@ -60,7 +60,7 @@ module C(){
     intersection(){
 
         // 圆环
-        translate([0,0,1])
+        translate([0, 0, wall_thick])
         difference(){
 
             cylinder(h = 3,d = d_in + 10,center = false);
