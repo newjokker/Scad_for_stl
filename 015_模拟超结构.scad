@@ -20,30 +20,27 @@ module A(){
 
 module B(){
 
-    difference(){
-
-        cylinder(
-            h = 50,   // 圆柱高度
-            d = 46,   // 圆柱直径
-            center = false
-        );
-
-        translate([0, 0, -2]){
-            cylinder(
-                h = 100,   // 圆柱高度
-                d = 44,   // 圆柱直径
-                center = false
-            );
-        }
-
-    }
-
-}
-
-module C(){
-
     // 一个半透明圆柱体，用作参考外壳
     color([1, 0.5, 0.5, 0.5]){
+
+        difference(){
+
+            cylinder(
+                h = 50,   // 圆柱高度
+                d = 46,   // 圆柱直径
+                center = false
+            );
+
+            translate([0, 0, -2]){
+                cylinder(
+                    h = 100,   // 圆柱高度
+                    d = 44,   // 圆柱直径
+                    center = false
+                );
+            }
+
+        }
+
 
         difference(){
 
@@ -55,8 +52,8 @@ module C(){
 
             translate([0, 0, 2]){
                 cylinder(
-                    h = 46,   // 圆柱高度
-                    d = 98,   // 圆柱直径
+                    h = 50 + 20,   // 圆柱高度
+                    d = 99,   // 圆柱直径
                     center = false
                 );
             }
@@ -82,10 +79,8 @@ module D(){
 }
 
 
-
 A();
 
-B();
 
-C();
+B();
 
