@@ -11,22 +11,17 @@ wall_thick  = 2.5;      // 壁厚
 // 螺旋带结构
 module A(){
 
-    turns   = 2;                    // 螺旋圈数
+    turns   = 1 + 2/5;                    // 螺旋圈数
     // R       = 36;                   // 螺旋半径
     strip_w = (d_out - d_in)/2;     // 螺旋带宽度
-    strip_t = wall_thick;           // 螺旋带厚度
+    strip_t = wall_thick * 3;           // 螺旋带厚度
     R       = (strip_w/2) + d_in/2;                   // 螺旋半径
 
     // 扭转挤出生成螺旋带
-    linear_extrude(
-        height = height,
-        twist = -360 * turns,
-        slices = 3000
-    )
+    linear_extrude(height = height,twist = -360 * turns, slices = 300)
     translate([R, 0])
     square([strip_w, strip_t], center = true);
 }
-
 
 // 外壳结构
 module B(){
@@ -45,14 +40,14 @@ module B(){
 
         cylinder(h = height, d = d_out,center = false);
 
-        translate([0, 0, wall_thick])
+        // translate([0, 0, wall_thick])
+        translate([0, 0, -1])
             cylinder(h = height + 20, d =d_out-wall_thick, center = false);
 
         translate([0, 0, -20])
             cylinder(h = height + 50, d = d_in, center = false);
     }
 }
-
 
 // 四分之一圆环切割结构
 module C(){
@@ -78,14 +73,21 @@ module C(){
 }
 
 
-// 用四分之一圆环切掉外壳一部分
-difference(){
+// // 用四分之一圆环切掉外壳一部分
+// difference(){
 
-    B();
+//     B();
 
-    C();
-}
+//     C();
+// }
 
 // 添加螺旋结构
 A();
+
+rotate(180){
+    A();
+}
+
+B();
+
 

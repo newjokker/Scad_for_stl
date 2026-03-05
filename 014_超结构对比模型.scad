@@ -13,7 +13,8 @@ $fn = 200;
 
 difference() {
     cylinder(h = H, d = OD, center = false);
-    cylinder(h = H + 0.2, d = ID, center = false); // +0.2 防止共面残留
+    translate([0, 0, -0.1])
+        cylinder(h = H + 0.2, d = ID, center = false); // +0.2 防止共面残留
 }
 
 
