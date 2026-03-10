@@ -4,8 +4,8 @@ from scipy.io.wavfile import write
 # -------- 参数 --------
 duration = 50            # 秒
 fs = 44100               # 采样率
-f_start = 200            # 起始频率
-f_end = 2500             # 结束频率
+f_start = 1145/2 - 1            # 起始频率
+f_end = 1145/2 + 1            # 结束频率
 
 # -------- 时间轴 --------
 t = np.linspace(0, duration, int(fs * duration))
