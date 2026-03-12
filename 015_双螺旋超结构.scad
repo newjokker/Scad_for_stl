@@ -1,4 +1,6 @@
 
+include <BOSL2/std.scad>
+
 $fn = 200;              // 圆形细分精度
 
 
@@ -11,16 +13,27 @@ wall_thick  = 2.5;      // 壁厚
 // 螺旋带结构
 module A(){
 
-    turns   = 1 + 2/5;                    // 螺旋圈数
-    // R       = 36;                   // 螺旋半径
-    strip_w = (d_out - d_in)/2;     // 螺旋带宽度
-    strip_t = wall_thick * 3;           // 螺旋带厚度
-    R       = (strip_w/2) + d_in/2;                   // 螺旋半径
+    difference(){
+        union(){
+            turns   = 1 + 2/5;                    // 螺旋圈数
+            // R       = 36;                   // 螺旋半径
+            strip_w = (d_out - d_in)/2;     // 螺旋带宽度
+            strip_t = wall_thick * 3;           // 螺旋带厚度
+            R       = (strip_w/2) + d_in/2;                   // 螺旋半径
 
-    // 扭转挤出生成螺旋带
-    linear_extrude(height = height,twist = -360 * turns, slices = 300)
-    translate([R, 0])
-    square([strip_w, strip_t], center = true);
+            // 扭转挤出生成螺旋带
+            linear_extrude(height = height,twist = -360 * turns, slices = 300)
+            translate([R, 0])
+            square([strip_w, strip_t], center = true);
+        }
+
+        // 切掉圆环延伸出来的部分
+        rotate(55)
+            translate([0, 0, 50])
+                cuboid([10, 100, 10], anchor = [0,0,0]);
+    }
+
+
 }
 
 // 外壳结构
@@ -73,20 +86,45 @@ module C(){
 }
 
 
-// // 用四分之一圆环切掉外壳一部分
-// difference(){
 
-//     B();
+// // 双螺旋
+// A();
 
-//     C();
+// rotate(180){
+//     A();
 // }
 
-// 添加螺旋结构
+// ------------------------------------
+
+// // 三螺旋
+// A();
+
+// rotate(120){
+//     A();
+// }
+
+// rotate(240){
+//     A();
+// }
+
+// ------------------------------------
+
+// 四螺旋
 A();
+
+rotate(90){
+    A();
+}
 
 rotate(180){
     A();
 }
+
+rotate(270){
+    A();
+}
+
+// ------------------------------------
 
 B();
 
