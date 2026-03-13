@@ -2,7 +2,7 @@ import numpy as np
 from scipy.io.wavfile import write
 
 # -------- 参数 --------
-duration = 50           # 秒
+duration = 10           # 秒
 fs = 44100              # 采样率
 f_start = 200           # 起始频率 (Hz)
 f_end = 2500            # 结束频率 (Hz)
