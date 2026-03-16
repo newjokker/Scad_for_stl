@@ -22,7 +22,7 @@ module A(){
             R       = (strip_w/2) + d_in/2;                   // 螺旋半径
 
             // 扭转挤出生成螺旋带
-            linear_extrude(height = height,twist = -360 * turns, slices = 300)
+            linear_extrude(height = height, twist = -360 * turns, slices = 300)
             translate([R, 0])
             square([strip_w, strip_t], center = true);
         }
@@ -85,6 +85,15 @@ module C(){
 
 }
 
+module DoubleHelix(){
+    // 双螺旋
+    A();
+
+    rotate(180){
+        A();
+    }
+    B();
+}
 
 
 // // 双螺旋
@@ -109,23 +118,25 @@ module C(){
 
 // ------------------------------------
 
-// 四螺旋
-A();
+// // 四螺旋
+// A();
 
-rotate(90){
-    A();
-}
+// rotate(90){
+//     A();
+// }
 
-rotate(180){
-    A();
-}
+// rotate(180){
+//     A();
+// }
 
-rotate(270){
-    A();
-}
+// rotate(270){
+//     A();
+// }
 
 // ------------------------------------
 
-B();
+// B();
 
+
+DoubleHelix();
 
