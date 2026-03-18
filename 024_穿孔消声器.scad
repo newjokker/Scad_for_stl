@@ -3,9 +3,9 @@ $fn = 200;              // 圆形细分精度
 
 // 定义主圆柱参数
 cylinder_height = 20;
-cylinder_diameter = 20;
+cylinder_diameter = 18;
 cylinder_radius = cylinder_diameter / 2;
-thick = 1;
+thick = 0.5;
 air_thick = 5;      // 空气层厚度
 
 // 定义小孔参数
@@ -41,7 +41,7 @@ difference() {
 }
 
 // 创建外壁
-difference() {  
+# difference() {  
     // 外壁主体
     cylinder(h = cylinder_height, d = cylinder_diameter + air_thick, center = false);
     
@@ -54,32 +54,32 @@ difference() {
 translate([0, 0, cylinder_height]) {
     // 内孔封顶（圆环）
     difference() {
-        cylinder(h = 2, d = cylinder_diameter, center = false);
+        cylinder(h = thick, d = cylinder_diameter, center = false);
         translate([0, 0, -0.01])
-            cylinder(h = 2.02, d = cylinder_diameter - thick, center = false);
+            cylinder(h = thick + 0.02, d = cylinder_diameter - thick, center = false);
     }
     
     // 外壁封顶（圆环）
     difference() {
-        cylinder(h = 2, d = cylinder_diameter + air_thick, center = false);
+        cylinder(h = thick, d = cylinder_diameter + air_thick, center = false);
         translate([0, 0, -0.01])
-            cylinder(h = 2.02, d = cylinder_diameter - thick, center = false);
+            cylinder(h = thick + 0.02, d = cylinder_diameter - thick, center = false);
     }
 }
 
 // 创建封顶 - 下部封顶（圆环形）
-translate([0, 0, -2]) {
+translate([0, 0, -thick]) {
     // 内孔封顶（圆环）
     difference() {
-        cylinder(h = 2, d = cylinder_diameter, center = false);
+        cylinder(h = thick, d = cylinder_diameter, center = false);
         translate([0, 0, -0.01])
-            cylinder(h = 2.02, d = cylinder_diameter - thick, center = false);
+            cylinder(h = thick + 0.02, d = cylinder_diameter - thick, center = false);
     }
     
     // 外壁封顶（圆环）
     difference() {
-        cylinder(h = 2, d = cylinder_diameter + air_thick, center = false);
+        cylinder(h = thick, d = cylinder_diameter + air_thick, center = false);
         translate([0, 0, -0.01])
-            cylinder(h = 2.02, d = cylinder_diameter - thick, center = false);
+            cylinder(h = thick + 0.02, d = cylinder_diameter - thick, center = false);
     }
 }
