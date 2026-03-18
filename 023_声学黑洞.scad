@@ -28,8 +28,8 @@ module wedge() {
             [0,4,3]     // 左侧面
         ]
     );
-    // // 底部凸起
-    // cuboid([L, W, c_height], anchor = BOTTOM);
+    // 底部凸起
+    cuboid([L, W, c_height], anchor = [-1, -1, 1]);
 }
 
 // ================= 横向排列的楔形块 =================
