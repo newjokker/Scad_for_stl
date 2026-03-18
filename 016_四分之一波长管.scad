@@ -11,7 +11,7 @@ d_small     = 20;
 
 
 module A(){
-    color([1, 1, 0.5, 0.3]){
+    {
         difference(){
             cylinder(h = height, d = d_out, center = false);
             translate([0, 0, -0.1])
@@ -24,7 +24,7 @@ difference(){
 
     A();
 
-    color([0.5, 0.5, 1]){
+    {
 
         r_0 = (d_out + d_in)/4;
         mini_0 = 0.02;

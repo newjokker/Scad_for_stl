@@ -13,3 +13,4 @@ NopSCADlib/
 
 *.wav
 
+scripts/__pycache__/trend_file.cpython-312.pyc
