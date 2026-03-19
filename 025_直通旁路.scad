@@ -30,16 +30,16 @@ module pip(c_h=40, c_r=10, rotate_z=90, h=10, thick=1, hollow=true){
 difference(){ 
 
     union(){
-        pip(c_h=140, c_r=10, rotate_z=0, h = 15);
+        pip(c_h=130, c_r=10, rotate_z=0, h = 15);
 
-        pip(c_h=135, c_r=10, rotate_z=90, h = 40);
+        pip(c_h=130, c_r=10, rotate_z=90, h = 40);
 
         pip(c_h=130, c_r=10, rotate_z=180, h = 60);
 
         pip(c_h=130, c_r=10, rotate_z=270, h = 60);
     }
 
-    cylinder(h = 80, r = 30, center = false);
+    cylinder(h = 80, r = 60, center = false);
 }
 
 # difference(){
@@ -47,9 +47,9 @@ difference(){
     cylinder(h = 80, r = 60, center = false);
 
     union(){
-        pip(c_h=60, c_r=10, rotate_z=0, h = 15, hollow=false);
+        pip(c_h=130, c_r=10, rotate_z=0, h = 15, hollow=false);
 
-        pip(c_h=135, c_r=10, rotate_z=90, h = 40, hollow=false);
+        pip(c_h=130, c_r=10, rotate_z=90, h = 40, hollow=false);
 
         pip(c_h=130, c_r=10, rotate_z=180, h = 60, hollow=false);
         
