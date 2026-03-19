@@ -27,27 +27,27 @@ module pip(c_h=40, c_r=10, rotate_z=90, h=10, thick=1, hollow=true){
     }
 }
 
-difference(){
+difference(){ 
 
     union(){
-        pip(c_h=40, c_r=10, rotate_z=0, h = 15);
+        pip(c_h=140, c_r=10, rotate_z=0, h = 15);
 
-        pip(c_h=35, c_r=10, rotate_z=90, h = 40);
+        pip(c_h=135, c_r=10, rotate_z=90, h = 40);
 
-        pip(c_h=30, c_r=10, rotate_z=180, h = 60);
+        pip(c_h=130, c_r=10, rotate_z=180, h = 60);
 
-        pip(c_h=30, c_r=10, rotate_z=270, h = 60);
+        pip(c_h=130, c_r=10, rotate_z=270, h = 60);
     }
 
-    cylinder(h = 80, r = 44, center = false);
+    cylinder(h = 80, r = 30, center = false);
 }
 
 # difference(){
-    cylinder(h = 80, r = 44 + 55.3, center = false);
-    cylinder(h = 80, r = 44, center = false);
+    cylinder(h = 80, r = 60 + 3, center = false);
+    cylinder(h = 80, r = 60, center = false);
 
     union(){
-        pip(c_h=140, c_r=10, rotate_z=0, h = 15, hollow=false);
+        pip(c_h=60, c_r=10, rotate_z=0, h = 15, hollow=false);
 
         pip(c_h=135, c_r=10, rotate_z=90, h = 40, hollow=false);
 
@@ -58,4 +58,8 @@ difference(){
     }
 }
 
+difference(){
+    cuboid([1000, 1000, 2], anchor=[0, 0, -1]);
+    cylinder(h = 80, r = 60, center = false);
+}
 
