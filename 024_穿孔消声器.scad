@@ -2,22 +2,22 @@ include <BOSL2/std.scad>
 $fn = 200;              // 圆形细分精度
 
 // 定义主圆柱参数
-cylinder_height = 20;
-cylinder_diameter = 18;
+thick = 1;
+cylinder_height = 50 - 2*thick;
+cylinder_diameter = 70;
+air_thick = (99.3 - cylinder_diameter - thick)/2;      // 空气层厚度
 cylinder_radius = cylinder_diameter / 2;
-thick = 0.5;
-air_thick = 5;      // 空气层厚度
 
 // 定义小孔参数
-hole_diameter = 1.5;      // 小孔直径
+hole_diameter = 2;      // 小孔直径
 rows = 7;               // 纵向行数
-columns_per_row = 12;   // 每行孔数
+columns_per_row = 15;   // 每行孔数
 start_height_offset = 1; // 起始高度偏移（避免边缘）
 
 // 创建内部多孔圆柱
 difference() {
     // 主体圆柱
-    cylinder(h = cylinder_height, d = cylinder_diameter, center = false);
+    cylinder(h = cylinder_height, d = cylinder_diameter + thick, center = false);
     
     // 打孔
     for (row = [0:rows-1]) {
@@ -37,33 +37,33 @@ difference() {
     
     // 挖空内部形成管状
     translate([0, 0, -0.01])
-        cylinder(h = cylinder_height + 0.02, d = cylinder_diameter - thick, center = false);
+        cylinder(h = cylinder_height + 0.02, d = cylinder_diameter, center = false);
 }
 
 // 创建外壁
 # difference() {  
     // 外壁主体
-    cylinder(h = cylinder_height, d = cylinder_diameter + air_thick, center = false);
+    cylinder(h = cylinder_height, d = cylinder_diameter + air_thick * 2 + thick, center = false);
     
     // 挖空内部形成外管
     translate([0, 0, -0.01])
-        cylinder(h = cylinder_height + 0.02, d = cylinder_diameter - thick + air_thick, center = false);
+        cylinder(h = cylinder_height + 0.02, d = cylinder_diameter + air_thick * 2, center = false);
 }
 
 // 创建封顶 - 上部封顶（圆环形） 
 translate([0, 0, cylinder_height]) {
     // 内孔封顶（圆环）
     difference() {
-        cylinder(h = thick, d = cylinder_diameter, center = false);
+        cylinder(h = thick, d = cylinder_diameter + thick, center = false);
         translate([0, 0, -0.01])
-            cylinder(h = thick + 0.02, d = cylinder_diameter - thick, center = false);
+            cylinder(h = thick + 0.02, d = cylinder_diameter, center = false);
     }
     
     // 外壁封顶（圆环）
     difference() {
-        cylinder(h = thick, d = cylinder_diameter + air_thick, center = false);
+        cylinder(h = thick, d = cylinder_diameter + air_thick * 2 + thick, center = false);
         translate([0, 0, -0.01])
-            cylinder(h = thick + 0.02, d = cylinder_diameter - thick, center = false);
+            cylinder(h = thick + 0.02, d = cylinder_diameter, center = false);
     }
 }
 
@@ -71,15 +71,15 @@ translate([0, 0, cylinder_height]) {
 translate([0, 0, -thick]) {
     // 内孔封顶（圆环）
     difference() {
-        cylinder(h = thick, d = cylinder_diameter, center = false);
+        cylinder(h = thick, d = cylinder_diameter +thick, center = false);
         translate([0, 0, -0.01])
-            cylinder(h = thick + 0.02, d = cylinder_diameter - thick, center = false);
+            cylinder(h = thick + 0.02, d = cylinder_diameter, center = false);
     }
     
     // 外壁封顶（圆环）
     difference() {
-        cylinder(h = thick, d = cylinder_diameter + air_thick, center = false);
+        cylinder(h = thick, d = cylinder_diameter + air_thick * 2 + thick, center = false);
         translate([0, 0, -0.01])
-            cylinder(h = thick + 0.02, d = cylinder_diameter - thick, center = false);
+            cylinder(h = thick + 0.02, d = cylinder_diameter, center = false);
     }
 }
