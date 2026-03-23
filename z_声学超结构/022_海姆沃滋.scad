@@ -1,5 +1,4 @@
 include <BOSL2/std.scad>
-use <del.scad>
 
 $fn = 200;              // 圆形细分精度
 
@@ -40,21 +39,37 @@ echo("Resonance frequency =", freq_text);
 
 // -------------------- 模型 --------------------
 
-module Helm(){
+module Helm(in_cube=true){
 
     difference() {
 
-        union() {
-            cylinder(h = h, d = 2 * (r + thick), center = false);
-            cuboid([a + 2 * thick, b + 2 * thick, c + 2 * thick], anchor = [0,0,1]);
-        }
+        cuboid([a + 2 * thick, b + 2 * thick, c + 2 * thick], anchor = [0,0,-1]);
 
-        translate([0, 0, -thick])
-            cuboid([a, b, c], anchor = [0,0,1]);
+        translate([0, 0, thick])
+            cuboid([a, b, c], anchor = [0,0,-1]);
 
-        translate([0, 0, -thick - 0.01])
-            cylinder(h = h + thick + 0.02, d = 2 * r, center = false);
+        translate([0, 0, thick + 0.01])
+            cylinder(h = 200, d = 2 * r, center = false);
     }
+
+    if (in_cube == true)
+    {
+        translate([0, 0, c-h+thick])
+            difference(){
+                cylinder(h = h, d = 2 * (r + thick), center = false);
+                translate([0, 0, -thick - 0.01])
+                    cylinder(h = h + thick + 0.02, d = 2 * r, center = false);
+            }
+    }
+    else{
+        translate([0, 0, c+2*thick])
+            difference(){
+                cylinder(h = h, d = 2 * (r + thick), center = false);
+                translate([0, 0, -thick - 0.01])
+                    cylinder(h = h + thick + 0.02, d = 2 * r, center = false);
+            } 
+    }
+
 }
 
 module Helm_in(){
@@ -66,27 +81,32 @@ module Helm_in(){
 
 
 
-// -------------------- 频率文字 --------------------
-// text() 是 2D，配合 linear_extrude 变成 3D
-translate([12, 12, h + 10])
-    linear_extrude(height = 0.8)
-        text(
-            freq_text,
-            size = 3,
-            font = "Heiti SC:style=Regular",
-            halign = "center",
-            valign = "center"
-        );
+// // -------------------- 频率文字 --------------------
+// // text() 是 2D，配合 linear_extrude 变成 3D
+// translate([12, 12, h + 10])
+//     linear_extrude(height = 0.8)
+//         text(
+//             freq_text,
+//             size = 3,
+//             font = "Heiti SC:style=Regular",
+//             halign = "center",
+//             valign = "center"
+//         );
 
 
-Helm();
-
-// translate([0, 15, 0])
-//     rotate([90, 0, 0])
-//         Helm_in();
-
+// difference(){
+//     Helm(in_cube=false);
+//     cuboid([100, 100, 100], anchor=[-1, 0, 0]);
+// }
 
 
+Helm(in_cube=false);
+
+translate([100, 0, 0])
+    Helm(in_cube=true);
+
+
+// Helm_in();
 
 // scale([0.6, 0.6, 0.6]){
 //     std_module();
