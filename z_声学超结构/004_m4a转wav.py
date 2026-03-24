@@ -39,5 +39,5 @@ def convert_m4a_to_wav(input_path, output_path=None, sample_rate=44100, channels
 # 使用示例
 if __name__ == "__main__":
     # 单个文件转换
-    convert_m4a_to_wav("/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/中新大道 8.m4a", "output2.wav")
+    convert_m4a_to_wav("/Volumes/Jokker/Code/Scad_for_stl/风机的频率.m4a", "自己买的风机.wav")
     
