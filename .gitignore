@@ -19,3 +19,5 @@ scripts/__pycache__/trend_file.cpython-312.pyc
 *.m4a
 *.ahai.csd
 *.csv
+*.jfif
+*.DS_Store

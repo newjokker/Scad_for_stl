@@ -218,7 +218,7 @@ def plot_comparison_results(filenames, labels, f_min=200, f_max=2500, is_steady=
     
     # 保存图片
     output_image = f"{output_prefix}.png"
-    plt.savefig(output_image, dpi=300, bbox_inches='tight')
+    # plt.savefig(output_image, dpi=300, bbox_inches='tight')
     print(f"\n✅ 对比图表已保存: {output_image}")
     plt.show()
     
@@ -251,18 +251,6 @@ def plot_comparison_results(filenames, labels, f_min=200, f_max=2500, is_steady=
                 })
                 print(f"  {label}: 在 {freq:.1f} Hz 处降噪 {gain:.1f} dB")
     
-    # 4. 生成CSV报告
-    if results:
-        df_results = pd.DataFrame(results)
-        csv_file = f"{output_prefix}_极值点分析.csv"
-        df_results.to_csv(csv_file, index=False, encoding='utf-8-sig')
-        print(f"\n📁 CSV报告已保存: {csv_file}")
-    
-    print(f"\n🎉 分析完成！输出文件:")
-    print(f"   1. 对比图表: {output_prefix}.png")
-    print(f"   2. 数据报告: {output_prefix}_极值点分析.csv")
-    print("="*60)
-
 
 # ================= 使用示例 =================
 if __name__ == "__main__":
@@ -271,21 +259,19 @@ if __name__ == "__main__":
     WAV_FILES = [
         r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/测试ha超材料/2026-03-25_09_43_52.559-1channel.wav",      # 基准文件
         r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/测试ha超材料/2026-03-25_09_46_24.361-1channel.wav",       # 对比结构1
-        r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/测试ha超材料/2026-03-25_09_47_49.821-1channel.wav"       # 对比结构1
     ]
     
     # 2. 对应的标签/结构名称
     LABELS = [
-        "无降噪",
-        "海姆沃兹共振", 
-        "吸音板", 
+        "w",
+        "wo", 
     ]
     
     # 3. 分析参数
     FREQ_MIN = 200      # 分析最低频率(Hz)
     FREQ_MAX = 2500     # 分析最高频率(Hz)
     IS_STEADY = True   # True=稳态噪声, False=扫频信号
-    REF_IDX = 0         # 参考结构索引（0表示第一个文件作为基准）
+    REF_IDX = 1         # 参考结构索引（0表示第一个文件作为基准）
     OUTPUT_PREFIX = "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/res"  # 输出文件名前缀
     
     # ================ 执行分析 ================
