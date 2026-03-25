@@ -1,14 +1,14 @@
 include <BOSL2/std.scad>
 include <BOSL2/structs.scad>
 
-$fn = 64;  // 优化性能
+$fn = 80;  // 优化性能
 
 // ===================== 参数 =====================
 cell_r      = 8;     // 六边形“外接圆半径”，也可理解为单元尺寸
-wall_t      = 0.8;     // 蜂窝壁厚
+wall_t      = 1;     // 蜂窝壁厚
 core_h      = 30;    // 蜂窝高度
-rows        = 15;     // 行数
-cols        = 5;     // 列数
+rows        = 3;     // 行数
+cols        = 3;     // 列数
 r_hollow    = 2.5;
 // ===================== 基本六边形 =====================
 module hex2d(r=10) {
@@ -26,8 +26,8 @@ module honeycomb_cell_2d(r=10, t=1) {
 }
 
 // 单个蜂窝单元（带上下盖）
-module honeycomb_cell_with_caps(r=10, t=1, h=20) {
-    difference(){
+module honeycomb_cell_with_caps(r=10, t=1, h=20, pip_h=15) {
+    # difference(){
         union(){
             rotate([0, 0, 30])
             union() {
@@ -50,13 +50,11 @@ module honeycomb_cell_with_caps(r=10, t=1, h=20) {
     }
 
     // 下面的管子
-    translate([0, 0, h-15-t])
+    translate([0, 0, h-pip_h-t])
         difference(){
-            cylinder(r=r_hollow + t, h=15);
-            cylinder(r=r_hollow, h=15);
+            cylinder(r=r_hollow + t, h=pip_h);
+            cylinder(r=r_hollow, h=pip_h);
         }
-        
-
 }
 
 // 蜂窝阵列（带盖子）
@@ -70,13 +68,14 @@ module honeycomb_core(r=10, t=1, h=20, rows=5, cols=6) {
                 x = col * dx + (row % 2) * dx / 2;
                 y = row * dy;
                 translate([x, y, 0])
-                    honeycomb_cell_with_caps(r, t, h);
+                    honeycomb_cell_with_caps(r, t, h, pip_h=15);
             }
         }
     }
 }
 
 // ===================== 总装 =====================
+
 honeycomb_core(
     r = cell_r,
     t = wall_t,
@@ -84,3 +83,5 @@ honeycomb_core(
     rows = rows,
     cols = cols
 );
+
+
