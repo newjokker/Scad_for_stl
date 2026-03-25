@@ -9,7 +9,7 @@ wall_t      = 1;     // 蜂窝壁厚
 core_h      = 30;    // 蜂窝高度
 rows        = 5;     // 行数
 cols        = 5;     // 列数
-r_hollow    = 1.5;
+r_hollow    = 2.5;
 // ===================== 基本六边形 =====================
 module hex2d(r=10) {
     polygon(points=[
@@ -49,6 +49,14 @@ module honeycomb_cell_with_caps(r=10, t=1, h=20) {
             cylinder(h=wall_t * 2 + core_h, r=r_hollow, center=false);
     }
 
+    // 下面的管子
+    translate([0, 0, h-15-t])
+        difference(){
+            cylinder(r=r_hollow + t, h=15);
+            cylinder(r=r_hollow, h=15);
+        }
+        
+
 }
 
 // 蜂窝阵列（带盖子）
@@ -69,7 +77,7 @@ module honeycomb_core(r=10, t=1, h=20, rows=5, cols=6) {
 }
 
 // ===================== 总装 =====================
-# honeycomb_core(
+honeycomb_core(
     r = cell_r,
     t = wall_t,
     h = core_h,
