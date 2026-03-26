@@ -21,3 +21,5 @@ scripts/__pycache__/trend_file.cpython-312.pyc
 *.csv
 *.jfif
 *.DS_Store
+*.jpeg
+.gitignore
