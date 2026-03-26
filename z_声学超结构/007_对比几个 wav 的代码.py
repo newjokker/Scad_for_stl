@@ -257,21 +257,29 @@ if __name__ == "__main__":
     # ================ 配置区 ================
     # 1. 输入WAV文件列表（完整路径）
     WAV_FILES = [
-        r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/测试ha超材料/2026-03-25_09_43_52.559-1channel.wav",      # 基准文件
-        r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/测试ha超材料/2026-03-25_09_46_24.361-1channel.wav",       # 对比结构1
+        r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/大的随机共振器/没板子/2026-03-26_13_48_12.429-1channel.wav",     
+        # r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/大的随机共振器/没板子/2026-03-26_13_48_25.972-1channel.wav",     
+        # r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/大的随机共振器/没板子/2026-03-26_13_48_38.604-1channel.wav",     
+        r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/大的随机共振器/有板子/2026-03-26_13_45_34.196-1channel.wav",      
+        # r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/大的随机共振器/有板子/2026-03-26_13_45_48.364-1channel.wav",      
+        # r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/大的随机共振器/有板子/2026-03-26_13_46_01.757-1channel.wav",      
     ]
     
     # 2. 对应的标签/结构名称
-    LABELS = [
-        "w",
-        "wo", 
+    LABELS = [  
+        "无超材料",
+        # "wo-2",
+        # "wo-3",
+        "有超材料",  
+        # "w-2", 
+        # "w-3", 
     ]
     
     # 3. 分析参数
     FREQ_MIN = 200      # 分析最低频率(Hz)
     FREQ_MAX = 2500     # 分析最高频率(Hz)
     IS_STEADY = True   # True=稳态噪声, False=扫频信号
-    REF_IDX = 1         # 参考结构索引（0表示第一个文件作为基准）
+    REF_IDX = 0         # 参考结构索引（0表示第一个文件作为基准）
     OUTPUT_PREFIX = "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/res"  # 输出文件名前缀
     
     # ================ 执行分析 ================
