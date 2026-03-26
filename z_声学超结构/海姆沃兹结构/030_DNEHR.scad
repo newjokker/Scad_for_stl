@@ -3,23 +3,13 @@ include <BOSL2/structs.scad>
 
 $fn = 50;
 
-// ===== 参数（单位 mm）=====
-t  = 1;   // 壁厚
 
-lu  = 30.1;     
-l1  = 0.3;
-du  = 6.7;    
-dd  = 3.2;     
-W   = 24.1;
-Lu  = 35.7;    
-H   = 10.8;
+module DNEHR(lu, l1, du, dd, W, Lu, H, l2){
 
-Ld = 45 - Lu -3*t;    // 下腔高度
-l2 = 4; 
-L= 45;
-
-
-module DNEHR(){
+    t = 0.8;
+    Ld = 45 - Lu -3*t;   
+    L = 45;
+    
     // 外面的大框
     difference(){
         cuboid([H, W, L], anchor=[0, 0, -1]);
@@ -52,11 +42,14 @@ module DNEHR(){
 
 }
 
-
+// 内部结构展示
 difference(){
-    DNEHR();
+    DNEHR(lu=9.9, l1=4.5, du=6.8, dd=2.2, W=24.5, Lu=37.3, H=10.8, l2=2.8);
     cuboid([100, 100, 100], anchor=[-1, 0, -1]);
 }
+
+// 
+
 
 
 
