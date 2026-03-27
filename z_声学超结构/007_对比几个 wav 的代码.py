@@ -257,22 +257,18 @@ if __name__ == "__main__":
     # ================ 配置区 ================
     # 1. 输入WAV文件列表（完整路径）
     WAV_FILES = [
-        r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/大的随机共振器/没板子/2026-03-26_13_48_12.429-1channel.wav",     
-        # r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/大的随机共振器/没板子/2026-03-26_13_48_25.972-1channel.wav",     
-        # r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/大的随机共振器/没板子/2026-03-26_13_48_38.604-1channel.wav",     
-        r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/大的随机共振器/有板子/2026-03-26_13_45_34.196-1channel.wav",      
-        # r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/大的随机共振器/有板子/2026-03-26_13_45_48.364-1channel.wav",      
-        # r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/大的随机共振器/有板子/2026-03-26_13_46_01.757-1channel.wav",      
+        r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-03-27_对比实验/001_无结构.wav",     
+        r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-03-27_对比实验/002_无钢丝网.wav",     
+        r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-03-27_对比实验/003_反向.wav",     
+        r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-03-27_对比实验/004_有钢丝网.wav",      
     ]
     
     # 2. 对应的标签/结构名称
     LABELS = [  
-        "无超材料",
-        # "wo-2",
-        # "wo-3",
-        "有超材料",  
-        # "w-2", 
-        # "w-3", 
+        "无",
+        "无钢丝网",
+        "反向",
+        "有钢丝网",  
     ]
     
     # 3. 分析参数
