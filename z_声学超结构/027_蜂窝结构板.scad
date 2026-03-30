@@ -5,17 +5,9 @@ $fn = 80;  // 优化性能
 
 // ===================== 参数 =====================
 cell_r      = 8;     // 六边形“外接圆半径”，也可理解为单元尺寸
-wall_t      = 0.8;     // 蜂窝壁厚
-core_h      = 30;    // 蜂窝高度
-rows        = 3;     // 行数
-cols        = 3;     // 列数
-r_hollow    = 2.5;
-
-
-r_hollow_min = 1.5;
-r_hollow_max = 3.5;
-
-
+wall_t      = 0.8;   // 蜂窝壁厚
+rows        = 5;     // 行数
+cols        = 5;     // 列数
 
 // ===================== 基本六边形 =====================
 module hex2d(r=10) {
@@ -52,8 +44,8 @@ module honeycomb_cell_with_caps(r=10, t=1, h=20, pip_h=15, r_hollow=2) {
                     hex2d(r - t/2);
             }
         }
-        translate([0, 0, wall_t])
-            cylinder(h=wall_t * 2 + core_h, r=r_hollow, center=false);
+        translate([0, 0, t])
+            cylinder(h=t * 2 + h, r=r_hollow, center=false);
     }
 
     // 下面的管子
@@ -65,7 +57,7 @@ module honeycomb_cell_with_caps(r=10, t=1, h=20, pip_h=15, r_hollow=2) {
 }
 
 // 蜂窝阵列（带盖子）
-module honeycomb_core(r=10, t=1, h=20, rows=5, cols=6) {
+module honeycomb_core(r=10, t=1, rows=5, cols=6) {
     dx = sqrt(3) * (r - t/2);        // 同列中心的 x 间距
     dy = 1.5 * (r - t/2);            // 行间距
 
@@ -76,6 +68,7 @@ module honeycomb_core(r=10, t=1, h=20, rows=5, cols=6) {
                 y = row * dy;
                 translate([x, y, 0])
 
+                    // 这边设置各个部分的长度范围
                     let(rand_r_hollow = rands(1.5, 3.5, 1)[0])
                     let(rand_pip_h = rands(1, 18, 1)[0])
                     let(rand_h = rands(20, 30, 1)[0])
@@ -93,7 +86,6 @@ module honeycomb_core(r=10, t=1, h=20, rows=5, cols=6) {
 honeycomb_core(
     r = cell_r,
     t = wall_t,
-    h = core_h,
     rows = rows,
     cols = cols
 );
