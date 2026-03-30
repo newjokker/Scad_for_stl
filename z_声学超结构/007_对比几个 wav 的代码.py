@@ -257,18 +257,18 @@ if __name__ == "__main__":
     # ================ 配置区 ================
     # 1. 输入WAV文件列表（完整路径）
     WAV_FILES = [
-        r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-03-27_对比实验/001_无结构.wav",     
-        r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-03-27_对比实验/002_无钢丝网.wav",     
-        r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-03-27_对比实验/003_反向.wav",     
-        r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-03-27_对比实验/004_有钢丝网.wav",      
+        r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-03-30_两块板的超材料/无结构.wav",     
+        r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-03-30_两块板的超材料/结构+2块.wav",     
+        r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-03-30_两块板的超材料/结构+布+2块.wav",     
+        r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-03-30_两块板的超材料/胶布封住洞.wav",      
     ]
     
     # 2. 对应的标签/结构名称
     LABELS = [  
         "无",
-        "无钢丝网",
-        "反向",
-        "有钢丝网",  
+        "超结构",
+        "超结构+布",
+        "超结构+封住洞",  
     ]
     
     # 3. 分析参数
