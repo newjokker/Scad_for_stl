@@ -102,7 +102,7 @@ module Helm_in(){
 
 Helm(in_cube=false);
 
-translate([100, 0, 0])
+translate([40, 0, 0])
     Helm(in_cube=true);
 
 
