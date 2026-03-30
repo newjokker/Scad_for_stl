@@ -5,11 +5,18 @@ $fn = 80;  // 优化性能
 
 // ===================== 参数 =====================
 cell_r      = 8;     // 六边形“外接圆半径”，也可理解为单元尺寸
-wall_t      = 1;     // 蜂窝壁厚
+wall_t      = 0.8;     // 蜂窝壁厚
 core_h      = 30;    // 蜂窝高度
 rows        = 3;     // 行数
 cols        = 3;     // 列数
 r_hollow    = 2.5;
+
+
+r_hollow_min = 1.5;
+r_hollow_max = 3.5;
+
+
+
 // ===================== 基本六边形 =====================
 module hex2d(r=10) {
     polygon(points=[
@@ -26,7 +33,7 @@ module honeycomb_cell_2d(r=10, t=1) {
 }
 
 // 单个蜂窝单元（带上下盖）
-module honeycomb_cell_with_caps(r=10, t=1, h=20, pip_h=15) {
+module honeycomb_cell_with_caps(r=10, t=1, h=20, pip_h=15, r_hollow=2) {
     # difference(){
         union(){
             rotate([0, 0, 30])
@@ -68,7 +75,14 @@ module honeycomb_core(r=10, t=1, h=20, rows=5, cols=6) {
                 x = col * dx + (row % 2) * dx / 2;
                 y = row * dy;
                 translate([x, y, 0])
-                    honeycomb_cell_with_caps(r, t, h, pip_h=15);
+
+                    let(rand_r_hollow = rands(1.5, 3.5, 1)[0])
+                    let(rand_pip_h = rands(1, 18, 1)[0])
+                    let(rand_h = rands(20, 30, 1)[0])
+                    
+                    // 将上段对齐
+                    translate([0, 0, -rand_h])
+                        honeycomb_cell_with_caps(r, t, rand_h, pip_h=rand_pip_h, r_hollow=rand_r_hollow);
             }
         }
     }
