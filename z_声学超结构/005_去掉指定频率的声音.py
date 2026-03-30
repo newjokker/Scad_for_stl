@@ -39,10 +39,10 @@ def remove_frequency_band(input_wav, output_wav, freq_min, freq_max):
 # --------------------------
 # 示例用法
 # --------------------------
-input_wav = "自己买的风机.wav"
-output_wav = "output_filtered_自己买的风机2.wav.wav"
-freq_min = 1080    # Hz
-freq_max = 1084   # Hz
+input_wav = "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-03-30_两块板的超材料/结构+布+2块.wav"
+output_wav = "/Volumes/Jokker/Code/Scad_for_stl/12312.wav"
+freq_min = 95    # Hz
+freq_max = 105   # Hz
 
 remove_frequency_band(input_wav, output_wav, freq_min, freq_max)
 
