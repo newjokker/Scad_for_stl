@@ -3,7 +3,7 @@ include <BOSL2/structs.scad>
 
 $fn = 128;
 
-
+thick = 2;
 
 
 
@@ -36,10 +36,10 @@ module A(d1, d2) {
 
 difference() {
     A(70, 150);
-    A(70 -2, 150 -2);
+    A(70 -2*thick, 150 -2*thick);
 }
 
 difference() {
     cylinder(h = 4, r = 120/2);
-    A(70 -2, 150 -2);
+    A(70 -2 * thick, 150 -2 * thick);
 }   

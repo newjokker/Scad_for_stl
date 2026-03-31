@@ -37,14 +37,14 @@ difference() {
                 anchor=[0, 0, -1],
             );
 
-    translate([0, 0, 500 - 100 * 2]) 
+    translate([0, 0, 500 - 150 * 2]) 
         rotate([90, 0, 90]) 
             cuboid(
                 [hole_w, hole_l, 200],
                 anchor=[0, 0, -1],
             );
 
-    translate([0, 0, 500 + 100 * 2]) 
+    translate([0, 0, 500 + 150 * 2]) 
         rotate([90, 0, 90]) 
             cuboid(
                 [hole_w, hole_l, 200],
