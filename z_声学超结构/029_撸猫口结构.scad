@@ -176,6 +176,13 @@ module base_plate(data=cells){
     }
     translate([0, 0, -5])
         cylinder(r=base_r, h=base_h, center=false);
+
+    translate([0, 0, -5]) 
+        difference() {
+            cylinder(r=base_r,   h=h + 4, center=false);
+            cylinder(r=base_r-1, h=h+4, center=false);
+        }
+
 }
 
 
