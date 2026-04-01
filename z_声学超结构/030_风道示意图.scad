@@ -3,15 +3,18 @@ include <BOSL2/structs.scad>
 
 $fn = 128;
 
-L = 150;
+L = 200;
 W = 200;
 H = 1000;
 thick = 3.2;
 outer_rounding = 30;
 inner_rounding = outer_rounding - thick;
 
-hole_w = 130;
-hole_l = 130;
+hole_w = 120;
+hole_l = 120;
+
+// 三个孔的高度
+z_list = [500, 500 - 130 * 2, 500 + 130 * 2];
 
 difference() {
     cuboid(
@@ -29,26 +32,31 @@ difference() {
             edges="Z"
         );
 
-    // 开三个 150 *  150 的方孔，方便安装
-    translate([0, 0, 500]) 
-        rotate([90, 0, 90]) 
-            cuboid(
-                [hole_w, hole_l, 200],
-                anchor=[0, 0, -1],
-            );
+    // ========= 左右两侧（X方向） =========
+    for (z = z_list) {
 
-    translate([0, 0, 500 - 150 * 2]) 
-        rotate([90, 0, 90]) 
-            cuboid(
-                [hole_w, hole_l, 200],
-                anchor=[0, 0, -1],
-            );
+        // 左侧 (-X)
+        translate([-400, 0, z]) 
+            rotate([90, 0, 90]) 
+                cuboid([hole_w, hole_l, 800], anchor=[0, 0, -1]);
 
-    translate([0, 0, 500 + 150 * 2]) 
-        rotate([90, 0, 90]) 
-            cuboid(
-                [hole_w, hole_l, 200],
-                anchor=[0, 0, -1],
-            );
+        // 右侧 (+X)
+        translate([400, 0, z]) 
+            rotate([90, 0, 90]) 
+                cuboid([hole_w, hole_l, 800], anchor=[0, 0, -1]);
+    }
 
+    // ========= 前后两侧（Y方向） =========
+    for (z = z_list) {
+
+        // 前侧 (-Y)
+        translate([0, -400, z]) 
+            rotate([90, 90, 0]) 
+                cuboid([hole_w, hole_l, 800], anchor=[0, 0, -1]);
+
+        // 后侧 (+Y)
+        translate([0, 400, z]) 
+            rotate([90, 90, 0]) 
+                cuboid([hole_w, hole_l, 800], anchor=[0, 0, -1]);
+    }
 }
