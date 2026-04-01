@@ -209,4 +209,9 @@ module DNEHR_shared_array() {
 // =========================
 // 渲染
 // =========================
-DNEHR_shared_array();
+difference() {
+    DNEHR_shared_array();  
+    cuboid([100, 100, t], anchor=[0, 0, -1]);
+
+}
+
