@@ -11,11 +11,12 @@ outer_rounding = 30;
 inner_rounding = outer_rounding - thick;
 
 // 洞的尺寸
-hole_w = 120;
+hole_w = 150;
 hole_l = 120;
 
 // 三个孔的高度
 z_list = [500, 500 - 130 * 2, 500 + 130 * 2];
+// z_list = [333/2];
 
 difference() {
     cuboid(
@@ -39,12 +40,12 @@ difference() {
         // 左侧 (-X)
         translate([-400, 0, z]) 
             rotate([90, 0, 90]) 
-                cuboid([hole_w, hole_l, 800], anchor=[0, 0, -1]);
+                cuboid([hole_l, hole_w, 800], anchor=[0, 0, -1]);
 
         // 右侧 (+X)
         translate([400, 0, z]) 
             rotate([90, 0, 90]) 
-                cuboid([hole_w, hole_l, 800], anchor=[0, 0, -1]);
+                cuboid([hole_l, hole_w, 800], anchor=[0, 0, -1]);
     }
 
     // ========= 前后两侧（Y方向） =========
