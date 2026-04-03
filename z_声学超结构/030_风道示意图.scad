@@ -10,6 +10,7 @@ thick = 3.2;
 outer_rounding = 30;
 inner_rounding = outer_rounding - thick;
 
+// 洞的尺寸
 hole_w = 120;
 hole_l = 120;
 
