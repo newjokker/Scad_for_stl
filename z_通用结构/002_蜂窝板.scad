@@ -56,38 +56,6 @@ module honeycomb_cell_with_caps(r=10, t=1, h=20, pip_h=15, r_hollow=2) {
         }
 }
 
-// 蜂窝阵列（带盖子）
-module honeycomb_core(r=10, t=1, rows=5, cols=6) {
-    dx = sqrt(3) * (r - t/2);        // 同列中心的 x 间距
-    dy = 1.5 * (r - t/2);            // 行间距
 
-    union() {
-        for (row = [0:rows-1]) {
-            for (col = [0:cols-1]) {
-                x = col * dx + (row % 2) * dx / 2;
-                y = row * dy;
-                translate([x, y, 0])
-
-                    // 这边设置各个部分的长度范围
-                    let(rand_r_hollow = rands(1.5, 3.5, 1)[0])
-                    let(rand_pip_h = rands(1, 18, 1)[0])
-                    let(rand_h = rands(20, 30, 1)[0])
-                    
-                    // 将上段对齐
-                    translate([0, 0, -rand_h])
-                        honeycomb_cell_with_caps(r, t, rand_h, pip_h=rand_pip_h, r_hollow=rand_r_hollow);
-            }
-        }
-    }
-}
-
-// ===================== 总装 =====================
-
-honeycomb_core(
-    r = cell_r,
-    t = wall_t,
-    rows = rows,
-    cols = cols
-);
-
-
+linear_extrude(height=10)
+    honeycomb_cell_2d(8, wall_t);

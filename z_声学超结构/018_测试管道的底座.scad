@@ -6,6 +6,8 @@ $fn = 128;
 
 length = 220;
 
+d = 135;
+
 thick = 5;
 
 difference(){
@@ -16,9 +18,9 @@ difference(){
         cuboid([length - 2 * thick, length - 2 * thick, length + 100], anchor = [-1,-1,-1]);
 
     translate([length/2, length/2, -0.01])
-        cylinder(h=10 + 0.02, r=125/2, center=false);
-
+        cylinder(h=10 + 0.02, r=d/2, center=false);
 }
+
 
 //
 
