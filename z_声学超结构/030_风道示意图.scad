@@ -5,7 +5,7 @@ $fn = 128;
 
 L = 200;
 W = 200;
-H = 1000;
+H = 333;
 thick = 3.2;
 outer_rounding = 30;
 inner_rounding = outer_rounding - thick;
@@ -15,8 +15,8 @@ hole_w = 150;
 hole_l = 120;
 
 // 三个孔的高度
-z_list = [500, 500 - 130 * 2, 500 + 130 * 2];
-// z_list = [333/2];
+// z_list = [500, 500 - 130 * 2, 500 + 130 * 2];
+z_list = [333/2];
 
 difference() {
     cuboid(

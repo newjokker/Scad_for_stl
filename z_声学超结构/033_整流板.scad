@@ -6,7 +6,7 @@ include <BOSL2/structs.scad>
 $fn = 80;  // 优化性能
 
 // ===================== 参数 =====================
-cell_r      = 8;     // 六边形“外接圆半径”，也可理解为单元尺寸
+cell_r      = 6;     // 六边形“外接圆半径”，也可理解为单元尺寸
 wall_t      = 0.8;   // 蜂窝壁厚
 rows        = 35;     // 行数
 cols        = 35;     // 列数
@@ -48,12 +48,12 @@ module honeycomb_core(r=10, t=1, rows=5, cols=6,  h=10) {
 
 
 thick = 2;
-r = 120;
+r = 120/2;
 
 difference(){
     cylinder(r=r, h=height, center=false);
     translate([0, 0, -0.01])
-    cylinder(r=r - 2*thick , h=height + 0.02, center=false);
+    cylinder(r=r - thick , h=height + 0.02, center=false);
 }
 
 intersection(){
