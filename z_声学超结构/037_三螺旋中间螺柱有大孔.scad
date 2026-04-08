@@ -4,9 +4,9 @@ include <BOSL2/std.scad>
 $fn = 200;              // 圆形细分精度
 
 
-height      = 49.65;    // 模型高度
-d_out       = 99.3;
-d_in        = 44;
+height      = 40;    // 模型高度
+d_out       = 87;
+d_in        = 25;
 wall_thick  = 2.5;      // 壁厚
 
 
@@ -42,7 +42,8 @@ module B(){
     // 内侧圆环
     difference(){
 
-        cylinder(h = height, d = d_in + wall_thick, center = false);
+        // cylinder(h = height, d = d_in + wall_thick, center = false);
+        cylinder(h = height, d = d_in + 0.4, center = false);
 
         translate([0, 0, -20])
             cylinder(h = height + 50, d = d_in, center = false);
@@ -96,15 +97,6 @@ module DoubleHelix(){
 }
 
 
-// // 双螺旋
-// A();
-
-// rotate(180){
-//     A();
-// }
-
-// ------------------------------------
-
 // 三螺旋
 A();
 
@@ -116,27 +108,6 @@ rotate(240){
     A();
 }
 
-// ------------------------------------
 
-// // 四螺旋
-// A();
-
-// rotate(90){
-//     A();
-// }
-
-// rotate(180){
-//     A();
-// }
-
-// rotate(270){
-//     A();
-// }
-
-// ------------------------------------
-
-// B();
-
-
-DoubleHelix();
+B();
 
