@@ -5,8 +5,8 @@ $fn = 200;              // 圆形细分精度
 
 
 height      = 40;    // 模型高度
-d_out       = 87;
-d_in        = 25;
+d_out       = 87 * 2;
+d_in        = 25 * 2;
 wall_thick  = 2.5;      // 壁厚
 
 
@@ -30,7 +30,7 @@ module A(){
         // 切掉圆环延伸出来的部分
         rotate(55)
             translate([0, 0, height])
-                cuboid([10, 100, 10], anchor = [0,0,0]);
+                cuboid([10, 200, 10], anchor = [0,0,0]);
     }
 
 
@@ -39,15 +39,15 @@ module A(){
 // 外壳结构
 module B(){
 
-    // 内侧圆环
-    difference(){
+    // // 内侧圆环
+    // difference(){
 
-        // cylinder(h = height, d = d_in + wall_thick, center = false);
-        cylinder(h = height, d = d_in + 0.4, center = false);
+    //     // cylinder(h = height, d = d_in + wall_thick, center = false);
+    //     cylinder(h = height, d = d_in + 0.4, center = false);
 
-        translate([0, 0, -20])
-            cylinder(h = height + 50, d = d_in, center = false);
-    }
+    //     translate([0, 0, -20])
+    //         cylinder(h = height + 50, d = d_in, center = false);
+    // }
 
     // 外侧圆环
     difference(){
@@ -110,4 +110,3 @@ rotate(240){
 
 
 B();
-
