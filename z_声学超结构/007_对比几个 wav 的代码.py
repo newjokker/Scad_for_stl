@@ -256,60 +256,24 @@ def plot_comparison_results(filenames, labels, f_min=200, f_max=2500, is_steady=
 if __name__ == "__main__":
     # ================ 配置区 ================
     # 1. 输入WAV文件列表（完整路径）
-    WAV_FILES = [
-        # r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-03-30/测点3-结构角点-4块吸音板.wav",     
-        # r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-03-30/测点3-结构角点-4块吸音板反面.wav",     
-        # r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-03-30/测点3-结构角点-结构+布+1块.wav",     
-        # r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-03-30/测点3-结构角点-结构+布+2块.wav",      
-        # r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-03-30/测点3-结构角点-结构+1块.wav",      
-        r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-03-30/测点3-结构角点-结构+2块.wav",      
-        # r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-03-30/测点3-结构角点-结构胶布堵孔+1块.wav",      
-        r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-03-30/测点3-结构角点-结构胶布堵孔+2块.wav",      
-        # r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-03-30/测点3-结构角点-无结构.wav",      
+
+    WAV_FILES = [   
+        r"/Volumes/Jokker/Code/Scad_for_stl/没有整流板.wav",      
+        r"/Volumes/Jokker/Code/Scad_for_stl/有整流板.wav",      
     ]
-    
-    # WAV_FILES = [
-    #     # r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-03-30/测点2-面中心-4块吸音板.wav",     
-    #     # r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-03-30/测点2-面中心-4块吸音板反面.wav",     
-    #     # r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-03-30/测点2-面中心-结构+布+1块.wav",     
-    #     # r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-03-30/测点2-面中心-结构+布+2块.wav",      
-    #     # r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-03-30/测点2-面中心-结构+1块.wav",      
-    #     r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-03-30/测点2-面中心-结构+2块.wav",      
-    #     # r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-03-30/测点2-面中心-结构胶布堵孔+1块.wav",      
-    #     r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-03-30/测点2-面中心-结构胶布堵孔+2块.wav",      
-    #     # r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-03-30/测点2-面中心-无结构.wav",      
-    # ]
-    
-    # WAV_FILES = [
-    #     # r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-03-30/测点1-中心-4块吸音板.wav",     
-    #     # r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-03-30/测点1-中心-4块吸音板反面.wav",     
-    #     # r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-03-30/测点1-中心-结构+布+1块.wav",     
-    #     # r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-03-30/测点1-中心-结构+布+2块.wav",      
-    #     # r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-03-30/测点1-中心-结构+1块.wav",      
-    #     r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-03-30/测点1-中心-结构+2块.wav",      
-    #     # r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-03-30/测点1-中心-结构胶布堵孔+1块.wav",      
-    #     r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-03-30/测点1-中心-结构胶布堵孔+2块.wav",      
-    #     # r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-03-30/测点1-中心-无结构.wav",      
-    # ]
+
     
     # 2. 对应的标签/结构名称
-    LABELS = [  
-        # "4块吸音板",
-        # "4块吸音板反面",
-        # "结构+布+1块",
-        # "结构+布+2块",  
-        # "结构+1块",  
-        "结构+2块",  
-        # "结构胶布堵孔+1块",  
-        "结构胶布堵孔+2块",  
-        # "无结构",  
+    LABELS = [   
+        "没有整流板",  
+        "有整流板",  
     ]
     
     # 3. 分析参数
     FREQ_MIN = 200      # 分析最低频率(Hz)
-    FREQ_MAX = 14500     # 分析最高频率(Hz)
+    FREQ_MAX = 5000     # 分析最高频率(Hz)
     IS_STEADY = True   # True=稳态噪声, False=扫频信号
-    REF_IDX = 1         # 参考结构索引（0表示第一个文件作为基准）
+    REF_IDX = 0         # 参考结构索引（0表示第一个文件作为基准）
     OUTPUT_PREFIX = "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/res"  # 输出文件名前缀
     
     # ================ 执行分析 ================
@@ -322,3 +286,5 @@ if __name__ == "__main__":
         reference_idx=REF_IDX,
         output_prefix=OUTPUT_PREFIX
     )
+    
+    
