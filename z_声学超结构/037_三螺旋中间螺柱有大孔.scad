@@ -7,7 +7,7 @@ $fn = 200;              // 圆形细分精度
 height      = 40;    // 模型高度
 d_out       = 87 * 2;
 d_in        = 25 * 2;
-wall_thick  = 2.5;      // 壁厚
+wall_thick  = 4;      // 壁厚
 
 
 // 螺旋带结构
@@ -22,7 +22,8 @@ module A(){
             R       = (strip_w/2) + d_in/2;                   // 螺旋半径
 
             // 扭转挤出生成螺旋带
-            linear_extrude(height = height, twist = -360 * turns, slices = 300)
+            // linear_extrude(height = height, twist = -360 * turns, slices = 300)
+            linear_extrude(height = height, twist = -480 * turns, slices = 300)
             translate([R, 0])
             square([strip_w, strip_t], center = true);
         }
@@ -39,15 +40,15 @@ module A(){
 // 外壳结构
 module B(){
 
-    // // 内侧圆环
-    // difference(){
+    // 内侧圆环
+    difference(){
 
-    //     // cylinder(h = height, d = d_in + wall_thick, center = false);
-    //     cylinder(h = height, d = d_in + 0.4, center = false);
+        // cylinder(h = height, d = d_in + wall_thick, center = false);
+        cylinder(h = height, d = d_in + 1.5, center = false);
 
-    //     translate([0, 0, -20])
-    //         cylinder(h = height + 50, d = d_in, center = false);
-    // }
+        translate([0, 0, -20])
+            cylinder(h = height + 50, d = d_in + 0.5, center = false);
+    }
 
     // 外侧圆环
     difference(){
