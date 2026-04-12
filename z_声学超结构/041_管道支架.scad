@@ -10,9 +10,10 @@ tube_h   = 50;    // 方管高
 clearance = 0;    // 间隙
 
 wall      = 6;    // 壁厚（够用了）
-raise_h   = 180;  // 抬高高度
+raise_h   = 140;  // 抬高高度
 
 base_thick = 8;   // 底板厚
+base_len   = 245; // 底板长度（这里可调）
 
 
 // ========= 上部 U 托 =========
@@ -59,8 +60,8 @@ module legs() {
 
 // ========= 底板 =========
 module base_plate() {
-    base_w = tube_w + 60;
-    base_d = tube_d + 20;
+    base_w = base_len; // 长度可设置（左右方向）
+    base_d = tube_d;   // 和其他部分一样宽（前后方向）
 
     cuboid([base_w, base_d, base_thick], anchor=CENTER);
 }
