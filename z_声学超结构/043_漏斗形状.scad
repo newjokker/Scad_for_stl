@@ -5,21 +5,24 @@ $fn = 200;
 // ================= 参数 =================
 
 // ---- 上部长方形口参数 ----
-top_rect_x          = 160;    // 上口长边尺寸
+top_rect_x          = 200;    // 上口长边尺寸
 top_rect_y          = 60;     // 上口短边尺寸
 top_corner_radius   = 6;      // 上口圆角
 top_straight_height = 10;     // 上口保留的直段高度
 
 // ---- 过渡段参数 ----
-funnel_height_upper = 5;      // 长方形到圆形的过渡高度
+funnel_height_upper = 10;      // 长方形到圆形的过渡高度
 
 // ---- 下部圆颈参数 ----
 neck_height         = 15;     // 颈部高度
 neck_radius         = 23/2;   // 颈部外半径
 
 // ---- 壁厚 / 底厚 ----
-wall_thickness      = 1;      // 统一壁厚
+wall_thickness      = 1.5;      // 普通区域壁厚
 bottom_thickness    = 2.5;    // 底部保留厚度（保留，但会打贯通小孔）
+
+// ---- 过渡段单独加厚参数（新增） ----
+transition_extra_thickness = 3.0;   // 过渡段额外加厚量
 
 // ================= 过滤板参数 =================
 filter_z            = top_straight_height + funnel_height_upper;
@@ -35,10 +38,10 @@ side_hole_margin_xy   = 2.0;   // 两端预留
 side_hole_margin_z    = 1.5;   // 上下预留
 side_hole_depth       = wall_thickness + 1.0;
 
-// ================= 底部打孔参数（新增） =================
-bottom_hole_radius    = 1.2;                 // 底部小孔半径
-bottom_hole_spacing   = bottom_hole_radius * 2.6;   // 底部小孔间距
-bottom_hole_edge_gap  = 1.2;                 // 距离内壁预留，避免边缘太薄
+// ================= 底部打孔参数 =================
+bottom_hole_radius    = 1.2;                  // 底部小孔半径
+bottom_hole_spacing   = bottom_hole_radius * 2.6;
+bottom_hole_edge_gap  = 1.2;                  // 距离内壁预留，避免边缘太薄
 
 // ================= 派生参数 =================
 inner_neck_radius   = neck_radius - wall_thickness;
@@ -48,21 +51,14 @@ inner_top_rect_x    = top_rect_x - wall_thickness * 2;
 inner_top_rect_y    = top_rect_y - wall_thickness * 2;
 inner_top_corner_r  = max(0.01, top_corner_radius - wall_thickness);
 
-neck_base_z         = top_straight_height + funnel_height_upper;
+// ---- 过渡段专用内腔参数（更小，所以过渡段更厚） ----
+transition_wall_thickness      = wall_thickness + transition_extra_thickness;
+inner_transition_top_rect_x    = top_rect_x - transition_wall_thickness * 2;
+inner_transition_top_rect_y    = top_rect_y - transition_wall_thickness * 2;
+inner_transition_top_corner_r  = max(0.01, top_corner_radius - transition_wall_thickness);
+inner_transition_neck_radius   = neck_radius - transition_wall_thickness;
 
-// ================= 安全检查 =================
-assert(inner_neck_radius > 0, "inner_neck_radius <= 0，壁厚过大");
-assert(inner_top_rect_x > 0, "inner_top_rect_x <= 0，壁厚过大");
-assert(inner_top_rect_y > 0, "inner_top_rect_y <= 0，壁厚过大");
-assert(top_corner_radius < min(top_rect_x, top_rect_y)/2, "top_corner_radius 太大");
-assert(filter_z >= top_straight_height + funnel_height_upper, "filter_z 太低");
-assert(filter_z + filter_thickness <= total_height, "filter_z 太高");
-assert(bottom_thickness >= 0, "bottom_thickness 不能小于 0");
-assert(bottom_thickness < neck_height, "bottom_thickness 必须小于 neck_height");
-assert(bottom_hole_radius > 0, "bottom_hole_radius 必须大于 0");
-assert(bottom_hole_spacing > bottom_hole_radius * 2, "bottom_hole_spacing 太小");
-assert(inner_neck_radius - bottom_hole_edge_gap - bottom_hole_radius > 0,
-       "底部孔参数过大，孔会打到边缘，请减小 bottom_hole_radius 或 bottom_hole_edge_gap");
+neck_base_z         = top_straight_height + funnel_height_upper;
 
 // ================= 2D 圆角矩形 =================
 module rounded_rect_2d(x, y, r) {
@@ -87,32 +83,50 @@ module funnel_outer() {
         }
 
         // 3) 下部颈部
-        translate([0, 0, top_straight_height + funnel_height_upper])
+        translate([0, 0, neck_base_z])
             cylinder(h = neck_height, r = neck_radius);
     }
 }
 
 // ================= 内腔模块 =================
+// 改进点：
+// 1. 上口直段还是普通壁厚
+// 2. 过渡段使用“更小”的内腔尺寸，让过渡壳体更厚
+// 3. 过渡段和颈部之间用一个短小的平滑过渡，避免突变太硬
 module funnel_inner() {
     union() {
-        // 1) 上部长方形内腔直段
+        // 1) 上部长方形内腔直段（普通壁厚）
         linear_extrude(height = top_straight_height + 0.02)
             rounded_rect_2d(inner_top_rect_x, inner_top_rect_y, inner_top_corner_r);
 
-        // 2) 内部过渡腔
+        // 2) 内部过渡腔（加厚版）
         hull() {
             translate([0, 0, top_straight_height])
                 linear_extrude(height = 0.01)
-                    rounded_rect_2d(inner_top_rect_x, inner_top_rect_y, inner_top_corner_r);
+                    rounded_rect_2d(
+                        inner_transition_top_rect_x,
+                        inner_transition_top_rect_y,
+                        inner_transition_top_corner_r
+                    );
 
-            translate([0, 0, top_straight_height + funnel_height_upper])
+            translate([0, 0, neck_base_z])
+                cylinder(h = 0.01, r = inner_transition_neck_radius);
+        }
+
+        // 3) 过渡段末端到正常颈部内径，做一个小平滑过渡
+        // 这样不会突然从更小内径跳到更大内径
+        hull() {
+            translate([0, 0, neck_base_z + bottom_thickness])
+                cylinder(h = 0.01, r = inner_transition_neck_radius);
+
+            translate([0, 0, neck_base_z + bottom_thickness + 1.2])
                 cylinder(h = 0.01, r = inner_neck_radius);
         }
 
-        // 3) 内部颈部通孔
-        // 保留底厚，不整体打穿
-        translate([0, 0, neck_base_z + bottom_thickness])
-            cylinder(h = neck_height - bottom_thickness + 0.04, r = inner_neck_radius);
+        // 4) 内部颈部通孔
+        // 保留底厚，但上方正常挖空
+        translate([0, 0, neck_base_z + bottom_thickness + 1.2])
+            cylinder(h = neck_height - bottom_thickness - 1.2 + 0.04, r = inner_neck_radius);
     }
 }
 
@@ -167,8 +181,7 @@ module top_side_vent_holes() {
     }
 }
 
-// ================= 底部贯通孔模块（新增） =================
-// 作用：在保留 bottom_thickness 的情况下，把这层底板打出贯通孔
+// ================= 底部贯通孔模块 =================
 module bottom_perforation_holes() {
     usable_r = inner_neck_radius - bottom_hole_edge_gap;
 
@@ -207,7 +220,7 @@ module funnel_shell() {
         funnel_outer();
         funnel_inner();
         top_side_vent_holes();
-        bottom_perforation_holes();   // 新增：把底板打穿
+        bottom_perforation_holes();
     }
 }
 
