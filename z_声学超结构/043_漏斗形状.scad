@@ -6,7 +6,7 @@ $fn = 200;
 
 // ---- 上部长方形口参数 ----
 top_rect_x          = 200;    // 上口长边尺寸
-top_rect_y          = 60;     // 上口短边尺寸
+top_rect_y          = 80;     // 上口短边尺寸
 top_corner_radius   = 6;      // 上口圆角
 top_straight_height = 10;     // 上口保留的直段高度
 
@@ -14,7 +14,7 @@ top_straight_height = 10;     // 上口保留的直段高度
 funnel_height_upper = 10;      // 长方形到圆形的过渡高度
 
 // ---- 下部圆颈参数 ----
-neck_height         = 15;     // 颈部高度
+neck_height         = 3;     // 颈部高度
 neck_radius         = 23/2;   // 颈部外半径
 
 // ---- 壁厚 / 底厚 ----
@@ -229,3 +229,10 @@ union() {
     funnel_shell();
     perforated_filter_plate();
 }
+
+translate([0, 0, 30])
+    difference(){
+        cylinder(r=23/2, h = 25);
+        cylinder(r=23/2 -2, h = 25);
+    }
+        

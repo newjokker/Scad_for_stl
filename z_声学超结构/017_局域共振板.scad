@@ -76,9 +76,9 @@ scale([2, 2, 2])
     translate([70, 0, 0])
         cuboid([9 , 11.25 * 6, 9], anchor = [-1,-1,-1]);
 
-// scale([2, 2, 2])
-//     translate([80, 0, 0])
-//         cuboid([9 , 11.5 * 5 + 1, 9], anchor = [-1,-1,-1]);
+scale([2, 2, 2])
+    translate([80, 0, 0])
+        cuboid([9 , 11.5 * 5 + 1, 9], anchor = [-1,-1,-1]);
 
 // scale([2, 2, 2])
 //     translate([0, 80, 0])
