@@ -5,8 +5,8 @@ $fn = 200;
 
 r_in = 190/2;
 r_out = (r_in * 2 + 40)/2;
-thick = 10;
-thick_cycle = 30; // 突出来的圆的厚度，用于卡住
+thick =  3;
+thick_cycle = 20; // 突出来的圆的厚度，用于卡住
 
 rect_l = 120 + 3;
 
@@ -21,7 +21,10 @@ difference(){
 }
 
 
-
+difference(){
+    cuboid([rect_l + 3, rect_l + 3, 20], anchor = [0, 0, -1]);
+    cuboid([rect_l, rect_l, 20], anchor = [0, 0, -1]);
+}
 
 
 
