@@ -2,10 +2,10 @@ include <BOSL2/std.scad>
 
 $fn = 200;
 
-length      = 120; 
-width       = 80;
-height      = 50;
-thickness   = 10; 
+length      = 350; 
+width       = 250;
+height      = 200;
+thickness   = 15; 
 
 
 module rect_frame_support(len=120, wid=80, hei=50, t=7) {
@@ -51,9 +51,15 @@ module rect_frame_support(len=120, wid=80, hei=50, t=7) {
 
 
 // 渲染
-rect_frame_support(
-    len = length,
-    wid = width,
-    hei = height,
-    t = thickness
-);
+
+difference(){
+    rect_frame_support(
+        len = length,
+        wid = width,
+        hei = height,
+        t = thickness
+    );
+
+    cuboid([length * 2, width * 2, height * 2], anchor=[1, 0, 0]);
+}
+
