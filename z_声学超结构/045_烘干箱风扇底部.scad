@@ -10,13 +10,15 @@ module half_ring(a=0, h=30, r=10, thick=1){
 }
 
 
+a = 0;
+
 rotate([0, 0, 45])
 {
     difference(){
-        half_ring(a=180 + 90, h=10, r=91, thick= 22*2 + 7);
-        half_ring(a=180 + 90 -1 , h=10, r=91 + 22, thick= 7);
+        half_ring(a=a, h=10, r=91, thick= 22*2 + 7);
+        half_ring(a=a -1 , h=10, r=91 + 22, thick= 7);
         translate([0, 0, 3])
-            half_ring(a=180 + 90 -1 , h=4, r=91 + 3, thick= 19 * 2 + 7);
+            half_ring(a=a -1 , h=4, r=91 + 3, thick= 19 * 2 + 7);
     }
 }
 
