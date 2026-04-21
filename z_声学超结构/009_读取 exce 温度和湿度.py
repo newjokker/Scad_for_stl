@@ -144,6 +144,8 @@ ax1.legend(lines, labels_all, loc="best")
 ax1.grid(True, linestyle='--', alpha=0.5)
 
 # ================= 标题 =================
+ax1.set_ylim(20, 40)   # 温度范围
+ax2.set_ylim(5, 30)   # 绝对湿度范围
 
 plt.title("Temperature & Absolute Humidity Comparison")
 
