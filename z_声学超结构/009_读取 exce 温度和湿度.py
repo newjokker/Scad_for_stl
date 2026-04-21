@@ -5,6 +5,11 @@ import matplotlib.dates as mdates
 
 # ================= 参数 =================
 
+# file_paths = [
+#     "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/温湿度数据/0420-14-14/C0028001802D-SN号C0028001802D-历史记录-2026年04月20日14时14分.xlsx",
+#     "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/温湿度数据/0420-14-14/C00280018035-SN号C00280018035-历史记录-2026年04月20日14时15分.xlsx"
+# ]
+
 file_paths = [
     "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/温湿度数据/0421-16-01/C0028001802D-SN号C0028001802D-历史记录-2026年04月21日16时01分.xlsx",
     "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/温湿度数据/0421-16-01/C00280018035-SN号C00280018035-历史记录-2026年04月21日16时01分.xlsx"
@@ -13,9 +18,21 @@ file_paths = [
 labels = ["Sensor A", "Sensor B"]
 
 start_time = "2026-04-21 10:56:30"
-end_time   = "2026-04-20 11:16:30"
+end_time   = "2026-04-21 11:16:30"
 
-tick_interval = 10
+start_time = "2026-04-21 11:22:15"
+end_time   = "2026-04-21 11:42:15"
+
+start_time = "2026-04-21 11:46:00"
+end_time   = "2026-04-21 12:06:00"
+
+start_time = "2026-04-21 13:43:00"
+end_time   = "2026-04-21 14:03:00"
+
+start_time = "2026-04-21 14:08:30"
+end_time   = "2026-04-21 14:28:30"
+
+tick_interval = 120
 
 # ================= 绝对湿度计算函数 =================
 
