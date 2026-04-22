@@ -1,6 +1,4 @@
-include <BOSL2/std.scad>
 
-$fn = 200;
 
 module leaf() {
 
@@ -68,21 +66,6 @@ rotate([0, 0, 90])
 
 
 
-// 外圈
-translate([0, 0, 90 -6])
-    difference() {
-        cylinder(h=6, r=165, center=false);  
-        cylinder(h=6, r=161, center=false);  
-    }
 
 
-// 外圈
-translate([0, 0, 55])
-    difference() {
-        cylinder(h=15, r=28, center=false);  
-        cylinder(h=15, r=11.78, center=false);  
-    }
 
-cylinder(h=2.3, r=140, center=false); 
-
-cylinder(h=2.3, r=165, center=false); 
