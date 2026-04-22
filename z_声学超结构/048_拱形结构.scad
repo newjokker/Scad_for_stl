@@ -1,128 +1,139 @@
-include <BOSL2/std.scad>
-
-$fn = 220;
-
-module dome_shell(
-    bottom_h    = 2.3,   // 底部平面厚度
-    wall_t      = 2.0,   // 壁厚
-
-    base_r      = 60,    // 底部外圈半径
-    flat_r      = 48,    // 上表面起拱前的平缓区域半径
-
-    dome_z      = 30,    // 顶部球心高度
-    dome_r      = 55,    // 顶部球半径
-
-    // 拱面过渡控制
-    trans_z1    = 3,
-    trans_r1    = 46,
-
-    trans_z2    = 9,
-    trans_r2    = 40,
-
-    trans_z3    = 18,
-    trans_r3    = 30,
-
-    // 开孔参数
-    hole_n      = 4,     // 总洞数
-    hole_r      = 20,    // 主孔半径
-    hole_z      = 32,    // 主孔中心高度
-    hole_len    = 220,   // 开孔长度
-
-    // 关键：孔下方缓慢连接参数
-    foot_r_scale   = 1.45,  // 底部过渡体半径倍率
-    foot_drop_scale= 1.15,  // 底部过渡体下沉倍率
-    foot_z_scale   = 0.65   // Z向压扁倍率，越小越“摊”
-) {
-
-    // ================= 外壳 =================
-    module outer_shape() {
-        union() {
-            // 底部平面
-            cylinder(h = bottom_h, r = base_r);
-
-            // 拱罩
-            hull() {
-                translate([0, 0, bottom_h])
-                    cylinder(h = 0.1, r = flat_r);
-
-                translate([0, 0, trans_z1])
-                    cylinder(h = 0.1, r = trans_r1);
-
-                translate([0, 0, trans_z2])
-                    cylinder(h = 0.1, r = trans_r2);
-
-                translate([0, 0, trans_z3])
-                    cylinder(h = 0.1, r = trans_r3);
-
-                translate([0, 0, dome_z])
-                    sphere(r = dome_r);
-            }
-        }
-    }
-
-    // ================= 内腔 =================
-    module inner_shape() {
-        union() {
-            // 内部底面
-            translate([0, 0, wall_t])
-                cylinder(h = max(bottom_h - wall_t, 0.1), r = base_r - wall_t);
-
-            // 内部拱腔
-            hull() {
-                translate([0, 0, bottom_h])
-                    cylinder(h = 0.1, r = flat_r - wall_t);
-
-                translate([0, 0, trans_z1])
-                    cylinder(h = 0.1, r = trans_r1 - wall_t);
-
-                translate([0, 0, trans_z2])
-                    cylinder(h = 0.1, r = trans_r2 - wall_t);
-
-                translate([0, 0, trans_z3])
-                    cylinder(h = 0.1, r = trans_r3 - wall_t);
-
-                translate([0, 0, dome_z])
-                    sphere(r = dome_r - wall_t);
-            }
-        }
-    }
-
-    // ================= 单个圆滑孔 =================
-    // 这个模块是关键：
-    // 不是单纯横向圆柱，而是“横向主孔 + 底部过渡鼓包”的 hull
-    // 这样孔下方的腿部根部会自然变圆滑
-    module soft_hole(r=20, len=220) {
-        foot_r    = r * foot_r_scale;
-        foot_drop = r * foot_drop_scale;
-
-        hull() {
-            // 主孔
-            rotate([0, 90, 0])
-                cylinder(h = len, r = r, center = true);
-
-            // 底部过渡体：往下拖、并在Z方向压扁
-            translate([0, 0, -foot_drop])
-                scale([1.15, 1.0, foot_z_scale])
-                    sphere(r = foot_r);
-        }
-    }
-
-    // ================= 环向均匀打孔 =================
-    module side_holes(n, r, z, len) {
-        for (i = [0 : n - 1]) {
-            rotate([0, 0, i * 360 / n])
-                translate([0, 0, z])
-                    soft_hole(r = r, len = len);
-        }
-    }
-
-    // ================= 主体 =================
-    difference() {
-        outer_shape();
-        inner_shape();
-        side_holes(hole_n, hole_r, hole_z, hole_len);
+// 方法1：使用 hull() 组合
+module smooth_cylinder_hull(h=20, r=5, base_height=2, base_r=10) {
+    // 底部平面
+    cylinder(h=base_height, r=base_r);
+    
+    // 圆柱
+    translate([0, 0, base_height])
+    cylinder(h=h, r=r);
+    
+    // 平滑过渡连接
+    hull() {
+        // 底部平面的顶部
+        translate([0, 0, base_height])
+        cylinder(h=0.1, r=base_r);
+        
+        // 圆柱的底部
+        translate([0, 0, base_height])
+        cylinder(h=0.1, r=r);
     }
 }
 
-// ================= 调用 =================
-dome_shell();
+// 方法2：使用旋转体创建自定义曲面
+module smooth_cylinder_custom(h=20, r=5, base_height=2, base_r=10, transition_h=5) {
+    // 创建旋转体剖面
+    rotate_extrude(angle=360) {
+        polygon(points=[
+            // 底部平面
+            [0, 0],
+            [base_r, 0],
+            [base_r, base_height],
+            
+            // 平滑过渡曲线
+            [r + (base_r - r) * 0.8, base_height + transition_h * 0.2],
+            [r + (base_r - r) * 0.6, base_height + transition_h * 0.4],
+            [r + (base_r - r) * 0.4, base_height + transition_h * 0.6],
+            [r + (base_r - r) * 0.2, base_height + transition_h * 0.8],
+            
+            // 圆柱
+            [r, base_height + transition_h],
+            [r, base_height + transition_h + h],
+            [0, base_height + transition_h + h]
+        ]);
+    }
+}
+
+// 方法3：使用球体创建圆角过渡
+module smooth_cylinder_rounded(h=20, r=5, base_height=2, base_r=10, fillet_r=3) {
+    union() {
+        // 底部平面
+        cylinder(h=base_height, r=base_r);
+        
+        // 圆柱
+        translate([0, 0, base_height])
+        cylinder(h=h, r=r);
+        
+        // 创建圆角过渡
+        translate([0, 0, base_height])
+        rotate_extrude(angle=360)
+        translate([r, 0, 0])
+        circle(r=fillet_r);
+    }
+}
+
+// 方法4：使用贝塞尔曲线创建更平滑的过渡
+module smooth_cylinder_bezier(h=20, r=5, base_height=2, base_r=10, transition_h=8) {
+    rotate_extrude(angle=360) {
+        // 定义贝塞尔曲线控制点
+        p0 = [base_r, base_height];
+        p1 = [base_r + (r - base_r)/3, base_height + transition_h/3];
+        p2 = [r + (base_r - r)/3, base_height + 2*transition_h/3];
+        p3 = [r, base_height + transition_h];
+        
+        // 创建多边形（简化版贝塞尔）
+        polygon(points=[
+            [0, 0],
+            [base_r, 0],
+            p0,
+            
+            // 过渡区域
+            [p1[0], p1[1]],
+            [p2[0], p2[1]],
+            p3,
+            
+            // 圆柱
+            [r, base_height + transition_h + h],
+            [0, base_height + transition_h + h]
+        ]);
+    }
+}
+
+// 主演示 - 显示所有方法
+translate([-30, 0, 0]) {
+    echo("方法1: 使用hull()组合");
+    smooth_cylinder_hull(h=15, r=4, base_height=3, base_r=8);
+}
+
+translate([-10, 0, 0]) {
+    echo("方法2: 自定义旋转体");
+    smooth_cylinder_custom(h=15, r=4, base_height=3, base_r=8, transition_h=6);
+}
+
+translate([10, 0, 0]) {
+    echo("方法3: 圆角过渡");
+    smooth_cylinder_rounded(h=15, r=4, base_height=3, base_r=8, fillet_r=2);
+}
+
+translate([30, 0, 0]) {
+    echo("方法4: 贝塞尔曲线过渡");
+    smooth_cylinder_bezier(h=15, r=4, base_height=3, base_r=8, transition_h=7);
+}
+
+// 参数说明：
+// h: 圆柱高度
+// r: 圆柱半径
+// base_height: 底部平面高度
+// base_r: 底部平面半径
+// transition_h: 过渡区域高度
+// fillet_r: 圆角半径
+
+// 专业平滑过渡示例
+module professional_smooth_cylinder() {
+    smooth_cylinder_custom(
+        h = 25,
+        r = 3,
+        base_height = 5,
+        base_r = 12,
+        transition_h = 10
+    );
+    
+    // 添加倒角
+    translate([0, 0, 5])
+    rotate_extrude(angle=360)
+    translate([12, 0, 0])
+    circle(r=1);
+}
+
+// 渲染高质量模型
+$fn = 100;  // 提高渲染质量
+professional_smooth_cylinder();
