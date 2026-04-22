@@ -2,9 +2,8 @@ include <BOSL2/std.scad>
 
 $fn = 200;
 
-module leaf() {
+module leaf(extrude_h = 90) {
 
-    extrude_h = 90;
     scale_factor = 0.017;
 
     points_raw = [
@@ -60,29 +59,35 @@ module leaf() {
 
 }
 
-rotate([0, 0, 00])
-    leaf();
-
-rotate([0, 0, 90])
-    leaf();
-
+// 扇叶
+leaf_num = 53;
+for (i = [0 : leaf_num-1])
+    color("red")
+        rotate([0, 0, i * 360 / leaf_num])
+            rotate([0, 0, 20])
+                translate([151.7, 0, 0])
+                    rotate([0, 0, 71])
+                        leaf(extrude_h = 95);
 
 
 // 外圈
 translate([0, 0, 90 -6])
     difference() {
         cylinder(h=6, r=165, center=false);  
-        cylinder(h=6, r=161, center=false);  
+        translate([0, 0, -0.05])
+            cylinder(h=6.1, r=161, center=false);  
     }
 
 
-// 外圈
+// 穿铁棒的结构
 translate([0, 0, 55])
     difference() {
         cylinder(h=15, r=28, center=false);  
         cylinder(h=15, r=11.78, center=false);  
     }
 
-cylinder(h=2.3, r=140, center=false); 
+difference(){
+    cylinder(h=2.3, r=162, center=false); 
 
-cylinder(h=2.3, r=165, center=false); 
+    cylinder(h=2.3, r=80, center=false); 
+}
