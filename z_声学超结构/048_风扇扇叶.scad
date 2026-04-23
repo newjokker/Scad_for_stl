@@ -2,7 +2,7 @@ include <BOSL2/std.scad>
 
 $fn = 200;
 
-thick = 5;
+thick = 4;
 
 module leaf(extrude_h = 90) {
 
@@ -71,9 +71,7 @@ module main() {
                 rotate([0, 0, 20])
                     translate([151.7, 0, 0])
                         rotate([0, 0, 71])
-                            leaf(extrude_h = 95);
-
-
+                            leaf(extrude_h = 90);
 
     // 外圈
     translate([0, 0, 90 -6])
@@ -83,25 +81,21 @@ module main() {
                 cylinder(h=6.1, r=161, center=false);  
         }
 
-
     // 穿铁棒的结构
     translate([0, 0, 67])
         difference() {
-            cylinder(h=15, r=28, center=false);  
-            cylinder(h=15, r=11.78, center=false);  
+            cylinder(h=15, r=18, center=false);  
+            cylinder(h=15, r=11.8/2, center=false);  
         }
 
-    // 
+    // 底盘
     difference(){
-        cylinder(h=2.3, r=162, center=false); 
-
-        cylinder(h=2.3, r=80, center=false); 
-    }
-
-    difference(){
-        cylinder(h=75, r=80, center=false); 
+        union() {
+            cylinder(h=75, r=80, center=false); 
+            cylinder(h=2.3, r=162, center=false); 
+        }
         cylinder(h=75-thick, r=80 -thick, center=false); 
-        cylinder(h=150, r=11.78, center=false);
+        cylinder(h=150, r=11.8/2, center=false);
     }
 }
 
