@@ -50,7 +50,15 @@ module blade_base(
 
 }
 
-blade_base();
+
+
+intersection(){
+
+    blade_base();
+
+    cylinder(h= 100, r= 95);
+
+}
 
 
 
