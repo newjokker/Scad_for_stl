@@ -80,5 +80,22 @@ scale_factor = 0.7;
 
 scale([scale_factor, scale_factor, scale_factor])
 {
-    main();
+    
+    difference(){
+
+        main();
+
+        for (i = [0:30]){
+
+            translate([0, 0, i * 3])
+                cylinder(r1= 128, r2=131, h=1.6);
+
+            translate([0, 0, i * 3 + 1.5])
+                cylinder(r1= 131, r2=128, h=1.6);
+
+        }
+
+    }
+
+
 }
