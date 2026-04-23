@@ -12,17 +12,18 @@ module main() {
         color("red")
             rotate([0, 0, i * (360 / leaf_num)/1 ])
                 translate([138, 0, 0])
-                    rotate([0, 0, -30])
-                        centrifugal_blade_airfoil(
-                            m = 0.06,
-                            p = 0.40,
-                            t = 0.12,
-                            num_points = 200,
-                            chord = 28,
-                            mode = "3d",
-                            width = 90,
-                            center_3d = false
-                        );
+                    rotate([0, 0, 30])
+                        mirror([0, 1, 0])
+                            centrifugal_blade_airfoil(
+                                m = 0.06,
+                                p = 0.40,
+                                t = 0.12,
+                                num_points = 200,
+                                chord = 28,
+                                mode = "3d",
+                                width = 90,
+                                center_3d = false
+                            );
 
     // 外圈
     translate([0, 0, 90 -6])
@@ -51,10 +52,10 @@ module main() {
 }
 
 
-scale([0.7,0.7,0.7])
-{
-    main();
-}
+// scale([0.7,0.7,0.7])
+// {
+//     main();
+// }
 
 
 
