@@ -75,8 +75,10 @@ module main() {
     blade_base();
 }
 
+scale_factor = 0.7;
+// scale_factor = 1;
 
-scale([0.7,0.7,0.7])
+scale([scale_factor, scale_factor, scale_factor])
 {
     main();
 }
