@@ -52,13 +52,13 @@ module blade_base(
 
 
 
-intersection(){
+// intersection(){
 
-    blade_base();
+//     blade_base();
 
-    cylinder(h= 100, r= 95);
+//     cylinder(h= 100, r= 95);
 
-}
+// }
 
 
 

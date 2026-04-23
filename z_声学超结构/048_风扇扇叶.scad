@@ -5,7 +5,7 @@ $fn = 200;
 
 module leaf(extrude_h = 90) {
 
-    scale_factor = 0.017;
+    scale_factor = 0.017 / 1.22448;
 
     points_raw = [
         [93.89743589743591, 21.05128205128213],
@@ -64,38 +64,38 @@ module leaf(extrude_h = 90) {
 module main() {
     // 扇叶
     leaf_num = 53;
-    for (i = [0 : leaf_num-1])
-        color("red")
-            rotate([0, 0, i * (360 / leaf_num)/1 ])
-                rotate([0, 0, 20])
-                    translate([151.7, 0, 0])
-                        rotate([0, 0, 71])
-                            leaf(extrude_h = 90);
 
-    blade_base();
-}
-
-scale_factor = 0.7;
-// scale_factor = 1;
-
-scale([scale_factor, scale_factor, scale_factor])
-{
-    
     difference(){
 
-        main();
+        // 叶片
+        for (i = [0 : leaf_num-1])
+            color("red")
+                rotate([0, 0, i * (360 / leaf_num)/1 ])
+                    rotate([0, 0, 20])
+                        translate([153.7, 0, 0])
+                            rotate([0, 0, 71])
+                                leaf(extrude_h = 90);
 
-        for (i = [0:30]){
-
+        // 锯齿边
+        extrend = 6.5;
+        for (i = [0:29]){
             translate([0, 0, i * 3])
-                cylinder(r1= 128, r2=131, h=1.6);
+                cylinder(r1= 128 + extrend, r2=131 + extrend, h=1.6);
 
-            translate([0, 0, i * 3 + 1.5])
-                cylinder(r1= 131, r2=128, h=1.6);
-
+            translate([0, 0, i * 3 + 1.6])
+                cylinder(r1= 131 + extrend, r2=128 + extrend, h=1.6);
         }
 
     }
 
 
+    blade_base();
+}
+
+// scale_factor = 0.7;
+scale_factor = 1;
+
+scale([scale_factor, scale_factor, scale_factor])
+{
+    main();
 }
