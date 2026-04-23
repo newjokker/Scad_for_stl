@@ -30,7 +30,7 @@ module main() {
                                 );
 
         // 锯齿边
-        extrend = 8.0;
+        extrend = 8.4;
         for (i = [0:29]){
             translate([0, 0, i * 3])
                 cylinder(r1= 128 + extrend, r2=131 + extrend, h=1.6);
