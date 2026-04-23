@@ -8,7 +8,7 @@ module blade_base(
     window_count = 5,          // 窗口数量
     window_w = 50,             // 窗口宽度（沿圆周方向）
     window_h = 40,             // 窗口高度（Z方向）
-    window_bottom = 15,        // 窗口底部离底面的高度
+    window_bottom = 13,        // 窗口底部离底面的高度
     window_cut_depth = 20      // 切割深度，足够大即可
 ) {
 
@@ -21,7 +21,7 @@ module blade_base(
         }
 
     // 穿铁棒的小结构
-    translate([0, 0, 67])
+    translate([0, 0, 57])
         difference() {
             cylinder(h = 15, r = 18, center = false);  
             cylinder(h = 15, r = 12.2 / 2, center = false);  
@@ -30,12 +30,12 @@ module blade_base(
     // 底盘 + 大凸起部分开窗
     difference() {
         union() {
-            cylinder(h = 75, r = 80, center = false); 
+            cylinder(h = 65, r = 80, center = false); 
             cylinder(h = 2.3, r = 162, center = false); 
         }
 
         // 内腔
-        cylinder(h = 75 - thick, r = 80 - thick, center = false); 
+        cylinder(h = 65 - thick, r = 80 - thick, center = false); 
 
         // 中心孔
         cylinder(h = 150, r = 12.2 / 2, center = false);
@@ -52,15 +52,16 @@ module blade_base(
 
 
 
-// intersection(){
+intersection(){
 
-//     blade_base();
+    blade_base();
 
-//     cylinder(h= 100, r= 95);
+    // cylinder(h= 100, r= 95);
 
-// }
-
-
+}
 
 
 
+
+
+     
