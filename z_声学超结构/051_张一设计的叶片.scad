@@ -30,13 +30,17 @@ module main() {
                                 );
 
         // 锯齿边
-        extrend = 8.4;
-        for (i = [0:29]){
-            translate([0, 0, i * 3])
-                cylinder(r1= 128 + extrend, r2=131 + extrend, h=1.6);
+        extrend = 6.5;
+        length = 125;
+        length_diff = 5;
+        lenght_h = 5;
+        // # for (i = [27:29]){
+        # for (i = [0:25]){
+            translate([0, 0, i * lenght_h])
+                cylinder(r1= length + extrend + 3, r2=length + extrend + 3 + length_diff, h=lenght_h);
 
-            translate([0, 0, i * 3 + 1.6])
-                cylinder(r1= 131 + extrend, r2=128 + extrend, h=1.6);
+            translate([0, 0, i * lenght_h + lenght_h])
+                cylinder(r1= length + extrend + 3 + length_diff, r2=length + extrend + 3, h=lenght_h);
         }
 
     }
