@@ -21,10 +21,10 @@ module blade_base(
         }
 
     // 穿铁棒的小结构
-    translate([0, 0, 57])
+    translate([0, 0, 52])
         difference() {
-            cylinder(h = 15, r = 18, center = false);  
-            cylinder(h = 15, r = 12.2 / 2, center = false);  
+            cylinder(h = 25, r = 18, center = false);  
+            cylinder(h = 25, r = 12.4 / 2, center = false);  
         }
 
     // 底盘 + 大凸起部分开窗
@@ -38,7 +38,7 @@ module blade_base(
         cylinder(h = 65 - thick, r = 80 - thick, center = false); 
 
         // 中心孔
-        cylinder(h = 150, r = 12.2 / 2, center = false);
+        cylinder(h = 150, r = 12.4 / 2, center = false);
 
         // ===== 大圆筒侧壁开多个窗口 =====
         for (i = [0 : window_count - 1]) {
