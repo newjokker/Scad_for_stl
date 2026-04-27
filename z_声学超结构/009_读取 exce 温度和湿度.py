@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
+from datetime import datetime, timedelta
 import os
 import re
 
@@ -22,8 +23,10 @@ plt.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
 file_paths = [
     # "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/温湿度数据/0421-19-10/C0028001802D-SN号C0028001802D-历史记录-2026年04月21日19时01分.xlsx",
     # "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/温湿度数据/0421-19-10/C00280018035-SN号C00280018035-历史记录-2026年04月21日19时01分.xlsx"
-    "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/温湿度数据/0422-13-40/C0028001802D-SN号C0028001802D-历史记录-2026年04月22日13时54分.xlsx",
-    "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/温湿度数据/0422-13-40/C00280018035-SN号C00280018035-历史记录-2026年04月22日13时53分.xlsx"
+    # "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/温湿度数据/0422-13-40/C0028001802D-SN号C0028001802D-历史记录-2026年04月22日13时54分.xlsx",
+    # "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/温湿度数据/0422-13-40/C00280018035-SN号C00280018035-历史记录-2026年04月22日13时53分.xlsx",
+    "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/温湿度数据/0424_09_10/C0028001802D-SN号C0028001802D-历史记录-2026年04月27日14时27分.xlsx",
+    "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/温湿度数据/0424_09_10/C00280018035-SN号C00280018035-历史记录-2026年04月27日14时27分.xlsx"
 ]
 
 labels = ["Sensor A", "Sensor B"]
@@ -42,11 +45,29 @@ time_ranges = [
     # ("2026-04-21 16:55:00", "2026-04-21 17:15:59", "常规-撸猫口 35℃"),
     # ("2026-04-21 18:37:00", "2026-04-21 18:57:59", "常规-撸猫口"),
     
-    ("2026-04-22 09:30:00", "2026-04-22 09:50:59", "-"),
-    ("2026-04-22 09:56:00", "2026-04-22 10:16:59", "-"),
-    ("2026-04-22 10:29:00", "2026-04-22 10:49:59", "-"),
-    ("2026-04-22 11:07:00", "2026-04-22 11:27:59", "-"),
+    # ("2026-04-22 09:30:00", "2026-04-22 09:50:59", "-"),
+    # ("2026-04-22 09:56:00", "2026-04-22 10:16:59", "-"),
+    # ("2026-04-22 10:29:00", "2026-04-22 10:49:59", "-"),
+    # ("2026-04-22 11:07:00", "2026-04-22 11:27:59", "-"),
+    
+    
+    ("2026-04-24 16:14:00", "2026-04-24 16:34:59", "常规-撸猫口"),
+    ("2026-04-24 16:40:00", "2026-04-24 17:01:59", "常规-撸猫口"),
+    ("2026-04-24 17:08:00", "2026-04-24 17:28:59", "常规-撸猫口"),
+    ("2026-04-24 17:34:00", "2026-04-24 17:54:59", "常规-撸猫口"),
+    ("2026-04-24 14:37:00", "2026-04-24 14:57:59", "主动排湿 12V_单个出风"),
+    ("2026-04-24 15:06:00", "2026-04-24 15:26:59", "主动排湿 12V_单个出风"),
+    ("2026-04-24 11:33:00", "2026-04-24 11:53:59", "主动排湿 12V_单个出风"),
+    ("2026-04-24 15:37:00", "2026-04-24 15:57:59", "主动排湿 12V_单个出风"),
+    ("2026-04-24 13:42:00", "2026-04-24 14:02:59", "主动排湿 12V_出风_吹风"),
+    ("2026-04-24 14:07:00", "2026-04-24 14:27:59", "主动排湿 12V_出风_吹风"),
+
+
+    # ("2026-04-24 11:28:00", "2026-04-24 11:58:59", "主动排湿 12V_单个出风"),
+    # ("2026-04-24 15:32:00", "2026-04-24 16:02:59", "主动排湿 12V_单个出风"),
+
 ]
+
 
 tick_interval = 120
 
@@ -55,6 +76,34 @@ save_dir = "./output_imgs"
 # os.makedirs(save_dir, exist_ok=True)
 
 # ================= 工具函数 =================
+
+def expand_time_ranges(time_ranges, minutes=5):
+    """
+    将 time_ranges 中的每个时间段前后扩展指定分钟数
+    
+    参数:
+        time_ranges: [(start, end, label), ...]
+        minutes: 前后扩展分钟数
+        
+    返回:
+        新的 time_ranges
+    """
+    new_ranges = []
+    
+    for start_str, end_str, label in time_ranges:
+        start = datetime.strptime(start_str, "%Y-%m-%d %H:%M:%S")
+        end   = datetime.strptime(end_str, "%Y-%m-%d %H:%M:%S")
+        
+        new_start = start - timedelta(minutes=minutes)
+        new_end   = end + timedelta(minutes=minutes)
+        
+        new_ranges.append((
+            new_start.strftime("%Y-%m-%d %H:%M:%S"),
+            new_end.strftime("%Y-%m-%d %H:%M:%S"),
+            label
+        ))
+    
+    return new_ranges
 
 def calc_absolute_humidity(temp_c, rh):
     """
@@ -101,6 +150,9 @@ def load_data(file_path, start_time, end_time):
     return df
 
 # ================= 主循环 =================
+
+time_ranges = expand_time_ranges(time_ranges, minutes=5)
+
 
 for idx, (start_time, end_time, title_desc) in enumerate(time_ranges, start=1):
 
