@@ -35,7 +35,7 @@ module main() {
         length_diff = 5;
         lenght_h = 5;
         // # for (i = [27:29]){
-        # for (i = [0:25]){
+        for (i = [0:25]){
             translate([0, 0, i * lenght_h])
                 cylinder(r1= length + extrend + 3, r2=length + extrend + 3 + length_diff, h=lenght_h);
 
