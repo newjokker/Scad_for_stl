@@ -7,7 +7,7 @@ $fn = 200;
 thread_diameter = 20;      // 螺纹公称直径（mm）
 thread_length = 30;        // 螺纹长度（mm）
 thread_pitch = 3;          // 螺距（mm）
-clearance = 0.25;          // 配合间隙（mm）- 3D打印建议0.2-0.4mm
+clearance = 0.4;          // 配合间隙（mm）- 3D打印建议0.2-0.4mm
 
 // 外螺母/外壳尺寸
 nut_outer_diameter = 30;   // 螺母外径（mm）
