@@ -2,7 +2,7 @@
 include <BOSL2/std.scad>
 include <BOSL2/gears.scad>
 
-$fn = 30;
+$fn = 300;
 
 
 mod=1; cteeth=40; pteeth=17; backing=3; PA=20; face=5;
