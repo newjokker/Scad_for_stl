@@ -258,15 +258,53 @@ if __name__ == "__main__":
     # 1. 输入WAV文件列表（完整路径）
 
     WAV_FILES = [   
-        r"/Volumes/Jokker/Code/Scad_for_stl/没有整流板.wav",      
-        r"/Volumes/Jokker/Code/Scad_for_stl/有整流板.wav",      
+        # r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-04-28_超结构测试/稳定性测试/2026-04-28_16_20_20.525-1channel.wav",      
+        # r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-04-28_超结构测试/稳定性测试/2026-04-28_16_20_33.365-1channel.wav",      
+        # r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-04-28_超结构测试/稳定性测试/2026-04-28_16_20_48.006-1channel.wav",      
+        # r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-04-28_超结构测试/稳定性测试/2026-04-28_16_21_00.565-1channel.wav",      
+        
+        r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-04-28_超结构测试/0 结构/2026-04-28_16_28_04.028-1channel.wav",      
+        # r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-04-28_超结构测试/0 结构/2026-04-28_16_28_15.389-1channel.wav",      
+        # r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-04-28_超结构测试/0 结构/2026-04-28_16_28_27.492-1channel.wav",     
+        
+        r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-04-28_超结构测试/1 结构/2026-04-28_16_26_02.788-1channel.wav",      
+        # r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-04-28_超结构测试/1 结构/2026-04-28_16_26_14.869-1channel.wav",      
+        # r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-04-28_超结构测试/1 结构/2026-04-28_16_26_26.460-1channel.wav",     
+        
+        r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-04-28_超结构测试/2 结构/2026-04-28_16_24_32.517-1channel.wav",      
+        # r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-04-28_超结构测试/2 结构/2026-04-28_16_24_44.141-1channel.wav",      
+        # r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-04-28_超结构测试/2 结构/2026-04-28_16_24_57.212-1channel.wav",     
+        
+        r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-04-28_超结构测试/3 结构/2026-04-28_16_22_42.965-1channel.wav",      
+        # r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-04-28_超结构测试/3 结构/2026-04-28_16_22_55.061-1channel.wav",      
+        # r"/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-04-28_超结构测试/3 结构/2026-04-28_16_23_07.661-1channel.wav",     
+        
     ]
 
     
     # 2. 对应的标签/结构名称
     LABELS = [   
-        "没有整流板",  
-        "有整流板",  
+        # "前面孔 1",  
+        # "前面孔 2",  
+        # "前面孔 3",  
+        # "前面孔 4",  
+        
+        "0 结构 1",
+        # "0 结构 2" ,
+        # "0 结构 3",
+        
+        "1 结构 1",
+        # "1 结构 2",
+        # "1 结构 3",
+        
+        "2 结构 1",
+        # "2 结构 2",
+        # "2 结构 3",
+        
+        "3 结构 1",
+        # "3 结构 2",
+        # "3 结构 3",
+        
     ]
     
     # 3. 分析参数
