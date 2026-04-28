@@ -1,57 +1,68 @@
 include <BOSL2/std.scad>
 include <BOSL2/joiners.scad>
 
-$fn = 72;
+$fn = 64;
 
-// ===== 参数 =====
-plate_x = 20;
-plate_y = 35;
-thick   = 3;
+spacing = 42;
+row_gap = 34;   // 两排之间的间距
 
-joint_l    = 28;   // 连接件长度
-joint_w    = 8;    // 连接件宽度
-joint_base = 8;    // 底座长度
-joint_ang  = 30;   // 倒扣角度
-
-slop = 35;       // 打印间隙
+plate = [28, 38, 4];
+slot_w = 16;
+slot_h = 7;
+slot_l = 28;
 
 
-// ===== 公件 =====
-module male_part() {
-    union() {
-        cuboid([plate_x, plate_y, thick], anchor=BOTTOM);
+// ===== 第一排：燕尾榫和燕尾槽 =====
+translate([0, 0, 0])
+xdistribute(spacing=spacing) {
 
-        translate([0, 0, thick])
-            joiner(
-                l = joint_l,
-                w = joint_w,
-                base = joint_base,
-                ang = joint_ang,
-                anchor = BOTTOM,
-                $slop = 0
-            );
-    }
+    dovetail("male", width=slot_w, height=slot_h, slide=slot_l);
+    dovetail("female", width=slot_w, height=slot_h, slide=slot_l);
+    dovetail("male", width=slot_w, height=slot_h, slide=slot_l, taper=5);
+    dovetail("female", width=slot_w, height=slot_h, slide=slot_l, taper=5);
 }
 
 
-// ===== 母件 =====
-module female_part() {
-    difference() {
-        cuboid([plate_x, plate_y, thick], anchor=BOTTOM);
+// ===== 第二排：带底板的公母件 =====
+translate([0, -row_gap, 0])
+xdistribute(spacing=spacing) {
 
-        translate([0, 0, thick - 0.1])
-            joiner_clear(
-                l = joint_l,
-                w = joint_w,
-                ang = joint_ang,
-                anchor = BOTTOM,
-                $slop = slop
-            );
-    }
+    male_plate();
+    female_plate();
+    male_plate(taper=5);
+    female_plate(taper=5);
 }
 
 
-// ===== 分开展示 =====
-translate([-40, 0, 0])
-    male_part();
+// ===== 第三排：圆角和倒角燕尾 =====
+translate([0, -row_gap * 2, 0])
+xdistribute(spacing=spacing) {
 
+    dovetail("male", width=slot_w, height=slot_h, slide=slot_l,
+        chamfer=1);
+    dovetail("female", width=slot_w, height=slot_h, slide=slot_l,
+        chamfer=1);
+    dovetail("male", width=slot_w, height=slot_h, slide=slot_l,
+        radius=1.2, round=true);
+    dovetail("female", width=slot_w, height=slot_h, slide=slot_l,
+        radius=1.2, round=true);
+}
+
+
+module male_plate(taper=0) {
+    cuboid(plate, anchor=BOTTOM)
+        attach(TOP)
+            dovetail("male", width=slot_w, height=slot_h,
+                slide=slot_l, taper=taper);
+}
+
+
+module female_plate(taper=0) {
+    diff()
+    cuboid(plate, anchor=BOTTOM) {
+        tag("remove")
+        attach(TOP)
+            dovetail("female", width=slot_w, height=slot_h,
+                slide=slot_l, taper=taper);
+    }
+}
