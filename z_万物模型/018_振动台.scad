@@ -25,10 +25,53 @@ ring_height = 1.2;           // 凸起高度
 ring_spacing = 10;            // 圆环之间的间距
 ring_start_radius = 12;      // 最内侧圆环的内半径
 
+// 底座
+show_part = "base";      // "assembly" 装配预览；"top" 只显示上盘；"base" 只显示底座
+base_diameter = 170;         // 底座直径，建议比上盘略大
+base_height = 8;             // 底座厚度，厚一些更稳
+base_gap = 24;               // 上盘圆柱底部到底座上表面的距离
+
+// 底座上的 6 个对应下柱，与上盘圆柱数量和位置一致
+base_post_enable = true;
+base_post_diameter = post_diameter;
+base_post_height = 15;        // 下柱高度，需小于 base_gap，给弹簧留压缩空间
+base_post_blend_diameter = 18;
+base_post_blend_height = 4;
+
+// 底座上的弹簧定位座，弹簧套在上下两组柱子之间
+spring_outer_diameter = 18;  // 弹簧座外径，略大于弹簧外径
+spring_seat_height = 3;      // 弹簧座凸台高度
+
+// 中心限位，防止上盘振动时横向跑偏；实际装配时要留活动间隙
+center_limiter_enable = true;
+center_limiter_diameter = 14;
+center_limiter_engage_depth = 8;    // 限位柱伸入上盘套筒的深度
+
+// 上盘背面的限位套筒，与底座中心限位柱配合
+limit_sleeve_enable = true;
+limit_sleeve_clearance = 2;      // 套筒内径比限位柱大多少，留给振动的活动间隙
+limit_sleeve_wall = 3;           // 套筒壁厚
+limit_sleeve_height = 12;        // 套筒向下伸出的高度，需短于上下盘间距
+limit_sleeve_blend_diameter = 30;
+limit_sleeve_blend_height = 4;
+
+// 底座固定孔和脚垫
+mount_hole_count = 4;
+mount_hole_diameter = 4.2;   // M4 螺丝孔可用 4.2 左右
+mount_hole_radius = 68;
+foot_count = 4;
+foot_diameter = 22;
+foot_height = 3;
+foot_radius = 62;
+
 // ========== 派生尺寸 ==========
 disk_radius = disk_diameter / 2;
 post_radius = post_diameter / 2;
 post_center_radius = disk_radius - post_edge_gap - post_radius;
+base_z = -post_height - base_gap - base_height;
+limit_sleeve_inner_diameter = center_limiter_diameter + limit_sleeve_clearance;
+limit_sleeve_outer_diameter = limit_sleeve_inner_diameter + limit_sleeve_wall * 2;
+center_limiter_height = post_height + base_gap - limit_sleeve_height + center_limiter_engage_depth;
 
 // ========== 基础模块 ==========
 module annular_ring(inner_radius, width, height) {
@@ -69,12 +112,80 @@ module smooth_post_blend(angle) {
         }
 }
 
-module vibration_table() {
+module limit_sleeve() {
+    if (limit_sleeve_enable && center_limiter_enable) {
+        difference() {
+            union() {
+                translate([0, 0, -limit_sleeve_height])
+                    cylinder(d = limit_sleeve_outer_diameter, h = limit_sleeve_height);
+
+                translate([0, 0, -limit_sleeve_blend_height]) {
+                    hull() {
+                        cylinder(d = limit_sleeve_blend_diameter, h = 0.4);
+
+                        translate([0, 0, limit_sleeve_blend_height - 0.4])
+                            cylinder(d = limit_sleeve_outer_diameter, h = 0.4);
+                    }
+                }
+            }
+
+            translate([0, 0, -limit_sleeve_height - 0.05])
+                cylinder(d = limit_sleeve_inner_diameter, h = limit_sleeve_height + 0.1);
+        }
+    }
+}
+
+module spring_seat(angle) {
+    rotate([0, 0, angle])
+        translate([post_center_radius, 0, base_height]) {
+            cylinder(d = spring_outer_diameter, h = spring_seat_height);
+        }
+}
+
+module base_support_post(angle) {
+    rotate([0, 0, angle])
+        translate([post_center_radius, 0, base_height]) {
+            if (base_post_blend_height > 0) {
+                hull() {
+                    cylinder(d = base_post_blend_diameter, h = 0.4);
+
+                    translate([0, 0, base_post_blend_height - 0.4])
+                        cylinder(d = base_post_diameter, h = 0.4);
+                }
+            }
+
+            cylinder(d = base_post_diameter, h = base_post_height);
+        }
+}
+
+module base_mount_holes() {
+    for (i = [0 : mount_hole_count - 1]) {
+        angle = 360 / mount_hole_count * i + 45;
+
+        rotate([0, 0, angle])
+            translate([mount_hole_radius, 0, -0.1])
+                cylinder(d = mount_hole_diameter, h = base_height + 0.2);
+    }
+}
+
+module bottom_feet() {
+    for (i = [0 : foot_count - 1]) {
+        angle = 360 / foot_count * i + 45;
+
+        rotate([0, 0, angle])
+            translate([foot_radius, 0, -foot_height])
+                cylinder(d = foot_diameter, h = foot_height);
+    }
+}
+
+module vibration_top() {
     union() {
         // 主圆盘：上表面用于接触物体，背面长出支撑柱。
         cylinder(d = disk_diameter, h = disk_height);
 
         friction_rings();
+
+        limit_sleeve();
 
         for (i = [0 : post_count - 1]) {
             angle = 360 / post_count * i;
@@ -84,6 +195,42 @@ module vibration_table() {
             if (post_blend_enable)
                 smooth_post_blend(angle);
         }
+    }
+}
+
+module vibration_base() {
+    union() {
+        difference() {
+            cylinder(d = base_diameter, h = base_height);
+            base_mount_holes();
+        }
+
+        for (i = [0 : post_count - 1]) {
+            angle = 360 / post_count * i;
+            spring_seat(angle);
+
+            if (base_post_enable)
+                base_support_post(angle);
+        }
+
+        if (center_limiter_enable)
+            translate([0, 0, base_height])
+                cylinder(d = center_limiter_diameter, h = center_limiter_height);
+
+        bottom_feet();
+    }
+}
+
+module vibration_table() {
+    if (show_part == "top") {
+        vibration_top();
+    } else if (show_part == "base") {
+        vibration_base();
+    } else {
+        vibration_top();
+
+        translate([0, 0, base_z])
+            vibration_base();
     }
 }
 
