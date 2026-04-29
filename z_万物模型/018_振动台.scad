@@ -32,28 +32,7 @@ base_height = 8;             // 底座厚度，厚一些更稳
 base_gap = 34;               // 上盘圆柱底部到底座上表面的距离
 
 // 底座上的 6 个对应下柱，与上盘圆柱数量和位置一致
-base_post_enable = true;
-base_post_diameter = post_diameter;
 base_post_height = 15;        // 下柱高度，需小于 base_gap，给弹簧留压缩空间
-base_post_blend_diameter = 18;
-base_post_blend_height = 4;
-
-// 底座上的弹簧定位座，弹簧套在上下两组柱子之间
-spring_outer_diameter = 18;  // 弹簧座外径，略大于弹簧外径
-spring_seat_height = 3;      // 弹簧座凸台高度
-
-// 中心限位，防止上盘振动时横向跑偏；实际装配时要留活动间隙
-center_limiter_enable = false;
-center_limiter_diameter = 14;
-center_limiter_engage_depth = 8;    // 限位柱伸入上盘套筒的深度
-
-// 上盘背面的限位套筒，与底座中心限位柱配合
-limit_sleeve_enable = false;
-limit_sleeve_clearance = 2;      // 套筒内径比限位柱大多少，留给振动的活动间隙
-limit_sleeve_wall = 3;           // 套筒壁厚
-limit_sleeve_height = 12;        // 套筒向下伸出的高度，需短于上下盘间距
-limit_sleeve_blend_diameter = 30;
-limit_sleeve_blend_height = 4;
 
 // 拆分打印用定位结构
 split_mode = true;               // true 时装配预览也显示定位凸起/定位孔
@@ -76,9 +55,6 @@ disk_radius = disk_diameter / 2;
 post_radius = post_diameter / 2;
 post_center_radius = disk_radius - post_edge_gap - post_radius;
 base_z = -post_height - base_gap - base_height;
-limit_sleeve_inner_diameter = center_limiter_diameter + limit_sleeve_clearance;
-limit_sleeve_outer_diameter = limit_sleeve_inner_diameter + limit_sleeve_wall * 2;
-center_limiter_height = post_height + base_gap - limit_sleeve_height + center_limiter_engage_depth;
 locator_hole_diameter = locator_pin_diameter + locator_clearance * 2;
 
 // ========== 基础模块 ==========
@@ -158,29 +134,6 @@ module smooth_post_blend(angle) {
         }
 }
 
-module limit_sleeve() {
-    if (limit_sleeve_enable && center_limiter_enable) {
-        difference() {
-            union() {
-                translate([0, 0, -limit_sleeve_height])
-                    cylinder(d = limit_sleeve_outer_diameter, h = limit_sleeve_height);
-
-                translate([0, 0, -limit_sleeve_blend_height]) {
-                    hull() {
-                        cylinder(d = limit_sleeve_blend_diameter, h = 0.4);
-
-                        translate([0, 0, limit_sleeve_blend_height - 0.4])
-                            cylinder(d = limit_sleeve_outer_diameter, h = 0.4);
-                    }
-                }
-            }
-
-            translate([0, 0, -limit_sleeve_height - 0.05])
-                cylinder(d = limit_sleeve_inner_diameter, h = limit_sleeve_height + 0.1);
-        }
-    }
-}
-
 module top_posts_piece(with_locator = true) {
     for (i = [0 : post_count - 1]) {
         angle = 360 / post_count * i;
@@ -192,13 +145,6 @@ module top_posts_piece(with_locator = true) {
     }
 }
 
-module spring_seat(angle) {
-    rotate([0, 0, angle])
-        translate([post_center_radius, 0, base_height]) {
-            cylinder(d = spring_outer_diameter, h = spring_seat_height);
-        }
-}
-
 module base_support_post(angle, with_locator = true) {
     rotate([0, 0, angle])
         translate([post_center_radius, 0, base_height]) {
@@ -206,26 +152,23 @@ module base_support_post(angle, with_locator = true) {
                 translate([0, 0, -locator_pin_height])
                     cylinder(d = locator_pin_diameter, h = locator_pin_height);
 
-            if (base_post_blend_height > 0) {
+            if (post_blend_enable) {
                 hull() {
-                    cylinder(d = base_post_blend_diameter, h = 0.4);
+                    cylinder(d = blend_diameter, h = 0.4);
 
-                    translate([0, 0, base_post_blend_height - 0.4])
-                        cylinder(d = base_post_diameter, h = 0.4);
+                    translate([0, 0, blend_height - 0.4])
+                        cylinder(d = blend_neck_diameter, h = 0.4);
                 }
             }
 
-            cylinder(d = base_post_diameter, h = base_post_height);
+            cylinder(d = post_diameter, h = base_post_height);
         }
 }
 
 module base_posts_piece(with_locator = true) {
     for (i = [0 : post_count - 1]) {
         angle = 360 / post_count * i;
-        spring_seat(angle);
-
-        if (base_post_enable)
-            base_support_post(angle, with_locator);
+        base_support_post(angle, with_locator);
     }
 }
 
@@ -251,7 +194,7 @@ module base_mount_holes() {
             translate([foot_radius, 0, -foot_height - 0.1])
                 cylinder(
                     d = mount_hole_diameter,
-                    h = base_height + foot_height + spring_seat_height + 0.2
+                    h = base_height + foot_height + 0.2
                 );
     }
 }
@@ -269,7 +212,6 @@ module bottom_feet() {
 module vibration_top() {
     union() {
         top_disk_piece(split_mode);
-        limit_sleeve();
         top_posts_piece(split_mode);
     }
 }
@@ -278,10 +220,6 @@ module vibration_base() {
     union() {
         base_disk_piece(split_mode);
         base_posts_piece(split_mode);
-
-        if (center_limiter_enable)
-            translate([0, 0, base_height])
-                cylinder(d = center_limiter_diameter, h = center_limiter_height);
     }
 }
 
