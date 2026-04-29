@@ -26,7 +26,7 @@ ring_spacing = 10;            // 圆环之间的间距
 ring_start_radius = 12;      // 最内侧圆环的内半径
 
 // 底座
-show_part = "assembly";      // "assembly" 装配预览；"top" 只显示上盘；"base" 只显示底座
+show_part = "assembly";      // "assembly" 装配预览；"top_disk" 上圆盘；"top_posts" 上柱子；"motor_mount" 电机座；"base_disk" 底盘；"base_posts" 底座柱子；"top" / "base" 整体件
 base_diameter = 180;         // 底座直径，建议比上盘略大
 base_height = 8;             // 底座厚度，厚一些更稳
 base_gap = 34;               // 上盘圆柱底部到底座上表面的距离
@@ -67,10 +67,18 @@ motor_side_wall_thickness = 2.4; // 两侧挡边厚度
 motor_zip_slot_width = 3.2;      // 扎带槽宽度
 motor_zip_slot_spacing = 22;     // 两条扎带槽中心距
 
+// 拆分打印用定位结构
+split_mode = true;               // true 时装配预览也显示定位凸起/定位孔
+locator_pin_diameter = 4;        // 柱子/电机座定位凸起直径
+locator_pin_height = 2.2;        // 定位凸起高度
+locator_clearance = 0.25;        // 定位孔单边余量，胶水装配建议 0.2~0.4
+top_socket_depth = 2.4;          // 上圆盘底部定位孔深度，需小于 disk_height
+base_socket_depth = 3;           // 底盘顶部定位孔深度，需小于 base_height
+motor_locator_spacing = 24;      // 电机座两个定位凸起之间距离
+
 // 底座固定孔和脚垫
 mount_hole_count = 4;
 mount_hole_diameter = 4.2;   // M4 螺丝孔可用 4.2 左右
-mount_hole_radius = 68;
 foot_count = 4;
 foot_diameter = 22;
 foot_height = 3;
@@ -84,6 +92,7 @@ base_z = -post_height - base_gap - base_height;
 limit_sleeve_inner_diameter = center_limiter_diameter + limit_sleeve_clearance;
 limit_sleeve_outer_diameter = limit_sleeve_inner_diameter + limit_sleeve_wall * 2;
 center_limiter_height = post_height + base_gap - limit_sleeve_height + center_limiter_engage_depth;
+locator_hole_diameter = locator_pin_diameter + locator_clearance * 2;
 
 // ========== 基础模块 ==========
 module annular_ring(inner_radius, width, height) {
@@ -106,10 +115,60 @@ module friction_rings() {
     }
 }
 
-module support_post(angle) {
+module top_post_socket_holes() {
+    for (i = [0 : post_count - 1]) {
+        angle = 360 / post_count * i;
+
+        rotate([0, 0, angle])
+            translate([post_center_radius, 0, -0.1])
+                cylinder(d = locator_hole_diameter, h = top_socket_depth + 0.1);
+    }
+}
+
+module motor_mount_socket_holes() {
+    if (motor_mount_enable) {
+        rotate([0, 0, motor_mount_angle])
+            translate([motor_mount_radius, 0, -0.1]) {
+                for (x = [-motor_locator_spacing / 2, motor_locator_spacing / 2])
+                    translate([x, 0, 0])
+                        cylinder(d = locator_hole_diameter, h = top_socket_depth + 0.1);
+            }
+    }
+}
+
+module base_post_socket_holes() {
+    for (i = [0 : post_count - 1]) {
+        angle = 360 / post_count * i;
+
+        rotate([0, 0, angle])
+            translate([post_center_radius, 0, base_height - base_socket_depth])
+                cylinder(d = locator_hole_diameter, h = base_socket_depth + 0.1);
+    }
+}
+
+module top_disk_piece(with_sockets = true) {
+    difference() {
+        union() {
+            cylinder(d = disk_diameter, h = disk_height);
+            friction_rings();
+        }
+
+        if (with_sockets) {
+            top_post_socket_holes();
+            motor_mount_socket_holes();
+        }
+    }
+}
+
+module support_post(angle, with_locator = true) {
     rotate([0, 0, angle])
-        translate([post_center_radius, 0, -post_height])
-            cylinder(d = post_diameter, h = post_height);
+        translate([post_center_radius, 0, 0]) {
+            translate([0, 0, -post_height])
+                cylinder(d = post_diameter, h = post_height);
+
+            if (with_locator)
+                cylinder(d = locator_pin_diameter, h = locator_pin_height);
+        }
 }
 
 module smooth_post_blend(angle) {
@@ -147,51 +206,70 @@ module limit_sleeve() {
     }
 }
 
-module motor_mount() {
+module motor_mount(with_locator = true) {
     if (motor_mount_enable) {
         rotate([0, 0, motor_mount_angle])
             translate([motor_mount_radius, 0, 0]) {
-                difference() {
-                    union() {
-                        translate([0, 0, -motor_mount_thickness / 2])
-                            cube(
-                                [motor_mount_length, motor_mount_width, motor_mount_thickness],
-                                center = true
-                            );
+                union() {
+                    difference() {
+                        union() {
+                            translate([0, 0, -motor_mount_thickness / 2])
+                                cube(
+                                    [motor_mount_length, motor_mount_width, motor_mount_thickness],
+                                    center = true
+                                );
 
-                        translate([
-                            0,
-                            motor_mount_width / 2 - motor_side_wall_thickness / 2,
-                            -motor_mount_thickness - motor_side_wall_height / 2
-                        ])
-                            cube(
-                                [motor_mount_length, motor_side_wall_thickness, motor_side_wall_height],
-                                center = true
-                            );
+                            translate([
+                                0,
+                                motor_mount_width / 2 - motor_side_wall_thickness / 2,
+                                -motor_mount_thickness - motor_side_wall_height / 2
+                            ])
+                                cube(
+                                    [motor_mount_length, motor_side_wall_thickness, motor_side_wall_height],
+                                    center = true
+                                );
 
-                        translate([
-                            0,
-                            -motor_mount_width / 2 + motor_side_wall_thickness / 2,
-                            -motor_mount_thickness - motor_side_wall_height / 2
-                        ])
-                            cube(
-                                [motor_mount_length, motor_side_wall_thickness, motor_side_wall_height],
-                                center = true
-                            );
+                            translate([
+                                0,
+                                -motor_mount_width / 2 + motor_side_wall_thickness / 2,
+                                -motor_mount_thickness - motor_side_wall_height / 2
+                            ])
+                                cube(
+                                    [motor_mount_length, motor_side_wall_thickness, motor_side_wall_height],
+                                    center = true
+                                );
+                        }
+
+                        for (x = [-motor_zip_slot_spacing / 2, motor_zip_slot_spacing / 2])
+                            translate([x, 0, -motor_mount_thickness / 2])
+                                cube(
+                                    [
+                                        motor_zip_slot_width,
+                                        motor_mount_width + 0.4,
+                                        motor_mount_thickness + 0.4
+                                    ],
+                                    center = true
+                                );
                     }
 
-                    for (x = [-motor_zip_slot_spacing / 2, motor_zip_slot_spacing / 2])
-                        translate([x, 0, -motor_mount_thickness / 2])
-                            cube(
-                                [
-                                    motor_zip_slot_width,
-                                    motor_mount_width + 0.4,
-                                    motor_mount_thickness + 0.4
-                                ],
-                                center = true
-                            );
+                    if (with_locator) {
+                        for (x = [-motor_locator_spacing / 2, motor_locator_spacing / 2])
+                            translate([x, 0, 0])
+                                cylinder(d = locator_pin_diameter, h = locator_pin_height);
+                    }
                 }
             }
+    }
+}
+
+module top_posts_piece(with_locator = true) {
+    for (i = [0 : post_count - 1]) {
+        angle = 360 / post_count * i;
+
+        support_post(angle, with_locator);
+
+        if (post_blend_enable)
+            smooth_post_blend(angle);
     }
 }
 
@@ -202,9 +280,13 @@ module spring_seat(angle) {
         }
 }
 
-module base_support_post(angle) {
+module base_support_post(angle, with_locator = true) {
     rotate([0, 0, angle])
         translate([post_center_radius, 0, base_height]) {
+            if (with_locator)
+                translate([0, 0, -locator_pin_height])
+                    cylinder(d = locator_pin_diameter, h = locator_pin_height);
+
             if (base_post_blend_height > 0) {
                 hull() {
                     cylinder(d = base_post_blend_diameter, h = 0.4);
@@ -218,12 +300,36 @@ module base_support_post(angle) {
         }
 }
 
+module base_posts_piece(with_locator = true) {
+    for (i = [0 : post_count - 1]) {
+        angle = 360 / post_count * i;
+        spring_seat(angle);
+
+        if (base_post_enable)
+            base_support_post(angle, with_locator);
+    }
+}
+
+module base_disk_piece(with_sockets = true) {
+    difference() {
+        union() {
+            cylinder(d = base_diameter, h = base_height);
+            bottom_feet();
+        }
+
+        base_mount_holes();
+
+        if (with_sockets)
+            base_post_socket_holes();
+    }
+}
+
 module base_mount_holes() {
-    for (i = [0 : mount_hole_count - 1]) {
-        angle = 360 / mount_hole_count * i + 45;
+    for (i = [0 : foot_count - 1]) {
+        angle = 360 / foot_count * i + 45;
 
         rotate([0, 0, angle])
-            translate([mount_hole_radius, 0, -foot_height - 0.1])
+            translate([foot_radius, 0, -foot_height - 0.1])
                 cylinder(
                     d = mount_hole_diameter,
                     h = base_height + foot_height + spring_seat_height + 0.2
@@ -243,52 +349,36 @@ module bottom_feet() {
 
 module vibration_top() {
     union() {
-        // 主圆盘：上表面用于接触物体，背面长出支撑柱。
-        cylinder(d = disk_diameter, h = disk_height);
-
-        friction_rings();
-
+        top_disk_piece(split_mode);
         limit_sleeve();
-
-        motor_mount();
-
-        for (i = [0 : post_count - 1]) {
-            angle = 360 / post_count * i;
-
-            support_post(angle);
-
-            if (post_blend_enable)
-                smooth_post_blend(angle);
-        }
+        motor_mount(split_mode);
+        top_posts_piece(split_mode);
     }
 }
 
 module vibration_base() {
-    difference() {
-        union() {
-            cylinder(d = base_diameter, h = base_height);
+    union() {
+        base_disk_piece(split_mode);
+        base_posts_piece(split_mode);
 
-            for (i = [0 : post_count - 1]) {
-                angle = 360 / post_count * i;
-                spring_seat(angle);
-
-                if (base_post_enable)
-                    base_support_post(angle);
-            }
-
-            if (center_limiter_enable)
-                translate([0, 0, base_height])
-                    cylinder(d = center_limiter_diameter, h = center_limiter_height);
-
-            bottom_feet();
-        }
-
-        base_mount_holes();
+        if (center_limiter_enable)
+            translate([0, 0, base_height])
+                cylinder(d = center_limiter_diameter, h = center_limiter_height);
     }
 }
 
 module vibration_table() {
-    if (show_part == "top") {
+    if (show_part == "top_disk") {
+        top_disk_piece();
+    } else if (show_part == "top_posts") {
+        top_posts_piece();
+    } else if (show_part == "motor_mount") {
+        motor_mount();
+    } else if (show_part == "base_disk") {
+        base_disk_piece();
+    } else if (show_part == "base_posts") {
+        base_posts_piece();
+    } else if (show_part == "top") {
         vibration_top();
     } else if (show_part == "base") {
         vibration_base();
