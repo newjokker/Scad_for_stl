@@ -26,10 +26,10 @@ ring_spacing = 10;            // 圆环之间的间距
 ring_start_radius = 12;      // 最内侧圆环的内半径
 
 // 底座
-show_part = "base";      // "assembly" 装配预览；"top" 只显示上盘；"base" 只显示底座
-base_diameter = 170;         // 底座直径，建议比上盘略大
+show_part = "assembly";      // "assembly" 装配预览；"top" 只显示上盘；"base" 只显示底座
+base_diameter = 180;         // 底座直径，建议比上盘略大
 base_height = 8;             // 底座厚度，厚一些更稳
-base_gap = 24;               // 上盘圆柱底部到底座上表面的距离
+base_gap = 34;               // 上盘圆柱底部到底座上表面的距离
 
 // 底座上的 6 个对应下柱，与上盘圆柱数量和位置一致
 base_post_enable = true;
@@ -43,17 +43,29 @@ spring_outer_diameter = 18;  // 弹簧座外径，略大于弹簧外径
 spring_seat_height = 3;      // 弹簧座凸台高度
 
 // 中心限位，防止上盘振动时横向跑偏；实际装配时要留活动间隙
-center_limiter_enable = true;
+center_limiter_enable = false;
 center_limiter_diameter = 14;
 center_limiter_engage_depth = 8;    // 限位柱伸入上盘套筒的深度
 
 // 上盘背面的限位套筒，与底座中心限位柱配合
-limit_sleeve_enable = true;
+limit_sleeve_enable = false;
 limit_sleeve_clearance = 2;      // 套筒内径比限位柱大多少，留给振动的活动间隙
 limit_sleeve_wall = 3;           // 套筒壁厚
 limit_sleeve_height = 12;        // 套筒向下伸出的高度，需短于上下盘间距
 limit_sleeve_blend_diameter = 30;
 limit_sleeve_blend_height = 4;
+
+// 上盘背面的电机支架，用扎带固定小振动电机
+motor_mount_enable = true;
+motor_mount_angle = 30;          // 电机支架所在角度，默认放在两个弹簧柱之间
+motor_mount_radius = 35;         // 电机支架中心到圆心距离
+motor_mount_length = 38;         // 电机支架长度
+motor_mount_width = 24;          // 电机支架宽度
+motor_mount_thickness = 3;       // 电机支架底板厚度
+motor_side_wall_height = 7;      // 两侧挡边高度
+motor_side_wall_thickness = 2.4; // 两侧挡边厚度
+motor_zip_slot_width = 3.2;      // 扎带槽宽度
+motor_zip_slot_spacing = 22;     // 两条扎带槽中心距
 
 // 底座固定孔和脚垫
 mount_hole_count = 4;
@@ -135,6 +147,54 @@ module limit_sleeve() {
     }
 }
 
+module motor_mount() {
+    if (motor_mount_enable) {
+        rotate([0, 0, motor_mount_angle])
+            translate([motor_mount_radius, 0, 0]) {
+                difference() {
+                    union() {
+                        translate([0, 0, -motor_mount_thickness / 2])
+                            cube(
+                                [motor_mount_length, motor_mount_width, motor_mount_thickness],
+                                center = true
+                            );
+
+                        translate([
+                            0,
+                            motor_mount_width / 2 - motor_side_wall_thickness / 2,
+                            -motor_mount_thickness - motor_side_wall_height / 2
+                        ])
+                            cube(
+                                [motor_mount_length, motor_side_wall_thickness, motor_side_wall_height],
+                                center = true
+                            );
+
+                        translate([
+                            0,
+                            -motor_mount_width / 2 + motor_side_wall_thickness / 2,
+                            -motor_mount_thickness - motor_side_wall_height / 2
+                        ])
+                            cube(
+                                [motor_mount_length, motor_side_wall_thickness, motor_side_wall_height],
+                                center = true
+                            );
+                    }
+
+                    for (x = [-motor_zip_slot_spacing / 2, motor_zip_slot_spacing / 2])
+                        translate([x, 0, -motor_mount_thickness / 2])
+                            cube(
+                                [
+                                    motor_zip_slot_width,
+                                    motor_mount_width + 0.4,
+                                    motor_mount_thickness + 0.4
+                                ],
+                                center = true
+                            );
+                }
+            }
+    }
+}
+
 module spring_seat(angle) {
     rotate([0, 0, angle])
         translate([post_center_radius, 0, base_height]) {
@@ -163,8 +223,11 @@ module base_mount_holes() {
         angle = 360 / mount_hole_count * i + 45;
 
         rotate([0, 0, angle])
-            translate([mount_hole_radius, 0, -0.1])
-                cylinder(d = mount_hole_diameter, h = base_height + 0.2);
+            translate([mount_hole_radius, 0, -foot_height - 0.1])
+                cylinder(
+                    d = mount_hole_diameter,
+                    h = base_height + foot_height + spring_seat_height + 0.2
+                );
     }
 }
 
@@ -187,6 +250,8 @@ module vibration_top() {
 
         limit_sleeve();
 
+        motor_mount();
+
         for (i = [0 : post_count - 1]) {
             angle = 360 / post_count * i;
 
@@ -199,25 +264,26 @@ module vibration_top() {
 }
 
 module vibration_base() {
-    union() {
-        difference() {
+    difference() {
+        union() {
             cylinder(d = base_diameter, h = base_height);
-            base_mount_holes();
+
+            for (i = [0 : post_count - 1]) {
+                angle = 360 / post_count * i;
+                spring_seat(angle);
+
+                if (base_post_enable)
+                    base_support_post(angle);
+            }
+
+            if (center_limiter_enable)
+                translate([0, 0, base_height])
+                    cylinder(d = center_limiter_diameter, h = center_limiter_height);
+
+            bottom_feet();
         }
 
-        for (i = [0 : post_count - 1]) {
-            angle = 360 / post_count * i;
-            spring_seat(angle);
-
-            if (base_post_enable)
-                base_support_post(angle);
-        }
-
-        if (center_limiter_enable)
-            translate([0, 0, base_height])
-                cylinder(d = center_limiter_diameter, h = center_limiter_height);
-
-        bottom_feet();
+        base_mount_holes();
     }
 }
 
