@@ -37,5 +37,17 @@ module old(){
         half_ring(a=a, h=50, r=91, thick= 22);
 }
 
+translate([0, 0, 150])
 old();
+
+// --------------------- 新的后盖 ----------------------
+
+translate([0, 0, 14])
+    // cylinder(r=91 + 22*2 + 7, h=10, center=true);
+    half_ring(a=0, h=30, r=91 - 60, thick= 22*2 + 7 + 60);
+    
+    translate([0, 0,60])
+        cylinder(r=61 + 22*2 + 7, h=10, center=true);
+
+
 
