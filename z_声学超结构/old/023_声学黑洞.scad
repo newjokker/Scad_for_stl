@@ -1,13 +1,13 @@
 include <BOSL2/std.scad>
 
 // ================= 参数 =================
-L = 10;  // 三角形底边的长度
-W = 10;  // 搓衣板的宽度
-H = 15;  // 楔形高度
+L = 15;  // 三角形底边的长度
+W = 15;  // 搓衣板的宽度
+H = 30;  // 楔形高度
 spacing = 0;  // 间距
 c_height = 2; // 楔形块底部凸起高度
-rows = 10;    // 行数
-cols = 10;    // 列数
+rows = 30;    // 行数
+cols = 30;    // 列数
 
 // ================= 单个楔形块模块 =================
 module wedge() {
@@ -69,5 +69,25 @@ module washboard_pattern() {
     }
 }
 
+// ================= 标准的外框 =================
+
+thick = 5;
+
+difference(){
+    cuboid([120 - 0.5, 150 - 0.5, 30], rounding = 3.6, edges = [LEFT+FRONT, RIGHT+FRONT, LEFT+BACK, RIGHT+BACK], anchor = [0, 0, -1]);
+    cuboid([120 - thick - 0.5, 150 - thick - 0.5, 40], rounding = 3.6, edges = [LEFT+FRONT, RIGHT+FRONT, LEFT+BACK, RIGHT+BACK], anchor = [0, 0, -1]);
+}
+
+
 // ================= 渲染 =================
-washboard_pattern();
+
+intersection(){
+    cuboid([120 - 0.5, 150 - 0.5, 30], rounding = 3.6, edges = [LEFT+FRONT, RIGHT+FRONT, LEFT+BACK, RIGHT+BACK], anchor = [0, 0, -1]);
+
+    translate([-100, -100, 0])
+        washboard_pattern();
+}
+
+
+
+
