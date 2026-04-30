@@ -32,7 +32,7 @@ base_height = 8;             // 底座厚度，厚一些更稳
 base_gap = 34;               // 上盘圆柱底部到底座上表面的距离
 
 // 底座上的 6 个对应下柱，与上盘圆柱数量和位置一致
-base_post_height = 15;        // 下柱高度，需小于 base_gap，给弹簧留压缩空间
+base_post_height = 20;        // 下柱高度，需小于 base_gap，给弹簧留压缩空间
 
 // 拆分打印用定位结构
 split_mode = true;               // true 时装配预览也显示定位凸起/定位孔
