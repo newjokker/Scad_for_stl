@@ -42,7 +42,7 @@ intersection(){
 
 
     // 裁切的立方体
-    cuboid([500, 500, 500], anchor=[-1, -1, 0]);
+    cuboid([500, 500, 500], anchor=[0, -1, 0]);
 
 }
 
