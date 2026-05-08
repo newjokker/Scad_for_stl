@@ -19,8 +19,10 @@ outer_ring_inner_r = 161;
 
 shaft_holder_z = 52 - 12.18;        // 铁棒座底部离底面的高度
 shaft_holder_h = 25;                // 铁棒座高度
-shaft_holder_outer_r = 28;          // 铁棒座外半径
+shaft_holder_outer_r = 18;          // 铁棒座外半径
+// shaft_holder_outer_r = 40/2;          // 铁棒座外半径
 shaft_hole_d = 12.4;                // 中心孔直径
+// shaft_hole_d = 27;                // 中心孔直径
 
 
 // ==================== 底盘 / 主圆筒参数 ====================
