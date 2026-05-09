@@ -65,7 +65,7 @@ module leaf(extrude_h = 90) {
 module main() {
     // 扇叶
     // leaf_num = 53;
-    leaf_num = 63;
+    leaf_num = 61;
 
     difference(){
 
