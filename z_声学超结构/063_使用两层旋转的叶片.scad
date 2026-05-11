@@ -1,3 +1,8 @@
+
+
+// 
+
+
 include <BOSL2/std.scad>
 use <tools/blade_other.scad>;
 
@@ -65,30 +70,52 @@ module main() {
     // 扇叶
     leaf_num = 53;
 
+    // 两种叶片中间的圆盘
+    translate([0, 0, 45]){
+        difference(){
+            cylinder(h=1, r=162);
+            cylinder(h=1, r=134);
+        }
+    }
+
     difference(){
 
-        // 叶片
-        for (i = [0 : leaf_num-1])
-            color("red")
-                rotate([0, 0, i * (360 / leaf_num)/1 ])
-                    rotate([0, 0, 20])
-                        translate([153.7, 0, 0])
-                            rotate([0, 0, 71])
-                                leaf(extrude_h = 90);
+        union(){
+            // 叶片
+            for (i = [0 : leaf_num-1])
+                color("red")
+                    rotate([0, 0, i * (360 / leaf_num)/1 ])
+                        rotate([0, 0, 20])
+                            translate([153.7, 0, 0])
+                                rotate([0, 0, 71])
+                                    leaf(extrude_h = 45);
 
-        // 锯齿边
-        extrend = 6.5;
-        length = 124;
-        length_diff = 5;
-        lenght_h = 5;
-        // # for (i = [27:29]){
-        # for (i = [0:25]){
-            translate([0, 0, i * lenght_h])
-                cylinder(r1= length + extrend + 3, r2=length + extrend + 3 + length_diff, h=lenght_h);
-
-            translate([0, 0, i * lenght_h + lenght_h])
-                cylinder(r1= length + extrend + 3 + length_diff, r2=length + extrend + 3, h=lenght_h);
+            // 叶片
+            translate([0, 0, 45])
+            {
+                for (i = [0 : leaf_num-1])
+                    color("red")
+                        rotate([0, 0, i * (360 / leaf_num)/1 + (360 / leaf_num/2)])
+                            rotate([0, 0, 20])
+                                translate([153.7, 0, 0])
+                                    rotate([0, 0, 71])
+                                        leaf(extrude_h = 45);
+            }
         }
+
+        // // 锯齿边
+        // extrend = 6.5;
+        // length = 124;
+        // length_diff = 5;
+        // lenght_h = 5;
+        // // # for (i = [27:29]){
+        // # for (i = [0:25]){
+        //     translate([0, 0, i * lenght_h])
+        //         cylinder(r1= length + extrend + 3, r2=length + extrend + 3 + length_diff, h=lenght_h);
+
+        //     translate([0, 0, i * lenght_h + lenght_h])
+        //         cylinder(r1= length + extrend + 3 + length_diff, r2=length + extrend + 3, h=lenght_h);
+        // }
 
     }
 

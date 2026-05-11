@@ -3,7 +3,7 @@ include <BOSL2/std.scad>
 use <tools/blade_from_zy.scad>;
 use <tools/blade_other.scad>;
 
-$fn = 200;
+$fn = 1200;
 
 module main() {
 
