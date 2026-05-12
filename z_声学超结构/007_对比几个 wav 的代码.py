@@ -270,10 +270,18 @@ if __name__ == "__main__":
         # "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-05-12 微孔板测试/003_左封_右封_上不封/后/2026-05-12_11_59_46.513-4channel.wav",
         # "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-05-12 微孔板测试/004_左封_右封_上封/后/2026-05-12_12_11_59.560-4channel.wav",
         
-        "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-05-12 微孔板测试/001-左不封_右不封_上不封/内/2026-05-12_11_29_08.684-4channel.wav",
-        "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-05-12 微孔板测试/002_左封_右不封_上不封/内/2026-05-12_11_49_05.857-4channel.wav",
-        "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-05-12 微孔板测试/003_左封_右封_上不封/内/2026-05-12_12_01_51.944-4channel.wav",
-        "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-05-12 微孔板测试/004_左封_右封_上封/内/2026-05-12_12_14_05.928-4channel.wav",
+        # "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-05-12 微孔板测试/001-左不封_右不封_上不封/内/2026-05-12_11_29_08.684-4channel.wav",
+        # "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-05-12 微孔板测试/002_左封_右不封_上不封/内/2026-05-12_11_49_05.857-4channel.wav",
+        # "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-05-12 微孔板测试/003_左封_右封_上不封/内/2026-05-12_12_01_51.944-4channel.wav",
+        # "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-05-12 微孔板测试/004_左封_右封_上封/内/2026-05-12_12_14_05.928-4channel.wav",
+        
+        "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-05-12_叶轮声音/未打磨/2026-05-12_15_47_39.672-4channel.wav",
+        "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-05-12_叶轮声音/未打磨/2026-05-12_15_47_53.744-4channel.wav",
+        "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-05-12_叶轮声音/未打磨/2026-05-12_15_48_05.529-4channel.wav",
+        
+        "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-05-12_叶轮声音/已打磨/2026-05-12_16_06_33.774-4channel.wav",
+        "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-05-12_叶轮声音/已打磨/2026-05-12_16_06_46.063-4channel.wav",
+        "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-05-12_叶轮声音/已打磨/2026-05-12_16_06_58.229-4channel.wav",
         
     ]
 
@@ -281,11 +289,17 @@ if __name__ == "__main__":
     # 2. 对应的标签/结构名称
     LABELS = [   
 
-        "内—左不封_右不封_上不封",
-        "内-左封_右不封_上不封",
-        "内-左封_右封_上不封",
-        "内-左封_右封_上封",  
+        # "内—左不封_右不封_上不封",
+        # "内-左封_右不封_上不封",
+        # "内-左封_右封_上不封",
+        # "内-左封_右封_上封",  
         
+        "未打磨 1",
+        "未打磨 2",
+        "未打磨 3",
+        "打磨   1",
+        "打磨   2",
+        "打磨   3",
               
     ]
     
@@ -293,7 +307,7 @@ if __name__ == "__main__":
     FREQ_MIN = 200      # 分析最低频率(Hz)
     FREQ_MAX = 10000     # 分析最高频率(Hz)
     IS_STEADY = True   # True=稳态噪声, False=扫频信号
-    REF_IDX = 3         # 参考结构索引（0表示第一个文件作为基准）
+    REF_IDX = 0         # 参考结构索引（0表示第一个文件作为基准）
     OUTPUT_PREFIX = "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/res"  # 输出文件名前缀
     
     # ================ 执行分析 ================
