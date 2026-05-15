@@ -83,9 +83,11 @@ module side_windows() {
                     [window_cut_depth, window_w, window_h],
                     center = true
                 );
-        rotate([0, 0, i * 360 / window_count])
-            translate([0, 48, 0])
-                cylinder(h=80, r=15);
+        
+        // // 掏空的圆片
+        // rotate([0, 0, i * 360 / window_count])
+        //     translate([0, 48, 0])
+        //         cylinder(h=80, r=15);
     }
 }
 
