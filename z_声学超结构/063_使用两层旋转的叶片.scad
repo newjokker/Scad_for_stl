@@ -73,8 +73,8 @@ module main() {
     // 两种叶片中间的圆盘
     translate([0, 0, 45]){
         difference(){
-            cylinder(h=1, r=162);
-            cylinder(h=1, r=134);
+            cylinder(h=2, r=162);
+            cylinder(h=2, r=134);
         }
     }
 
