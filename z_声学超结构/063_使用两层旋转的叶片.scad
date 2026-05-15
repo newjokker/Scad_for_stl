@@ -4,7 +4,7 @@
 
 
 include <BOSL2/std.scad>
-use <tools/blade_other.scad>;
+use <tools/blade_other_light.scad>;
 
 $fn = 1200;
 
