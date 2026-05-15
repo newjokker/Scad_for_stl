@@ -61,45 +61,56 @@ module leaf(extrude_h = 90) {
 }
 
 module smooth_serrated_edge_cutter(base_r, tooth_depth, pitch_h, tooth_count, segments = 16) {
-    for (i = [0 : tooth_count - 1]) {
-        for (j = [0 : segments - 1]) {
-            z1 = (i + j / segments) * pitch_h;
-            z2 = (i + (j + 1) / segments) * pitch_h;
-            r1 = base_r + tooth_depth * (0.5 - 0.5 * cos(360 * j / segments));
-            r2 = base_r + tooth_depth * (0.5 - 0.5 * cos(360 * (j + 1) / segments));
+    height = tooth_count * pitch_h;
+    step_count = tooth_count * segments;
+    eps = 0.02;
 
-            translate([0, 0, z1])
-                cylinder(r1 = r1, r2 = r2, h = z2 - z1);
-        }
-    }
+    profile = [
+        for (k = [0 : step_count])
+            let (
+                z = height * k / step_count,
+                r = base_r + tooth_depth * (0.5 - 0.5 * cos(360 * z / pitch_h))
+            )
+            [r, z]
+    ];
+
+    rotate_extrude(convexity = 10)
+        polygon(points = concat(
+            [[0, -eps], [base_r, -eps]],
+            profile,
+            [[base_r, height + eps], [0, height + eps]]
+        ));
 }
 
 
 module main() {
     // 扇叶
     leaf_num = 53;
+    blade_h = 90;
 
     difference(){
 
         // 叶片
-        for (i = [0 : leaf_num-1])
-            color("red")
-                rotate([0, 0, i * (360 / leaf_num)/1 ])
-                    rotate([0, 0, 20])
-                        translate([153.7, 0, 0])
-                            rotate([0, 0, 71])
-                                leaf(extrude_h = 90);
+        union() {
+            for (i = [0 : leaf_num-1])
+                color("red")
+                    rotate([0, 0, i * (360 / leaf_num)/1 ])
+                        rotate([0, 0, 20])
+                            translate([153.7, 0, 0])
+                                rotate([0, 0, 71])
+                                    leaf(extrude_h = blade_h);
+        }
 
         // 锯齿边
         extrend = 8;
         length = 124;
         length_diff = 5;
-        length_h = 10;
+        length_h = 7;
         smooth_serrated_edge_cutter(
             base_r = length + extrend + 3,
             tooth_depth = length_diff,
             pitch_h = length_h,
-            tooth_count = 33,
+            tooth_count = ceil(blade_h / length_h) + 1,
             segments = 24
         );
 
