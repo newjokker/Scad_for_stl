@@ -4,7 +4,7 @@
 $fn = 1200;
 
 // 壁厚
-thick = 4;
+thick = 3;
 
 
 // ==================== 外圈参数 ====================
@@ -30,14 +30,14 @@ shaft_hole_d = 12.4;                // 中心孔直径
 base_h = 55;
 base_r = 80;
 
-bottom_plate_h =  2.3;                 // 底盘的厚度
+bottom_plate_h =  2;                 // 底盘的厚度
 bottom_plate_r = 162;
 
 
 // ==================== 窗口参数 ====================
 
 window_count = 5;
-window_w = 50;             // 沿圆周方向宽度
+window_w = 60;             // 沿圆周方向宽度
 window_h = 35;             // Z 方向高度
 window_bottom = 10;        // 窗口底部离底面高度
 window_cut_depth = 20;     // 切穿侧壁的深度
@@ -83,6 +83,11 @@ module side_windows() {
                     [window_cut_depth, window_w, window_h],
                     center = true
                 );
+        
+        // // 掏空的圆片
+        // rotate([0, 0, i * 360 / window_count])
+        //     translate([0, 48, 0])
+        //         cylinder(h=80, r=15);
     }
 }
 
@@ -104,9 +109,10 @@ module main_base() {
         // 中心孔
         shaft_hole();
 
-        // 侧面窗口
+        // 窗口
         side_windows();
     }
+
 }
 
 

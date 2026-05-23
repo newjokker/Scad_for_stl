@@ -1,5 +1,5 @@
 include <BOSL2/std.scad>
-use <tools/blade_other.scad>;
+use <tools/blade_other_light.scad>;
 
 $fn = 1200;
 
@@ -60,41 +60,70 @@ module leaf(extrude_h = 90) {
 
 }
 
+module smooth_serrated_edge_cutter(base_r, tooth_depth, pitch_h, tooth_count, segments = 16) {
+    height = tooth_count * pitch_h;
+    step_count = tooth_count * segments;
+    eps = 0.02;
+
+    profile = [
+        for (k = [0 : step_count])
+            let (
+                z = height * k / step_count,
+                r = base_r + tooth_depth * (0.5 - 0.5 * cos(360 * z / pitch_h))
+            )
+            [r, z]
+    ];
+
+    rotate_extrude(convexity = 10)
+        polygon(points = concat(
+            [[0, -eps], [base_r, -eps]],
+            profile,
+            [[base_r, height + eps], [0, height + eps]]
+        ));
+}
+
 
 module main() {
     // 扇叶
     leaf_num = 53;
+    blade_h = 90;
 
     difference(){
 
         // 叶片
-        for (i = [0 : leaf_num-1])
-            color("red")
-                rotate([0, 0, i * (360 / leaf_num)/1 ])
-                    rotate([0, 0, 20])
-                        translate([153.7, 0, 0])
-                            rotate([0, 0, 71])
-                                leaf(extrude_h = 90);
+        union() {
+            for (i = [0 : leaf_num-1])
+                color("red")
+                    rotate([0, 0, i * (360 / leaf_num)/1 ])
+                        rotate([0, 0, 20])
+                            translate([153.7, 0, 0])
+                                rotate([0, 0, 71])
+                                    leaf(extrude_h = blade_h);
+        }
 
         // 锯齿边
-        extrend = 6.5;
+        extrend = 8;
         length = 124;
         length_diff = 5;
-        lenght_h = 5;
-        // # for (i = [27:29]){
-        # for (i = [0:25]){
-            translate([0, 0, i * lenght_h])
-                cylinder(r1= length + extrend + 3, r2=length + extrend + 3 + length_diff, h=lenght_h);
-
-            translate([0, 0, i * lenght_h + lenght_h])
-                cylinder(r1= length + extrend + 3 + length_diff, r2=length + extrend + 3, h=lenght_h);
-        }
+        length_h = 7;
+        smooth_serrated_edge_cutter(
+            base_r = length + extrend + 3,
+            tooth_depth = length_diff,
+            pitch_h = length_h,
+            tooth_count = ceil(blade_h / length_h) + 1,
+            segments = 24
+        );
 
     }
 
 
     blade_base();
 }
+
+
+
+
+
 
 // scale_factor = 0.7;
 scale_factor = 1;

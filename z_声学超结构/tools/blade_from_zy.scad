@@ -1,4 +1,4 @@
-$fn = 80;
+$fn = 1200;
 
 // NACA 四位数半厚度分布
 function naca_thickness(x, t) =

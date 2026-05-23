@@ -1,11 +1,12 @@
 include <BOSL2/std.scad>
 use <tools/blade_other.scad>;
 
-$fn = 1200;
+$fn = 200;
 
 module leaf(extrude_h = 90) {
 
     scale_factor = 0.017 / 1.22448;
+    // scale_factor = 0.017 / 1.1;
 
     points_raw = [
         [93.89743589743591, 21.05128205128213],
@@ -63,7 +64,8 @@ module leaf(extrude_h = 90) {
 
 module main() {
     // 扇叶
-    leaf_num = 53;
+    // leaf_num = 53;
+    leaf_num = 61;
 
     difference(){
 
@@ -82,7 +84,7 @@ module main() {
         length_diff = 5;
         lenght_h = 5;
         // # for (i = [27:29]){
-        # for (i = [0:25]){
+        for (i = [0:25]){
             translate([0, 0, i * lenght_h])
                 cylinder(r1= length + extrend + 3, r2=length + extrend + 3 + length_diff, h=lenght_h);
 

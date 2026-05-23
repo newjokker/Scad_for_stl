@@ -1,15 +1,15 @@
 
 include <BOSL2/std.scad>
 use <tools/blade_from_zy.scad>;
-use <tools/blade_other.scad>;
+use <tools/blade_other_new.scad>;
 
 $fn = 1200;
 
 module main() {
 
 
-    // leaf_num = 53;
-    leaf_num = 61;
+    leaf_num = 53;
+    // leaf_num = 61;
 
     difference(){
 
