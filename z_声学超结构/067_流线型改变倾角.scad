@@ -20,7 +20,9 @@ module main() {
                         rotate([0, 0, 30])
                             mirror([0, 1, 0])
                                 centrifugal_blade_airfoil(
-                                    m = 0.06,
+                                    // m = 0.06,
+                                    // FIXME: 这边是修改的弯曲程度
+                                    m = 0.19,
                                     p = 0.40,
                                     t = 0.12,
                                     num_points = 200,

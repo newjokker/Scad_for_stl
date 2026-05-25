@@ -8,15 +8,15 @@ $fn = 1200;
 module main() {
 
 
-    // leaf_num = 53;
-    leaf_num = 61;
+    leaf_num = 53;
+    // leaf_num = 61;
 
     difference(){
 
         for (i = [0 : leaf_num-1])
             color("red")
                 rotate([0, 0, i * (360 / leaf_num)/1 ])
-                    translate([136.5, 0, 0])
+                    translate([129, 0, 0])
                         rotate([0, 0, 30])
                             mirror([0, 1, 0])
                                 centrifugal_blade_airfoil(
@@ -24,7 +24,9 @@ module main() {
                                     p = 0.40,
                                     t = 0.12,
                                     num_points = 200,
-                                    chord = 28,
+                                    // FIXME: 这边是修改的弦长
+                                    // chord = 28,
+                                    chord = 28 * 1.3,
                                     mode = "3d",
                                     width = 90,
                                     center_3d = false

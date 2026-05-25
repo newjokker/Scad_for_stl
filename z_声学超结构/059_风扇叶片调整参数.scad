@@ -1,5 +1,5 @@
 include <BOSL2/std.scad>
-use <tools/blade_other.scad>;
+use <tools/blade_other_light.scad>;
 
 $fn = 200;
 
@@ -64,8 +64,8 @@ module leaf(extrude_h = 90) {
 
 module main() {
     // 扇叶
-    // leaf_num = 53;
-    leaf_num = 61;
+    leaf_num = 53;
+    // leaf_num = 61;
 
     difference(){
 
@@ -78,19 +78,19 @@ module main() {
                             rotate([0, 0, 71])
                                 leaf(extrude_h = 90);
 
-        // 锯齿边
-        extrend = 6.5;
-        length = 124;
-        length_diff = 5;
-        lenght_h = 5;
-        // # for (i = [27:29]){
-        for (i = [0:25]){
-            translate([0, 0, i * lenght_h])
-                cylinder(r1= length + extrend + 3, r2=length + extrend + 3 + length_diff, h=lenght_h);
+        // // 锯齿边
+        // extrend = 6.5;
+        // length = 124;
+        // length_diff = 5;
+        // lenght_h = 5;
+        // // # for (i = [27:29]){
+        // for (i = [0:25]){
+        //     translate([0, 0, i * lenght_h])
+        //         cylinder(r1= length + extrend + 3, r2=length + extrend + 3 + length_diff, h=lenght_h);
 
-            translate([0, 0, i * lenght_h + lenght_h])
-                cylinder(r1= length + extrend + 3 + length_diff, r2=length + extrend + 3, h=lenght_h);
-        }
+        //     translate([0, 0, i * lenght_h + lenght_h]) 
+        //         cylinder(r1= length + extrend + 3 + length_diff, r2=length + extrend + 3, h=lenght_h);
+        // }
 
     }
 
@@ -98,7 +98,6 @@ module main() {
     blade_base();
 }
 
-// scale_factor = 0.7;
 scale_factor = 1;
 
 scale([scale_factor, scale_factor, scale_factor])

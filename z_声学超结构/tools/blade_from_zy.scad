@@ -69,6 +69,7 @@ function airfoil_polygon_points(m, p, t, num_points, chord) =
         airfoil_lower_points_rev(m, p, t, num_points, chord)
     );
 
+
 // 中弧线点集
 function airfoil_camber_points(m, p, num_points, chord) =
     [ for (i = [0 : num_points])
