@@ -20,7 +20,7 @@ module A(thick = 1.5, L = 150, W = 105, H = 298, r = 10) {
 module B(thick = 1.5, L = 150, W = 105, H = 298 -100, r = 10){
     difference(){
         cuboid([L, W, H], anchor=BOT, edges = "Y", except = [BOTTOM]);
-        cuboid([L, W, H], anchor=BOT, rounding = 10, edges = "Y", except = [BOTTOM]);
+        cuboid([L, W, H], anchor=BOT, rounding = r, edges = "Y", except = [BOTTOM]);
     }
 
     translate([0, 0, H])
@@ -31,10 +31,10 @@ module B(thick = 1.5, L = 150, W = 105, H = 298 -100, r = 10){
 
 
 
-A(thick = 1.5, L = 100, W = 105, H = 100, r = 10);
+A(thick = 1.5, L = 100, W = 105, H = 100, r = 20);
 
 
-// B(thick = 1.5, L = 100, W = 105, H = (298 - 100)/2, r = 10);
+B(thick = 1.5, L = 100, W = 105, H = (298 - 100)/2, r = 20);
 
 
 
