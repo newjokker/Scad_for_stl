@@ -259,30 +259,14 @@ if __name__ == "__main__":
 
     WAV_FILES = [   
 
-        # # 前面点
-        # "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-05-12 微孔板测试/001-左不封_右不封_上不封/前/2026-05-12_11_20_16.981-4channel.wav",
-        # "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-05-12 微孔板测试/002_左封_右不封_上不封/前/2026-05-12_11_45_23.353-4channel.wav",
-        # "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-05-12 微孔板测试/003_左封_右封_上不封/前/2026-05-12_11_58_52.752-4channel.wav",
-        # "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-05-12 微孔板测试/004_左封_右封_上封/前/2026-05-12_12_11_19.360-4channel.wav",
+
+        # 
+        "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-05-16_泡沫铝/泡沫铝一块，多孔板两块/内/2026-05-16_10_57_29.843-4channel.wav",
+        # "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-05-16_泡沫铝/泡沫铝一块，多孔板两块/内/2026-05-16_10_57_42.947-4channel.wav",
+        # "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-05-16_泡沫铝/泡沫铝一块，多孔板两块/内/2026-05-16_10_57_55.156-4channel.wav",
         
-        # "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-05-12 微孔板测试/001-左不封_右不封_上不封/后/2026-05-12_11_22_45.532-4channel.wav",
-        # "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-05-12 微孔板测试/002_左封_右不封_上不封/后/2026-05-12_11_46_25.769-4channel.wav",
-        # "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-05-12 微孔板测试/003_左封_右封_上不封/后/2026-05-12_11_59_46.513-4channel.wav",
-        # "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-05-12 微孔板测试/004_左封_右封_上封/后/2026-05-12_12_11_59.560-4channel.wav",
-        
-        # "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-05-12 微孔板测试/001-左不封_右不封_上不封/内/2026-05-12_11_29_08.684-4channel.wav",
-        # "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-05-12 微孔板测试/002_左封_右不封_上不封/内/2026-05-12_11_49_05.857-4channel.wav",
-        # "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-05-12 微孔板测试/003_左封_右封_上不封/内/2026-05-12_12_01_51.944-4channel.wav",
-        # "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-05-12 微孔板测试/004_左封_右封_上封/内/2026-05-12_12_14_05.928-4channel.wav",
-        
-        "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-05-12_叶轮声音/未打磨/2026-05-12_15_47_39.672-4channel.wav",
-        "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-05-12_叶轮声音/未打磨/2026-05-12_15_47_53.744-4channel.wav",
-        "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-05-12_叶轮声音/未打磨/2026-05-12_15_48_05.529-4channel.wav",
-        
-        "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-05-12_叶轮声音/已打磨/2026-05-12_16_06_33.774-4channel.wav",
-        "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-05-12_叶轮声音/已打磨/2026-05-12_16_06_46.063-4channel.wav",
-        "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-05-12_叶轮声音/已打磨/2026-05-12_16_06_58.229-4channel.wav",
-        
+        # 
+        "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/2026-05-16_泡沫铝/泡沫率三块重新测试/内/2026-05-16_11_53_45.520-4channel.wav"
     ]
 
     
@@ -294,12 +278,12 @@ if __name__ == "__main__":
         # "内-左封_右封_上不封",
         # "内-左封_右封_上封",  
         
-        "未打磨 1",
-        "未打磨 2",
-        "未打磨 3",
-        "打磨   1",
-        "打磨   2",
-        "打磨   3",
+        "泡沫铝一块，多孔板两块 内1",
+        # "泡沫铝一块，多孔板两块 内2",
+        # "泡沫铝一块，多孔板两块 内3",
+        "泡沫铝三块， 内1",
+
+
               
     ]
     
