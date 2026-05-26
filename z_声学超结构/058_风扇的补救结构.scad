@@ -4,10 +4,10 @@ $fn = 500;
 
 
 // ===== 参数 =====
-start_h = 10;
-end_h   = 15;
+start_h = 6.0;
+end_h   = 6.4;
 
-spacing = 45;   // 每个模型之间的间距
+spacing = 450;   // 每个模型之间的间距
 
 
 // ===== 模型 =====
@@ -21,7 +21,7 @@ module A(h=5){
 
 
 // ===== 排列 =====
-for(i = [start_h:end_h]) {
+for(i = [start_h:0.1:end_h]) {
 
     translate([(i - start_h) * spacing, 0, 0])
         A(h=i);
