@@ -25,9 +25,9 @@ difference() {
 }
 
 // 前挡板
-translate([(l-2*wall)/2, gap/2,  0])
+translate([(w-wall)/2, gap/2,  0])
     cuboid([wall, (l-gap)/2 - 20, h], anchor=[0, -1, -1], rounding=gap_rounding, edges=[TOP+FRONT]);
 
 // 后挡板（对称结构）
-translate([(l-2*wall)/2, -gap/2,  0])
+translate([(w-wall)/2, -gap/2,  0])
     cuboid([wall, (l-gap)/2 -20, h], anchor=[0, 1, -1], rounding=gap_rounding, edges=[TOP+BACK]);
