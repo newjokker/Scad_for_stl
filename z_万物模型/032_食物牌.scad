@@ -14,18 +14,18 @@ $fn = 200;
 
 
 /* [尺寸参数] */
-sign_width = 40;       // 牌子宽度 (mm)
+sign_width = 23;       // 牌子宽度 (mm)
 sign_height = 15;       // 牌子高度 (mm)
 border_width = 1;     // 边框厚度 (mm)
-corner_radius = 1;      // 外圆角半径 (mm)
-white_base_thickness = 0.5;   // 白色底板厚度 (mm)
+corner_radius = 2;      // 外圆角半径 (mm)
+white_base_thickness = 2.5;   // 白色底板厚度 (mm)
 black_top_thickness = 0.5;   // 黑色上层厚度 (mm)
 
 /* [颜色] */
 frame_color = "black";     // 上层边框/文字颜色（黑色）
 base_color = "white";      // 底板颜色（白色）
 
-text_str  = "知行室测试";
+text_str  = "知行";
 text_size = 6;
 font_name = "Heiti SC:style=Regular";
 
@@ -56,21 +56,34 @@ module rounded_rect_frame(outer_w, outer_h, outer_r, frame_w, thickness) {
 // 模型生成
 // ============================================
 
-// 第一层：白色底板
-color(base_color)
-    rounded_rect(sign_width, sign_height, corner_radius, white_base_thickness);
+difference(){
+    
+    union(){
+        // 底板
+        color(base_color)
+            rounded_rect(sign_width, sign_height, corner_radius, white_base_thickness);
 
-// 第二层：黑色边框（等宽圆角）
-color(frame_color)
-    translate([0, 0, white_base_thickness])
-        rounded_rect_frame(sign_width, sign_height, corner_radius, border_width, black_top_thickness);
+        // 黑色边框
+        color(frame_color)
+            translate([0, 0, white_base_thickness])
+                rounded_rect_frame(sign_width, sign_height, corner_radius, border_width, black_top_thickness);
 
-color(frame_color)
-    linear_extrude(height = white_base_thickness + black_top_thickness)
-        text(
-            text_str,
-            size = text_size,
-            font = font_name,
-            halign = "center",
-            valign = "center"
-        );
+        // 文字
+        color(frame_color)
+            translate([0, 0, white_base_thickness])
+                linear_extrude(height = black_top_thickness)
+                    text(
+                        text_str,
+                        size = text_size,
+                        font = font_name,
+                        halign = "center",
+                        valign = "center"
+                    );
+    }
+
+    // 磁吸孔
+    cylinder(r=3.1, h=2.1);
+
+}
+
+
