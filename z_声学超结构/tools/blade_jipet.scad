@@ -8,37 +8,35 @@ thick = 3;
 
 
 // ==================== 外圈参数 ====================
-
-outer_ring_z = 84;
 outer_ring_h = 6;
-outer_ring_r = 165;
-outer_ring_inner_r = 161;
+outer_ring_z = 106 - outer_ring_h;
+outer_ring_r = 132;
+outer_ring_inner_r = 128;
 
 
 // ==================== 中心铁棒座参数 ====================
 
-shaft_holder_z = 52 - 12.18;        // 铁棒座底部离底面的高度
-shaft_holder_h = 28;                // 铁棒座高度
+shaft_holder_z = 69;        // 铁棒座底部离底面的高度
+shaft_holder_h = 22;                // 铁棒座高度
 shaft_holder_outer_r = 18;          // 铁棒座外半径
-// shaft_holder_outer_r = 40/2;          // 铁棒座外半径
-shaft_hole_d = 12.4;                // 中心孔直径
-// shaft_hole_d = 27;                // 中心孔直径
+// shaft_hole_d = 12.4;                // 中心孔直径
+shaft_hole_d = 8.4;                // 中心孔直径
 
 
 // ==================== 底盘 / 主圆筒参数 ====================
 
-base_h = 55;
-base_r = 80;
+base_h = 72;
+base_r = 90;
 
 bottom_plate_h =  2;                 // 底盘的厚度
-bottom_plate_r = 162;
+bottom_plate_r = 130;
 
 
 // ==================== 窗口参数 ====================
 
 window_count = 5;
 window_w = 60;             // 沿圆周方向宽度
-window_h = 35;             // Z 方向高度
+window_h = 45;             // Z 方向高度
 window_bottom = 10;        // 窗口底部离底面高度
 window_cut_depth = 20;     // 切穿侧壁的深度
 
@@ -140,15 +138,6 @@ module blade_base() {
 
 blade_base();
 
-
-
-intersection(){
-
-    blade_base();
-
-    cylinder(h= 100, r= 95);
-
-}
 
 
 
