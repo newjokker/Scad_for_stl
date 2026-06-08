@@ -1,24 +1,24 @@
 
 include <BOSL2/std.scad>
 use <tools/blade_from_zy.scad>;
-use <tools/blade_other_light.scad>;
+use <tools/blade_jipet.scad>;
 
 $fn = 1200;
 
 module main() {
 
 
-    // leaf_num = 53;
-    leaf_num = 61;
+    leaf_num = 53;
+    // leaf_num = 61;
 
     difference(){
 
         for (i = [0 : leaf_num-1])
             color("red")
                 rotate([0, 0, i * (360 / leaf_num)/1 ])
-                    translate([136.5, 0, 0])
-                        rotate([0, 0, 30])
-                            mirror([0, 1, 0])
+                    translate([108, 0, 0])
+                        rotate([0, 0, 10])
+                            mirror([0, 0, 0])
                                 centrifugal_blade_airfoil(
                                     // m = 0.06,
                                     // FIXME: 这边是修改的弯曲程度
@@ -26,9 +26,9 @@ module main() {
                                     p = 0.40,
                                     t = 0.12,
                                     num_points = 200,
-                                    chord = 28,
+                                    chord = 28 * 0.8,
                                     mode = "3d",
-                                    width = 90,
+                                    width = 106,
                                     center_3d = false
                                 );
 
@@ -55,13 +55,8 @@ module main() {
     blade_base();
 }
 
-// scale_factor = 0.7;
-scale_factor = 1;
+main();
 
-scale([scale_factor, scale_factor, scale_factor])
-{
-    main();
-}
 
 
 

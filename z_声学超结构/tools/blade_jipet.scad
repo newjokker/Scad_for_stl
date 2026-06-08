@@ -10,8 +10,8 @@ thick = 3;
 // ==================== 外圈参数 ====================
 outer_ring_h = 6;
 outer_ring_z = 106 - outer_ring_h;
-outer_ring_r = 132;
-outer_ring_inner_r = 128;
+outer_ring_r = 131;
+outer_ring_inner_r = 127;
 
 
 // ==================== 中心铁棒座参数 ====================
@@ -26,7 +26,7 @@ shaft_hole_d = 8.4;                // 中心孔直径
 // ==================== 底盘 / 主圆筒参数 ====================
 
 base_h = 72;
-base_r = 90;
+base_r = 80;
 
 bottom_plate_h =  2;                 // 底盘的厚度
 bottom_plate_r = 130;
@@ -136,9 +136,18 @@ module blade_base() {
 
 // ==================== 生成模型 ====================
 
-blade_base();
+// blade_base();
 
 
+
+
+intersection(){
+
+    blade_base();
+
+    cylinder(h= 130, r= 110);
+
+}
 
 
 
