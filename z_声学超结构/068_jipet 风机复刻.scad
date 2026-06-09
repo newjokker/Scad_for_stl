@@ -26,7 +26,7 @@ module main() {
                                     p = 0.40,
                                     t = 0.12,
                                     num_points = 200,
-                                    chord = 28 * 0.8,
+                                    chord = 23,
                                     mode = "3d",
                                     width = 106,
                                     center_3d = false

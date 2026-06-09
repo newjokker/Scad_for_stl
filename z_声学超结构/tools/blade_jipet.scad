@@ -20,13 +20,13 @@ shaft_holder_z = 69;        // 铁棒座底部离底面的高度
 shaft_holder_h = 22;                // 铁棒座高度
 shaft_holder_outer_r = 18;          // 铁棒座外半径
 // shaft_hole_d = 12.4;                // 中心孔直径
-shaft_hole_d = 8.4;                // 中心孔直径
+shaft_hole_d = 10.4;                // 中心孔直径
 
 
 // ==================== 底盘 / 主圆筒参数 ====================
 
-base_h = 72;
-base_r = 80;
+base_h = 70;
+base_r = 90;
 
 bottom_plate_h =  2;                 // 底盘的厚度
 bottom_plate_r = 130;
