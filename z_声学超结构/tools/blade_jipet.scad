@@ -11,7 +11,7 @@ thick = 3;
 outer_ring_h = 6;
 outer_ring_z = 106 - outer_ring_h;
 outer_ring_r = 131;
-outer_ring_inner_r = 127;
+outer_ring_inner_r = 125;
 
 
 // ==================== 中心铁棒座参数 ====================
