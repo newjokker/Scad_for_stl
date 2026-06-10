@@ -16,34 +16,34 @@ module main() {
         for (i = [0 : leaf_num-1])
             color("red")
                 rotate([0, 0, i * (360 / leaf_num)/1 ])
-                    translate([108, 0, 0])
-                        rotate([0, 0, 10])
+                    translate([105, 0, 0])
+                        rotate([0, 0, -5])
                             mirror([0, 0, 0])
                                 centrifugal_blade_airfoil(
                                     // m = 0.06,
                                     // FIXME: 这边是修改的弯曲程度
-                                    m = 0.19,
-                                    p = 0.40,
-                                    t = 0.12,
+                                    m = 0.2,
+                                    p = 0.50,
+                                    t = 0.08,
                                     num_points = 200,
-                                    chord = 23,
+                                    chord = 23 + 2,
                                     mode = "3d",
                                     width = 106,
                                     center_3d = false
                                 );
 
-        // 锯齿边
-        extrend = 6.5;
-        length = 96;
-        length_diff = 5;
-        lenght_h = 5;
-        for (i = [0:25]){
-            translate([0, 0, i * lenght_h])
-                cylinder(r1= length + extrend + 3, r2=length + extrend + 3 + length_diff, h=lenght_h);
+        // // 锯齿边
+        // extrend = 6.5;
+        // length = 96;
+        // length_diff = 5;
+        // lenght_h = 5;
+        // for (i = [0:25]){
+        //     translate([0, 0, i * lenght_h])
+        //         cylinder(r1= length + extrend + 3, r2=length + extrend + 3 + length_diff, h=lenght_h);
 
-            translate([0, 0, i * lenght_h + lenght_h])
-                cylinder(r1= length + extrend + 3 + length_diff, r2=length + extrend + 3, h=lenght_h);
-        }
+        //     translate([0, 0, i * lenght_h + lenght_h])
+        //         cylinder(r1= length + extrend + 3 + length_diff, r2=length + extrend + 3, h=lenght_h);
+        // }
 
     }
 
