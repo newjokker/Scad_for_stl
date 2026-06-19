@@ -178,30 +178,30 @@ module Battery_box_18650(pos=[0,0,0]){
             rotate([90,0,0])
                 wire_hole(d=3, depth=6, pos=[0, 0, 0]);
 
-        // 开关孔
-        translate([-3, 0, 1])
-        {
-            // 开关主体
-            color("red") #
-            if($show_chip)
-            {
-                translate([10, 24, 2])
-                    rotate([90,0,0]){
-                        cuboid([6, 3.7, 5], anchor=[-1,-1,-1]);
-                    }
-            }
+        // // 开关孔
+        // translate([-3, 0, 1])
+        // {
+        //     // 开关主体
+        //     color("red") #
+        //     if($show_chip)
+        //     {
+        //         translate([10, 24, 2])
+        //             rotate([90,0,0]){
+        //                 cuboid([6, 3.7, 5], anchor=[-1,-1,-1]);
+        //             }
+        //     }
 
-            // 两个引脚线孔
-            translate([9, 24, 3])
-                rotate([90,0,0]){
-                    cylinder(r=1, h=5, anchor=[-1,-1,-1]);
-                }
+        //     // 两个引脚线孔
+        //     translate([9, 24, 3])
+        //         rotate([90,0,0]){
+        //             cylinder(r=1, h=5, anchor=[-1,-1,-1]);
+        //         }
 
-            translate([15.5, 24, 3])
-                rotate([90,0,0]){
-                    cylinder(r=1, h=5, anchor=[-1,-1,-1]);
-                }
-        }
+        //     translate([15.5, 24, 3])
+        //         rotate([90,0,0]){
+        //             cylinder(r=1, h=5, anchor=[-1,-1,-1]);
+        //         }
+        // }
 
         // 电量显示孔
         // color("red")
@@ -211,3 +211,4 @@ module Battery_box_18650(pos=[0,0,0]){
 
     }
 }
+
