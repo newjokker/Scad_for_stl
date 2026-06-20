@@ -17,7 +17,7 @@ module boss(
     // 自攻螺丝专用尺寸表
     hole_table = [
         ["m2", 2.2, 1.6],       // 螺丝类型, φ通孔, φ引导孔
-        ["m3", 3.5, 2.2]
+        ["m3", 3.5, 2.5]
     ];
 
     idx = (screw == "m2") ? 0 : 1;
@@ -112,7 +112,7 @@ module triangle_holder(triangle_a, depth=2, r=2.3, multi_z=1.3){
 
 
 // 螺丝柱
-// boss(screw="m3", mode="through", height=10, rib_height= 4, rib_thickness=1, thick=2, pos=[0,0,0]);
+boss(screw="m3", mode="through", height=10, rib_height= 4, rib_thickness=1, thick=2, pos=[0,0,0]);
 
 
 // // 磁铁柱
