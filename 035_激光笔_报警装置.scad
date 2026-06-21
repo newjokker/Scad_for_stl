@@ -29,7 +29,7 @@ module ESP(){
     difference(){
 
         // esp32-c3 安装口
-        clip(esp32_c3_size[0], esp32_c3_size[1], thick_out=1, thick_in=1.5, h_out=10, h_in=5);
+        clip(esp32_c3_size[0], esp32_c3_size[1], thick_out=2, thick_in=1.5, h_out=10, h_in=5);
         
         // type c 接口
         translate([0, 0, 2])
@@ -44,7 +44,7 @@ module TP(){
     difference(){
 
         // TP4056 安装口
-        clip(TP4056_size[0], TP4056_size[1], thick_out=1, thick_in=2, h_out=5, h_in=3);    
+        clip(TP4056_size[0], TP4056_size[1], thick_out=2, thick_in=2, h_out=5, h_in=3);    
         
         // type c 接口
         translate([0, 0, 1.5])
@@ -53,7 +53,7 @@ module TP(){
 }
 
 module BA(){
-    clip(70, 19, thick_out=1, thick_in=1, h_out=10, h_in=0);
+    clip(70, 19, thick_out=2, thick_in=1, h_out=10, h_in=0);
 }
 
 module HOLE(){
@@ -70,16 +70,16 @@ module HOLE(){
 module LIP(){
     length = 100;
     width = 50;
-    wall_thickness =1;
+    wall_thickness =2;
 
 
-    translate([0, 70, 0]){
+    translate([0, 70, -wall_thickness]){
     difference(){
         # lid(
-            lid_size=[length + wall_thickness*2, width + wall_thickness * 2, 1.5],
-            plug_thickness=1.5,
-            plug_depth=1.5,
-            wall_thickness=1,
+            lid_size=[length + wall_thickness*2, width + wall_thickness * 2, 2],
+            plug_thickness=2.5,
+            plug_depth=2.5,
+            wall_thickness=wall_thickness,
             chamfer=0.5,
             // hand_direction="right",
             hand_direction="left",
@@ -97,14 +97,14 @@ module LIP(){
 
 module SWITCH(){
     // 开关
-    clip(l=6.5, w=12.8, thick_out=0.5, thick_in=2, h_out=7, h_in=1);
+    clip(l=7.6, w=13, thick_out=2, thick_in=2, h_out=10, h_in=1);
 
 }
 
 module SHELL(){
     // 外壳
 
-    wall_thickness = 1;
+    wall_thickness = 2;
 
     length = 100;
     width = 50;
@@ -122,16 +122,16 @@ module SHELL(){
                 }
             }
 
-            translate([-(length/2 -6.5/2), -(width/2 -12.8/2 -5), 0])
+            translate([-(length/2 -6.5/2) +1, -(width/2 -12.8/2 -5), 0])
                 SWITCH();
         }
 
         // 开关的两个洞
         translate([-(length/2 -6.5/2), -(width/2 -12.8/2 -5), 2.5])
-            cuboid([length, 10.5, 4], anchor=[0, 0, -1]);
+            cuboid([length, 10.5, 5], anchor=[0, 0, -1]);
 
-        translate([0, -(width/2 -12.8/2 -5), 2.5])
-            cuboid([90, 10.5, 8], anchor=[0, 0, -1]);
+        translate([0, -(width/2 -12.8/2 -5),  4.5])
+            cuboid([90, 13, 10], anchor=[0, 0, -1]);
 
         // 激光头的一个洞
         translate([50, 12, 10])
@@ -141,7 +141,7 @@ module SHELL(){
         // type c
         translate([-(52/2 + 27/2 + 19), 10, 5])
             rotate([90, 0, 90])
-                type_c_hole(offset=0.5, depth=30, pos=[0, 0, 0]);
+                type_c_hole(offset=0.8, depth=30, pos=[0, 0, 0]);
     }
 
     boss(screw="m3", mode="self_tap", height=height - 3, rib_height= 10, rib_thickness=1, thick=2, pos=[-30, -13, 0]);
@@ -175,7 +175,7 @@ module main(){
         }
 }
 
-main();
+# main();
 
 
 

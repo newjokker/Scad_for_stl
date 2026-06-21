@@ -7,7 +7,7 @@ module type_c_hole(offset=0.3, depth=3, pos=[0, 0, 0]) {
     
     // Type-C 接口标准尺寸
     hole_width = 8.8 + offset;                  // 标准宽度
-    hole_height = 2.98 + offset * (2.6/8.4);     // 标准高度
+    hole_height = 3.5 + offset * (2.6/8.4);     // 标准高度
     corner_radius = 0.5;                        // 圆角半径
     
     translate(pos){
