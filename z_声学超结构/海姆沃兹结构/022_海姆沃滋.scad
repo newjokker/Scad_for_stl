@@ -81,17 +81,19 @@ module Helm_in(){
 
 
 
-// // -------------------- 频率文字 --------------------
-// // text() 是 2D，配合 linear_extrude 变成 3D
-// translate([12, 12, h + 10])
-//     linear_extrude(height = 0.8)
-//         text(
-//             freq_text,
-//             size = 3,
-//             font = "Heiti SC:style=Regular",
-//             halign = "center",
-//             valign = "center"
-//         );
+// -------------------- 频率文字 --------------------
+// text() 是 2D，配合 linear_extrude 变成 3D
+
+color("red")
+    translate([12, 12, h + 10])
+        linear_extrude(height = 0.8)
+            text(
+                freq_text,
+                size = 3,
+                font = "Heiti SC:style=Regular",
+                halign = "center",
+                valign = "center"
+            );
 
 
 // difference(){
@@ -100,7 +102,7 @@ module Helm_in(){
 // }
 
 
-Helm(in_cube=false);
+// Helm(in_cube=false);
 
 translate([40, 0, 0])
     Helm(in_cube=true);
