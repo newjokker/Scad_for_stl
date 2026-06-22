@@ -15,16 +15,14 @@ use <lib/port.scad>;
     坐标方向：X 左负右正，Y 前负后正，Z 向上为正。
 */
 
-// ==================== 1. 参数区：常改这里 ====================
-
-view_part = "all";          // "all" / "layout" / "shell" / "lid" / "holders" / "esp32" / "tp4056" / "battery"
+view_part = "all";           // ["all","layout","shell","lid","holders","esp32","tp4056","battery"]
 $fn = $preview ? 96 : 180;  // 预览时圆弧少一点更快，导出时更圆
 
 
 // ---------- 外壳 ----------
-case_inner = [100, 50, 20]; // 外壳内部空间：[长, 宽, 高]
+case_inner = [100, 50, 20]; /* [test] */ 
 wall = 2;                   // 侧壁厚度
-floor_thickness = 2;        // 底板厚度
+floor_thickness = 2;        // [0.5:5]
 shell_drop = 1;             // 外壳向下沉 1mm，保留原来的底部效果
 
 case_outer = [
@@ -44,7 +42,7 @@ lid_hand_direction = "left";      // "left" 或 "right"
 
 
 // ---------- 螺丝 ----------
-screw_type = "m3";
+screw_type = "m3";                  /* [螺丝] */
 screw_hole_d = 2.5;               // 盖子螺丝孔直径
 
 screw_post_positions = [
@@ -59,7 +57,7 @@ lid_hole_positions = [
 
 
 // ---------- 开关 ----------
-switch_size = [7.6, 13, 10];      // 开关座内部尺寸
+switch_size = [7.6, 13, 10];      /* [开关] */
 switch_holder_pos = [-45.75, -13.6, 0];
 
 switch_side_hole_pos = [-46.75, -13.6, 2.5];
