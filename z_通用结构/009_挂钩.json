@@ -1,0 +1,43 @@
+{
+    "fileFormatVersion": "1",
+    "parameterSets": {
+        "test": {
+            "BOTTOM": "[0, 0, -1]",
+            "CENTER": "[0, 0, 0]",
+            "TOP": "[0, 0, 1]",
+            "base_t": "14",
+            "base_w": "87",
+            "fillet": "0.5",
+            "fn_val": "112",
+            "hole_rounding": "5",
+            "hole_z": "44",
+            "inner_r": "29",
+            "model_scale": "0.40000000000000002",
+            "outer_r": "38",
+            "plate_d": "37",
+            "plate_h": "5.5",
+            "plate_w": "36",
+            "rounding": "3",
+            "show_plate": "false"
+        },
+        "New set 1": {
+            "BOTTOM": "[0, 0, -1]",
+            "CENTER": "[0, 0, 0]",
+            "TOP": "[0, 0, 1]",
+            "base_t": "10",
+            "base_w": "50",
+            "fillet": "2",
+            "fn_val": "128",
+            "hole_rounding": "1",
+            "hole_z": "25",
+            "inner_r": "15",
+            "model_scale": "0.5",
+            "outer_r": "25",
+            "plate_d": "30",
+            "plate_h": "2",
+            "plate_w": "50",
+            "rounding": "2",
+            "show_plate": "true"
+        }
+    }
+}
