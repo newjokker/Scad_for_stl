@@ -20,7 +20,7 @@ side_window_depth = thickness + 8;
 // 顶部渐缩出口参数：底部接整个箱体上口，顶部收成较小的排气口
 top_outlet_length = 110;
 top_outlet_width = 55;
-top_taper_height = 120;
+top_taper_height = 60;
 top_straight_height = 25;
 top_corner_r = 14;
 
