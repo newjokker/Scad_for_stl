@@ -21,8 +21,10 @@ neck_radius = 2.6;            // [0.8:0.1:8]
 // 壁厚，单位 mm
 wall_thickness = 1.2;         // [0.6:0.1:5]
 
-// 显示模式：solid 为实体，cutaway 为剖视
-display_mode = "cutaway";     // [solid, cutaway]
+// 模型模式：solid 为完整装配体，cutaway 为剖视，print_set 为分件打印排布
+display_mode = "cutaway";     // [solid, cutaway, print_set]
+// print_set 模式下主体和盖板之间的间距，单位 mm
+print_part_gap = 8;           // [2:1:30]
 // 是否在端面显示估算共振频率
 show_frequency = true;
 // 频率文字大小
@@ -147,6 +149,36 @@ module pipe_body_solid() {
     }
 }
 
+module printable_body() {
+    // 去掉上端盖，让所有腔体开口朝上，避免封闭内腔和不可清理支撑。
+    intersection() {
+        pipe_body_solid();
+        translate([-outer_radius - 1, -outer_radius - 1, -0.5])
+            cube([
+                2 * outer_radius + 2,
+                2 * outer_radius + 2,
+                body_length - wall_thickness + 0.5
+            ], center = false);
+    }
+}
+
+module printable_lid() {
+    // 单独打印的环形盖板，打印后粘接到 printable_body 顶部来封闭腔体。
+    difference() {
+        cylinder(h = wall_thickness, r = outer_radius, center = false);
+
+        translate([0, 0, -0.5])
+            cylinder(h = wall_thickness + 1, r = duct_radius, center = false);
+    }
+}
+
+module printable_set() {
+    printable_body();
+
+    translate([2 * outer_radius + print_part_gap, 0, 0])
+        printable_lid();
+}
+
 module frequency_text_emboss() {
     freq_text = str(round(design_frequency * 10) / 10, " Hz");
     linear_extrude(height = text_emboss_height, center = false)
@@ -195,6 +227,8 @@ module helmholtz_pipe(display = display_mode) {
         cutaway_cavity_volume();
         color("Black")
             top_frequency_label();
+    } else if (display == "print_set") {
+        printable_set();
     } else {
         union() {
             pipe_body_solid();
