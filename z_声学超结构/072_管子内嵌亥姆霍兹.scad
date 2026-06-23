@@ -6,15 +6,24 @@ use <tools/hh_cube.scad>;
 $fn = 96;
 
 // ---------------- 参数 ----------------
-nx = 7;   // X方向数量
+
+// 竖方向
+nx = 4;   // X方向数量
 ny = 2;   // Y方向数量
 
-cavity_length = 24.5;
+cavity_length = 23;
 cavity_width  = 21.3;
 cavity_height = 20;
 
-// neck_length = 10;
-// neck_radius = 3.6;
+// // 横方向
+// nx = 7;   // X方向数量
+// ny = 2;   // Y方向数量
+
+// cavity_length = 24.5;
+// cavity_width  = 21.3;
+// cavity_height = 20;
+
+
 wall_thickness = 1.0;
 
 // 相邻 cube 共用一层墙

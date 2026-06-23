@@ -12,7 +12,7 @@ height = 90;
 wall_thickness_button = 1.5;
 wall_thickness = 2.5;
 
-length = 50;
+length = 45.6;
 
 translate([0, 0, -wall_thickness_button/2])
 difference(){
