@@ -39,5 +39,8 @@ def convert_m4a_to_wav(input_path, output_path=None, sample_rate=44100, channels
 # 使用示例
 if __name__ == "__main__":
     # 单个文件转换
-    convert_m4a_to_wav("/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/贤坤路60号 3.m4a", "主动排湿口.wav")
+    convert_m4a_to_wav("/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/有消音.m4a", "有消音.wav")
+    convert_m4a_to_wav("/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/无消音.m4a", "无消音.wav")
     
+    # 直接使用这个命令即可
+    # ffmpeg -i "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/无消音.m4a" "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/无消音.wav" 

@@ -41,8 +41,9 @@ for (ix = [0 : nx - 1]) {
         ])
 
         let(
-            neck_length = ix * 1.5 + 5,
-            neck_radius = 3.6 + iy
+            neck_length = ix * 2.5 + 10,
+            // neck_radius = 1.5 + iy * 0.5
+            neck_radius = 1.5 + iy * 1
         )
 
         helmholtz_resonator(
