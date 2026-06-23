@@ -43,4 +43,5 @@ if __name__ == "__main__":
     convert_m4a_to_wav("/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/无消音.m4a", "无消音.wav")
     
     # 直接使用这个命令即可
-    # ffmpeg -i "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/无消音.m4a" "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/无消音.wav" 
+    # ffmpeg -i "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/test_01.m4a" "./test_01.wav" 
+    # ffmpeg -i "/Volumes/Jokker/Code/Scad_for_stl/z_声学超结构/data/test_02.m4a" "./test_02.wav" 
