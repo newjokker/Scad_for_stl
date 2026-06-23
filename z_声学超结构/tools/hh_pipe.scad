@@ -21,8 +21,8 @@ neck_radius = 2.6;            // [0.8:0.1:8]
 // 壁厚，单位 mm
 wall_thickness = 1.2;         // [0.6:0.1:5]
 
-// 显示模式：solid 为实体，transparent 为透明，cutaway 为剖视
-display_mode = "cutaway";     // [solid, transparent, cutaway]
+// 显示模式：solid 为实体，cutaway 为剖视
+display_mode = "cutaway";     // [solid, cutaway]
 // 是否在端面显示估算共振频率
 show_frequency = true;
 // 频率文字大小
@@ -167,11 +167,14 @@ module front_frequency_label() {
     }
 }
 
-module transparent_air_volume() {
-    color("LightSkyBlue", 0.28)
-        translate([0, 0, -0.25])
-            cylinder(h = body_length + 0.5, r = duct_radius, center = false);
+module top_frequency_label() {
+    if (show_frequency) {
+        translate([0, -outer_radius * 0.72, body_length + 0.01])
+            frequency_text_emboss();
+    }
+}
 
+module cutaway_cavity_volume() {
     color("Orange", 0.42)
         all_cavity_voids();
 }
@@ -186,16 +189,12 @@ module pipe_body_cutaway() {
 }
 
 module helmholtz_pipe(display = display_mode) {
-    if (display == "transparent") {
-        color("Gainsboro", 0.34)
-            pipe_body_solid();
-        transparent_air_volume();
-        color("Black")
-            front_frequency_label();
-    } else if (display == "cutaway") {
+    if (display == "cutaway") {
         color("Gainsboro")
             pipe_body_cutaway();
-        transparent_air_volume();
+        cutaway_cavity_volume();
+        color("Black")
+            top_frequency_label();
     } else {
         union() {
             pipe_body_solid();
