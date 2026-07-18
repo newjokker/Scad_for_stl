@@ -404,16 +404,16 @@ extension_arm_standalone(
     arm_length = 100,
     arm_thickness = 5,
 
-    reduce_mode = "both",
-    reduce_length = 20,
+    reduce_mode = "inner",
+    reduce_length = 24,
     reduced_thickness = 2.5,
 
     screw_diameter = 3.5,
 
-    inner_hole_inset = 10,
-    inner_hole_x_offset = 6,
+    inner_hole_inset = 12,
+    inner_hole_x_offset = 5,
 
-    outer_hole_inset = 10,
+    outer_hole_inset = 12,
     outer_hole_x_offset = 5,
 
     end_gap = 0.5,
