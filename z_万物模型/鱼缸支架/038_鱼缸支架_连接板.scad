@@ -396,36 +396,14 @@ module extension_arm_standalone(
 // 测试调用
 // =============================================================
 
-// 竖着中间连接板
-extension_arm_standalone(
-    arm_width = 25,
-    arm_length = 100,
-    arm_thickness = 5,
-
-    reduce_mode = "inner",
-    reduce_length = 24,
-    reduced_thickness = 2.5,
-
-    screw_diameter = 3.5,
-
-    inner_hole_inset = 12,
-    inner_hole_x_offset = 5,
-
-    outer_hole_inset = 15/2,
-    outer_hole_x_offset = 5,
-
-    end_gap = 0.5,
-    hole_fn = 48
-);
-
 // 竖着底部连接板
-translate([50, 0, 0]) 
+translate([0, 0, 0]) 
     extension_arm_standalone(
         arm_width = 25,
         arm_length = 100,
         arm_thickness = 5,
 
-        reduce_mode = "both",
+        reduce_mode = "inner",
         reduce_length = 24,
         reduced_thickness = 2.5,
 
@@ -434,7 +412,7 @@ translate([50, 0, 0])
         inner_hole_inset = 12,
         inner_hole_x_offset = 5,
 
-        outer_hole_inset = 12,
+        outer_hole_inset = 15/2,
         outer_hole_x_offset = 5,
 
         end_gap = 0.5,
@@ -468,7 +446,7 @@ translate([-50, 0, 0])
 translate([-100, 0, 0]) 
     extension_arm_standalone(
         arm_width = 25,
-        arm_length = 170,
+        arm_length = 125,
         arm_thickness = 5,
 
         reduce_mode = "none",
@@ -485,4 +463,30 @@ translate([-100, 0, 0])
 
         end_gap = 0.5,
         hole_fn = 48
-    );
+);
+
+// 竖着中间连接板
+arm_lengths = [100, 150, 200, 250];
+for (i = [0:len(arm_lengths)-1]) {
+    translate([50 + (arm_lengths[i] - 100), 0, 0]) 
+        extension_arm_standalone(
+            arm_width = 25,
+            arm_length = arm_lengths[i],
+            arm_thickness = 5,
+
+            reduce_mode = "both",
+            reduce_length = 24,
+            reduced_thickness = 2.5,
+
+            screw_diameter = 3.5,
+
+            inner_hole_inset = 12,
+            inner_hole_x_offset = 5,
+
+            outer_hole_inset = 12,
+            outer_hole_x_offset = 5,
+
+            end_gap = 0.5,
+            hole_fn = 48
+        );
+}
