@@ -396,9 +396,7 @@ module extension_arm_standalone(
 // 测试调用
 // =============================================================
 
-// 两端均削减：
-// 内端双孔中心距为 12 mm
-// 外端双孔中心距为 16 mm
+// 竖着中间连接板
 extension_arm_standalone(
     arm_width = 25,
     arm_length = 100,
@@ -413,9 +411,78 @@ extension_arm_standalone(
     inner_hole_inset = 12,
     inner_hole_x_offset = 5,
 
-    outer_hole_inset = 12,
+    outer_hole_inset = 15/2,
     outer_hole_x_offset = 5,
 
     end_gap = 0.5,
     hole_fn = 48
 );
+
+// 竖着底部连接板
+translate([50, 0, 0]) 
+    extension_arm_standalone(
+        arm_width = 25,
+        arm_length = 100,
+        arm_thickness = 5,
+
+        reduce_mode = "both",
+        reduce_length = 24,
+        reduced_thickness = 2.5,
+
+        screw_diameter = 3.5,
+
+        inner_hole_inset = 12,
+        inner_hole_x_offset = 5,
+
+        outer_hole_inset = 12,
+        outer_hole_x_offset = 5,
+
+        end_gap = 0.5,
+        hole_fn = 48
+);
+
+// 竖着顶端上部连接板
+translate([-50, 0, 0]) 
+    extension_arm_standalone(
+        arm_width = 25,
+        arm_length = 100,
+        arm_thickness = 5,
+
+        reduce_mode = "inner",
+        reduce_length = 24,
+        reduced_thickness = 2.5,
+
+        screw_diameter = 3.5,
+
+        inner_hole_inset = 12,
+        inner_hole_x_offset = 5,
+
+        outer_hole_inset = 12,
+        outer_hole_x_offset = 5,
+
+        end_gap = 0.5,
+        hole_fn = 48
+);
+
+// 横过来的连接板
+translate([-100, 0, 0]) 
+    extension_arm_standalone(
+        arm_width = 25,
+        arm_length = 170,
+        arm_thickness = 5,
+
+        reduce_mode = "none",
+        reduce_length = 24,
+        reduced_thickness = 2.5,
+
+        screw_diameter = 3.5,
+
+        inner_hole_inset = 12,
+        inner_hole_x_offset = 6,
+
+        outer_hole_inset = 12,
+        outer_hole_x_offset = 5,
+
+        end_gap = 0.5,
+        hole_fn = 48
+    );
