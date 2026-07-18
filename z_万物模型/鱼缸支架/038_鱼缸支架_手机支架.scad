@@ -7,7 +7,7 @@ module type_c_hole(offset=0.3, depth=3, pos=[0, 0, 0]) {
     
     // Type-C 接口标准尺寸
     hole_width = 9 + offset;                  // 标准宽度
-    hole_height = 3.8 + offset * (2.6/8.4);     // 标准高度
+    hole_height = 6 + offset * (2.6/8.4);     // 标准高度
     corner_radius = 0.5;                        // 圆角半径
     
     translate(pos){
@@ -69,7 +69,7 @@ module phone_holder() {
 
     // 左右两组连接耳在X方向上的位置
     // 数值越大，两组连接耳之间的距离越大
-    tab_x_offset = box_length / 2 - 35;
+    tab_x_offset = 97.5/2;
 
     // 连接耳从手机盒向外伸出的长度
     tab_length = 24;
