@@ -456,7 +456,7 @@ translate([-100, 0, 0])
         screw_diameter = 3.5,
 
         inner_hole_inset = 12,
-        inner_hole_x_offset = 6,
+        inner_hole_x_offset = 5,
 
         outer_hole_inset = 12,
         outer_hole_x_offset = 5,

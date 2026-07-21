@@ -92,7 +92,7 @@ module phone_holder() {
 
     // 两个孔相对于连接耳中心线的X方向偏移
     // 两孔圆心间距 = 2 * connection_hole_x_offset
-    connection_hole_x_offset = 6;
+    connection_hole_x_offset = 5;
 
 
     // =========================================================

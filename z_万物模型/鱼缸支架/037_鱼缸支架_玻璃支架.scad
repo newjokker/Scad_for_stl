@@ -86,12 +86,12 @@ module GlassHolder() {
 // ==================== 渲染 ====================
 GlassHolder();
 
-// ==================== 辅助显示（可选） ====================
-// 取消注释下面的代码可以显示玻璃位置参考
+// // ==================== 辅助显示（可选） ====================
+// // 取消注释下面的代码可以显示玻璃位置参考
 
-%translate([0, 0, holder_base_height]) {
-    color("LightBlue", 0.3) {
-        cuboid([holder_width + 50, glass_thickness, holder_height + 50], 
-               anchor=[0, 0, -1]);
-    }
-}
+// %translate([0, 0, holder_base_height]) {
+//     color("LightBlue", 0.3) {
+//         cuboid([holder_width + 50, glass_thickness, holder_height + 50], 
+//                anchor=[0, 0, -1]);
+//     }
+// }
