@@ -1,18 +1,31 @@
 include <../NopSCADlib/lib.scad>
 include <BOSL2/std.scad>
 
-$fn=256;
+/* [端盖尺寸 / End Cap Size] */
 
-// ===== 铝型材端盖参数 =====
-fit_clearance_per_side = 0.1;
+// 插入铝型材端面的深度，单位 mm
+insert_depth = 7;          // [1:0.5:20]
+
+// 端盖露出型材外的深度（可见厚度），单位 mm
+exposed_depth = 8;         // [1:0.5:20]
+
+// 单边安装公差；正值使配合更松。
+fit_clearance_per_side = 0.10; // [0:0.05:0.3]
+
+/* [Hidden] */
+
+// 以下项目为模型固定设置；在拓竹 Customizer 中不显示。
 extrusion_type = E2020;
-insert_depth = 7;
-cap_total_thickness = 15;
+corner_rounding = 1.2;
+model_resolution = 128;
 
+$fn = model_resolution;
+cap_total_thickness = insert_depth + exposed_depth;
 
-assert(insert_depth > 0 && insert_depth < cap_total_thickness, "插入深度应介于 0 和端盖总厚度之间");
+assert(insert_depth > 0, "插入深度必须大于 0");
+assert(exposed_depth > 0, "露出深度必须大于 0");
 
-// 端盖在插入深度内原本会留下的实体（即型材槽、中心孔等位置的插入凸台）。
+// 插入型材槽、中心孔等位置的凸台截面。
 module insert_profile_2d() {
     difference() {
         square([extrusion_width(extrusion_type), extrusion_height(extrusion_type)], center=true);
@@ -20,44 +33,32 @@ module insert_profile_2d() {
     }
 }
 
-// 对插入实体作负偏置，等同于二维“腐蚀”：
-// 外轮廓向内退让，同时槽/孔周围的凸台也会缩小，避免只放大凹槽而使凸台变紧。
-module eroded_insert_profile_2d(clearance) {
-    offset(delta=-clearance)
+// 对插入凸台做负偏置（二维“腐蚀”），形成固定的安装公差。
+module eroded_insert_profile_2d() {
+    offset(delta=-fit_clearance_per_side)
         insert_profile_2d();
 }
 
-// 生成一个端盖。clearance 为单边公差：正数更松，负数更紧。
-module aluminium_cap(clearance=fit_clearance_per_side) {
-    assert(clearance >= -0.20 && clearance <= 0.50,
-           "单边公差建议保持在 -0.20 至 0.50 mm 之间");
-    if (clearance >= 0) {
-        difference() {
-            cuboid([20, 20, cap_total_thickness], anchor=[0, 0, -1], rounding=1.2, edges=[LEFT + FRONT, RIGHT + FRONT, LEFT + BACK, RIGHT + BACK, TOP]);
+// 端盖外观尺寸跟随 E2020 截面；总深度由“插入深度 + 露出深度”自动计算。
+module aluminium_cap() {
+    difference() {
+        cuboid(
+            [extrusion_width(extrusion_type), extrusion_height(extrusion_type), cap_total_thickness],
+            anchor=[0, 0, -1],
+            rounding=corner_rounding,
+            edges=[LEFT + FRONT, RIGHT + FRONT, LEFT + BACK, RIGHT + BACK, TOP]
+        );
 
-            // 保持端盖外观尺寸不变，先生成原始型材配合腔。
-            extrusion(extrusion_type, insert_depth, center=false);
+        // 保持外观不变，只对插入型材的前 insert_depth mm 生成配合结构。
+        extrusion(extrusion_type, insert_depth, center=false);
 
-            // 仅移除插入部分“腐蚀”前后多出的材料；顶部外观端面不受影响。
-            // 安装单边间隙为 0 时，此差集为空，得到原始严丝合缝尺寸。
-            linear_extrude(height=insert_depth, convexity=8)
-                difference() {
-                    insert_profile_2d();
-                    eroded_insert_profile_2d(clearance);
-                }
-        }
-    } else {
-        // 负数用于测试更紧的配合：把插入凸台向外扩张。
-        union() {
+        // 移除“腐蚀”前后多出的材料：外侧与槽内凸台都会退让 0.10 mm。
+        linear_extrude(height=insert_depth, convexity=8)
             difference() {
-                cuboid([20, 20, cap_total_thickness], anchor=[0, 0, -1], rounding=1.2, edges=[LEFT + FRONT, RIGHT + FRONT, LEFT + BACK, RIGHT + BACK, TOP]);
-                extrusion(extrusion_type, insert_depth, center=false);
+                insert_profile_2d();
+                eroded_insert_profile_2d();
             }
-            linear_extrude(height=insert_depth, convexity=8)
-                eroded_insert_profile_2d(clearance);
-        }
     }
 }
-
 
 aluminium_cap();
