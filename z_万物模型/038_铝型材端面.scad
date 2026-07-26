@@ -3,6 +3,9 @@ include <BOSL2/std.scad>
 
 /* [端盖尺寸 / End Cap Size] */
 
+// 铝型材规格（边长，单位 mm）：20=2020、30=3030、40=4040
+extrusion_side_length = 20; // [20, 30, 40]
+
 // 插入铝型材端面的深度，单位 mm
 insert_depth = 7;          // [1:0.5:20]
 
@@ -10,13 +13,17 @@ insert_depth = 7;          // [1:0.5:20]
 exposed_depth = 8;         // [1:0.5:20]
 
 // 单边安装公差；正值使配合更松。
-fit_clearance_per_side = 0.10; // [0:0.05:0.3]
+fit_clearance_per_side = 0.0; // [0:0.05:0.3]
+
+// 圆角弧度
+corner_rounding = 2;        // [1:0.5:4]
 
 /* [Hidden] */
 
 // 以下项目为模型固定设置；在拓竹 Customizer 中不显示。
-extrusion_type = E2020;
-corner_rounding = 1.2;
+// 由上方数字下拉选项自动匹配 NopSCADlib 的对应铝型材截面。
+extrusion_type = extrusion_side_length == 30 ? E3030 :
+                 extrusion_side_length == 40 ? E4040 : E2020;
 model_resolution = 128;
 
 $fn = model_resolution;
@@ -39,7 +46,7 @@ module eroded_insert_profile_2d() {
         insert_profile_2d();
 }
 
-// 端盖外观尺寸跟随 E2020 截面；总深度由“插入深度 + 露出深度”自动计算。
+// 端盖外观尺寸跟随所选型材截面；总深度由“插入深度 + 露出深度”自动计算。
 module aluminium_cap() {
     difference() {
         cuboid(
