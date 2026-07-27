@@ -2,7 +2,7 @@
   铝型材端盖（NopSCADlib 版）
   依赖同级目录中的 ../NopSCADlib 与 OpenSCAD 库路径中的 BOSL2。
 */
-include <../NopSCADlib/lib.scad>
+include <NopSCADlib/lib.scad>
 include <BOSL2/std.scad>
 
 /* [端盖尺寸 / End Cap Size] */
