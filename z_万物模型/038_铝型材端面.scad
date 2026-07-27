@@ -50,7 +50,6 @@ extrusion_type =
 
 $fn = model_resolution;
 cap_total_thickness = insert_depth + exposed_depth;
-clearance_label = str(fit_clearance_per_side, " mm");
 clearance_label_size = min(
     exposed_depth * 0.6,
     extrusion_width(extrusion_type) / 6.5
@@ -68,8 +67,8 @@ module insert_profile_2d() {
 }
 
 // 按配合调整量偏置插入实体：正值腐蚀缩小，负值膨胀放大。
-module clearance_adjusted_insert_profile_2d() {
-    offset(delta=-fit_clearance_per_side)
+module clearance_adjusted_insert_profile_2d(clearance=fit_clearance_per_side) {
+    offset(delta=-clearance)
         insert_profile_2d();
 }
 
@@ -86,7 +85,7 @@ module insertion_outer_corner_cleanup_2d() {
 }
 
 // 在前侧外露段凹刻单边配合调整量，例如 “-0.1 mm”。
-module clearance_label_engraving() {
+module clearance_label_engraving(clearance=fit_clearance_per_side) {
     translate([
         0,
         -extrusion_height(extrusion_type) / 2,
@@ -95,7 +94,7 @@ module clearance_label_engraving() {
         rotate([90, 0, 0])
             linear_extrude(height=clearance_label_depth, center=true, convexity=4)
                 text(
-                    clearance_label,
+                    str(clearance, " mm"),
                     size=clearance_label_size,
                     halign="center",
                     valign="center"
@@ -103,7 +102,7 @@ module clearance_label_engraving() {
 }
 
 // 端盖外形与所选型材的宽、高自动匹配；总厚度 = 插入深度 + 露出深度。
-module aluminium_cap() {
+module aluminium_cap(clearance=fit_clearance_per_side) {
     difference() {
         union() {
             difference() {
@@ -118,25 +117,25 @@ module aluminium_cap() {
                 extrusion(extrusion_type, insert_depth, center=false);
 
                 // 正值：减去原轮廓与收缩轮廓之间的区域，使插入部分缩小。
-                if (fit_clearance_per_side > 0)
+                if (clearance > 0)
                     linear_extrude(height=insert_depth, convexity=8)
                         difference() {
                             insert_profile_2d();
-                            clearance_adjusted_insert_profile_2d();
+                            clearance_adjusted_insert_profile_2d(clearance);
                         }
             }
 
             // 负值：补上膨胀后的插入轮廓。
             // 外框同步向内偏置，避免新增材料沿型材外缘连成一圈边框。
-            if (fit_clearance_per_side < 0)
+            if (clearance < 0)
                 linear_extrude(height=insert_depth, convexity=8)
                     intersection() {
-                        offset(delta=fit_clearance_per_side)
+                        offset(delta=clearance)
                             square(
                                 [extrusion_width(extrusion_type), extrusion_height(extrusion_type)],
                                 center=true
                             );
-                        clearance_adjusted_insert_profile_2d();
+                        clearance_adjusted_insert_profile_2d(clearance);
                     }
         }
 
@@ -149,8 +148,35 @@ module aluminium_cap() {
             )
                 insertion_outer_corner_cleanup_2d();
 
-        clearance_label_engraving();
+        clearance_label_engraving(clearance);
     }
 }
 
-aluminium_cap();
+// 单件模式：批量测试完成后，取消下一行注释。
+// aluminium_cap();
+
+/*
+  临时批量试打印：-0.30 mm 至 +0.30 mm，每档相差 0.05 mm。
+  每个端盖侧面会自动刻上自己的调整量。
+  不需要批量模式时，只需注释文件最后一行，并恢复上方 aluminium_cap();。
+*/
+module temporary_clearance_test_array() {
+    test_clearance_values = [
+        -0.30, -0.25, -0.20, -0.15, -0.10, -0.05, 0,
+         0.05,  0.10,  0.15,  0.20,  0.25, 0.30
+    ];
+    test_columns = 5;
+    test_gap = 5;
+    test_x_spacing = extrusion_width(extrusion_type) + test_gap;
+    test_y_spacing = extrusion_height(extrusion_type) + test_gap;
+
+    for (index = [0 : len(test_clearance_values) - 1])
+        translate([
+            (index % test_columns) * test_x_spacing,
+            floor(index / test_columns) * test_y_spacing,
+            0
+        ])
+            aluminium_cap(test_clearance_values[index]);
+}
+
+temporary_clearance_test_array(); // 临时批量模式：试完后注释这一行。
