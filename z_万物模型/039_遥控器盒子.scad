@@ -1,21 +1,29 @@
-// 遥控器收纳盒（根据 remote_holder.stl 参数化重建）
-// 单位：mm
+// 遥控器收纳盒
 include <BOSL2/std.scad>
 
-$fn = 36;
+$fn = 336;
 
 // -------- 可调参数 --------
-box_depth       = 33;  // 盒子前后深度
-box_width       = 60;  // 盒子左右宽度
-box_height      = 85;  // 盒子高度
-rounding        = 3;
-wall_thickness  = 2;
+// 盒子前后深度
+box_depth       = 33;   // [5:260]
+// 盒子左右宽度 
+box_width       = 90;   // [5:260]
+// 盒子高度 
+box_height      = 80;   // [5:260]
+// 盒子圆角弧度
+rounding        = 3;    // [0:0.5:10]
+// 盒子厚度
+wall_thickness  = 3;    // [2:0.5:8]
 
 // -------- 简单挂钩参数 --------
-hook_gap       = 7;   // 挂钩内部空隙
-hook_thickness = 2;   // 挂钩厚度
-hook_rise      = 14;  // 高出盒口的高度
-hook_drop      = 60;  // 外侧挂片长度
+// 挂钩内部空隙
+hook_gap       = 7;     // [3:1:20]
+// 挂钩厚度  
+hook_thickness = 3;     // [2:0.5:8]
+// 高出盒口的高度  
+hook_rise      = 14;    // [0:1:50]
+// 外侧挂片长度 
+hook_drop      = 60;    // [0:1:130]
 
 // 由三块直板组成的简单倒 U 形挂钩
 module simple_hook() {
