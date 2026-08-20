@@ -21,25 +21,39 @@ thick = 1.2;
 // }
 
 
-length = 10;
-          
-difference() {
-    translate([0, 0, 1])
-        rotate([90, 0, 0])
-            difference() {
-                // 管子
-                union() {
-                    cuboid([2, 1, length], anchor=[0, 1, 0]);
-                    cylinder(h=length, r=1, center=true);
+module A(length=10, r1=1, r2=0.5, gap=0.3) {
+    difference() {
+        translate([0, 0, r1])
+            rotate([90, 0, 0])
+                difference() {
+                    // 管子
+                    union() {
+                        cuboid([r1*2, r1, length], anchor=[0, 1, 0]);
+                        cylinder(h=length, r=r1, center=true);
+                    }
+                    // 掏空心
+                    cylinder(h=length, r=r2, center=true);
                 }
-                // 掏空心
-                cylinder(h=length, r=0.8, center=true);
-            }
-    // 安装天线的缝
-    translate([0, 0, 0.5])
-        cuboid([0.2, length, 5], anchor=[0, 0, -1]);
-
+        // 安装天线的缝
+        translate([0, 0, r1/2 * 3/2])
+            cuboid([gap, length, 5], anchor=[0, 0, -1]);
+    }
 }
+
+difference() {
+
+    union(){
+        A(length=15);
+
+        translate([-12/2, 0, 0]) 
+            rotate([0, 0, 90])
+                A(length=12);
+    }
+
+    translate([0, 0, 1/2]) 
+        cuboid([9, 5, 5], anchor=[0, 0, -1]);
+}
+
 
 
 
