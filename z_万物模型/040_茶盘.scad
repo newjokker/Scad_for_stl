@@ -4,19 +4,20 @@ include <BOSL2/std.scad>
 $fn = 168;
 
 // ===== 内部净空间 =====
-inner_length = (252 + 242) / 2;
+inner_length = 244;
 inner_height = 90;
 
 // ===== 壁厚与底厚 =====
 wall_thickness   = 5;
-bottom_thickness = 5;
+bottom_thickness = 4;
 
 // ===== XY 平面四角圆角 =====
 inner_corner_r = 25;
 outer_corner_r = inner_corner_r + wall_thickness;
 
-// ===== 顶部边缘圆角 =====
-top_edge_r = 3;
+// ===== 顶部内侧斜面 =====
+top_bevel_h = 5;       // 斜面高度
+top_bevel_w = 3;       // 向外扩大的宽度，单边尺寸
 
 // ===== 自动计算 =====
 outer_length = inner_length + wall_thickness * 2;
@@ -33,36 +34,48 @@ module rounded_box_xy(size, h, r) {
 }
 
 
-// 带圆润顶部边缘的外壳
+// 外部主体保持竖直
 module outer_body() {
+    rounded_box_xy(
+        [outer_length, outer_length],
+        outer_height,
+        outer_corner_r
+    );
+}
+
+
+// 内部净空间，顶部向外扩大形成朝内斜面
+module inner_cutout() {
 
     union() {
 
-        // 下部主体
+        // 内部主体空间
         rounded_box_xy(
-            [outer_length, outer_length],
-            outer_height - top_edge_r,
-            outer_corner_r
+            [inner_length, inner_length],
+            inner_height - top_bevel_h + 0.01,
+            inner_corner_r
         );
 
-        // 顶部圆润过渡
+        // 顶部内侧斜面
         hull() {
 
-            translate([0, 0, outer_height - top_edge_r])
+            // 斜面底部
+            translate([0, 0, inner_height - top_bevel_h])
                 linear_extrude(height = 0.01)
                     rect(
-                        [outer_length, outer_length],
-                        rounding = outer_corner_r
+                        [inner_length, inner_length],
+                        rounding = inner_corner_r
                     );
 
-            translate([0, 0, outer_height])
+            // 斜面顶部，开口扩大
+            translate([0, 0, inner_height + 0.01])
                 linear_extrude(height = 0.01)
                     rect(
                         [
-                            outer_length - top_edge_r * 2,
-                            outer_length - top_edge_r * 2
+                            inner_length + top_bevel_w * 2,
+                            inner_length + top_bevel_w * 2
                         ],
-                        rounding = outer_corner_r - top_edge_r
+                        rounding = inner_corner_r + top_bevel_w
                     );
         }
     }
@@ -73,11 +86,6 @@ difference() {
 
     outer_body();
 
-    // 内部净空间
     translate([0, 0, bottom_thickness])
-        rounded_box_xy(
-            [inner_length, inner_length],
-            inner_height + 1,
-            inner_corner_r
-        );
+        inner_cutout();
 }
