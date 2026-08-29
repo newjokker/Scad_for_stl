@@ -2,7 +2,7 @@
 // 来源: R1四驱小车板件孔位【孔位图】.dwg
 // 坐标基准: B版视图中心近似为 [1324.272, 252.067]，单位按 DWG 毫米处理。
 
-plate_thickness = 2.5;      // [1:0.5:6] 底板厚度
+plate_thickness = 3;      // [1:0.5:6] 底板厚度
 $fn = 72;
 
 motor_hole_radius = 1.6;
@@ -25,6 +25,24 @@ vertical_wire_hole_y = -5;  // 两个竖孔的中心 Y 坐标
 horizontal_wire_hole_x = 15; // 孔中心到 Y 轴的距离
 horizontal_wire_hole_y = -71;// 两个横孔的中心 Y 坐标
 
+// 设备安装长条孔矩阵：
+// [长, 宽, 中心 x, 中心 y, 旋转角度, 圆角大小]
+// 角度为 0 时长边沿 X 轴，角度为 90 时长边沿 Y 轴。
+equipment_slot_matrix = [
+    
+    // 现有的两个竖直穿线孔
+    [wire_hole_length, wire_hole_width, -vertical_wire_hole_x, vertical_wire_hole_y, 90, wire_hole_corner_radius],
+    [wire_hole_length, wire_hole_width,  vertical_wire_hole_x, vertical_wire_hole_y, 90, wire_hole_corner_radius],
+
+    // 现有的两个水平穿线孔
+    [wire_hole_length, wire_hole_width, -horizontal_wire_hole_x, horizontal_wire_hole_y, 0, wire_hole_corner_radius],
+    [wire_hole_length, wire_hole_width,  horizontal_wire_hole_x, horizontal_wire_hole_y, 0, wire_hole_corner_radius],
+
+    // 安装接收机
+    [15, 3.2, 40, 20, 20, 0]
+
+];
+
 // B版底板外轮廓。曲边由 DWG 折线化，保留可编辑坐标。
 outline_points = [
     [-29.069, 90.000], [29.070, 90.000], [49.930, 72.278],
@@ -46,7 +64,7 @@ module r1_4wd_base_plate() {
             polygon(points = outline_points);
 
         motor_bracket_holes();
-        wire_holes();
+        equipment_slot_holes();
     }
 }
 
@@ -62,28 +80,24 @@ module motor_bracket_holes() {
                     );
 }
 
-// 尺寸精确为 wire_hole_length × wire_hole_width 的圆角长孔。
-module wire_hole_2d() {
-    offset(r = wire_hole_corner_radius)
+// 生成指定总长、总宽和圆角的二维长条孔。
+module rounded_slot_2d(length, width, corner_radius) {
+    safe_radius = min(corner_radius, min(length, width) / 2);
+
+    offset(r = safe_radius)
         square([
-            wire_hole_length - 2 * wire_hole_corner_radius,
-            wire_hole_width - 2 * wire_hole_corner_radius
+            length - 2 * safe_radius,
+            width - 2 * safe_radius
         ], center = true);
 }
 
-module wire_holes() {
-    // 左右两个竖孔。
-    for (x = [-vertical_wire_hole_x, vertical_wire_hole_x])
-        translate([x, vertical_wire_hole_y, -0.1])
+// 按矩阵逐个生成贯穿底板的设备安装长条孔。
+module equipment_slot_holes() {
+    for (slot = equipment_slot_matrix)
+        translate([slot[2], slot[3], -0.1])
             linear_extrude(plate_thickness + 0.2)
-                rotate(90)
-                    wire_hole_2d();
-
-    // 底部两个横孔。
-    for (x = [-horizontal_wire_hole_x, horizontal_wire_hole_x])
-        translate([x, horizontal_wire_hole_y, -0.1])
-            linear_extrude(plate_thickness + 0.2)
-                wire_hole_2d();
+                rotate(slot[4])
+                    rounded_slot_2d(slot[0], slot[1], slot[5]);
 }
 
 r1_4wd_base_plate();
