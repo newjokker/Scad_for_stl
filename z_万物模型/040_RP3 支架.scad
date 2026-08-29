@@ -5,7 +5,7 @@ $fn = 336;
 // 类似于旗杆，底部有一个弯折里面有螺丝孔
 
 thick = 1.2;
-high = 70;
+high = 120;
 width = 15 + thick * 2;
 pcb_thick = 5 + thick * 2;
 
@@ -20,7 +20,9 @@ difference() {
 
 difference() {
     cuboid([25, width, 3], anchor=[-1, 0, -1]);
-    translate([15, 0, 0, ]) 
+    translate([12, 0, 0, ]) 
+        cylinder(h=10, r=3.3/2);
+    translate([20, 0, 0, ]) 
         cylinder(h=10, r=3.3/2);
 }
 
