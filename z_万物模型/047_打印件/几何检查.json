@@ -1,0 +1,154 @@
+{
+  "carriage.stl": {
+    "components": 1,
+    "non_manifold_edges": 0,
+    "bounds_mm": [
+      [
+        0.0,
+        29.666197723675815
+      ],
+      [
+        0.0,
+        70.0
+      ],
+      [
+        0.0,
+        50.0
+      ]
+    ],
+    "euler": -14
+  },
+  "ruler.stl": {
+    "components": 1,
+    "non_manifold_edges": 0,
+    "bounds_mm": [
+      [
+        0.0,
+        190.0
+      ],
+      [
+        0.0,
+        12.0
+      ],
+      [
+        0.0,
+        3.0
+      ]
+    ],
+    "euler": -2
+  },
+  "print_layout.stl": {
+    "components": 8,
+    "non_manifold_edges": 0,
+    "bounds_mm": [
+      [
+        0.0,
+        201.0
+      ],
+      [
+        0.0,
+        112.0
+      ],
+      [
+        0.0,
+        68.0
+      ]
+    ],
+    "euler": -54
+  },
+  "motor_mount.stl": {
+    "components": 1,
+    "non_manifold_edges": 0,
+    "bounds_mm": [
+      [
+        0.0,
+        70.0
+      ],
+      [
+        0.0,
+        86.0
+      ],
+      [
+        0.0,
+        68.0
+      ]
+    ],
+    "euler": -20
+  },
+  "clamp_cap.stl": {
+    "components": 1,
+    "non_manifold_edges": 0,
+    "bounds_mm": [
+      [
+        0.0,
+        18.0
+      ],
+      [
+        0.0,
+        18.0
+      ],
+      [
+        0.0,
+        2.5
+      ]
+    ],
+    "euler": -2
+  },
+  "idler_spacer.stl": {
+    "components": 1,
+    "non_manifold_edges": 0,
+    "bounds_mm": [
+      [
+        0.0,
+        8.0
+      ],
+      [
+        0.0,
+        8.0
+      ],
+      [
+        0.0,
+        3.0
+      ]
+    ],
+    "euler": 0
+  },
+  "idler_mount.stl": {
+    "components": 1,
+    "non_manifold_edges": 0,
+    "bounds_mm": [
+      [
+        0.0,
+        54.0
+      ],
+      [
+        0.0,
+        86.0
+      ],
+      [
+        0.0,
+        48.0
+      ]
+    ],
+    "euler": -14
+  },
+  "open_belt_preview": {
+    "components": 1,
+    "non_manifold_edges": 0,
+    "bounds_mm": [
+      [
+        -7.066197723150253,
+        287.06619772315025
+      ],
+      [
+        -15.0,
+        -9.0
+      ],
+      [
+        32.93380227684975,
+        47.06619772315025
+      ]
+    ],
+    "euler": 2
+  }
+}
