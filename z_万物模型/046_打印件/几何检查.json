@@ -1,0 +1,10 @@
+{
+  "type": "prescribed-anchor quasi-static geometric contact following, not dynamics",
+  "anchor_amplitude_deg": 7.5,
+  "phase_resolution_deg": 0.05,
+  "samples": 101,
+  "wheel_net_degrees": -24.0,
+  "accumulated_recoil_deg": 0.2,
+  "configuration_jumps_over_1degree": [],
+  "frame_clearance_checks": "rotor vs frame empty; anchor +/-8deg at 2deg increments vs frame empty; pendulum vs pointer sweep empty"
+}
