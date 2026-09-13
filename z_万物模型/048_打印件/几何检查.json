@@ -1,0 +1,218 @@
+{
+  "carriage.stl": {
+    "components": 1,
+    "non_manifold_edges": 0,
+    "bounds_mm": [
+      [
+        0.0,
+        29.666197723675815
+      ],
+      [
+        0.0,
+        70.0
+      ],
+      [
+        0.0,
+        50.0
+      ]
+    ]
+  },
+  "ruler.stl": {
+    "components": 1,
+    "non_manifold_edges": 0,
+    "bounds_mm": [
+      [
+        0.0,
+        190.0
+      ],
+      [
+        0.0,
+        12.0
+      ],
+      [
+        0.0,
+        3.0
+      ]
+    ]
+  },
+  "print_layout.stl": {
+    "components": 14,
+    "non_manifold_edges": 0,
+    "bounds_mm": [
+      [
+        0.0,
+        201.0
+      ],
+      [
+        0.0,
+        167.0
+      ],
+      [
+        0.0,
+        68.0
+      ]
+    ]
+  },
+  "motor_mount.stl": {
+    "components": 1,
+    "non_manifold_edges": 0,
+    "bounds_mm": [
+      [
+        0.0,
+        70.0
+      ],
+      [
+        0.0,
+        86.0
+      ],
+      [
+        0.0,
+        68.0
+      ]
+    ]
+  },
+  "cross_tie.stl": {
+    "components": 1,
+    "non_manifold_edges": 0,
+    "bounds_mm": [
+      [
+        0.0,
+        8.0
+      ],
+      [
+        0.0,
+        24.0
+      ],
+      [
+        0.0,
+        4.0
+      ]
+    ]
+  },
+  "print_guides.stl": {
+    "components": 4,
+    "non_manifold_edges": 0,
+    "bounds_mm": [
+      [
+        0.0,
+        130.0
+      ],
+      [
+        0.0,
+        104.0
+      ],
+      [
+        0.0,
+        29.0
+      ]
+    ]
+  },
+  "join_strap.stl": {
+    "components": 1,
+    "non_manifold_edges": 0,
+    "bounds_mm": [
+      [
+        0.0,
+        40.0
+      ],
+      [
+        0.0,
+        7.0
+      ],
+      [
+        0.0,
+        3.0
+      ]
+    ]
+  },
+  "clamp_cap.stl": {
+    "components": 1,
+    "non_manifold_edges": 0,
+    "bounds_mm": [
+      [
+        0.0,
+        18.0
+      ],
+      [
+        0.0,
+        18.0
+      ],
+      [
+        0.0,
+        2.5
+      ]
+    ]
+  },
+  "guide_left.stl": {
+    "components": 1,
+    "non_manifold_edges": 0,
+    "bounds_mm": [
+      [
+        0.0,
+        130.0
+      ],
+      [
+        0.0,
+        20.0
+      ],
+      [
+        0.0,
+        29.0
+      ]
+    ]
+  },
+  "idler_spacer.stl": {
+    "components": 1,
+    "non_manifold_edges": 0,
+    "bounds_mm": [
+      [
+        0.0,
+        8.0
+      ],
+      [
+        0.0,
+        8.0
+      ],
+      [
+        0.0,
+        3.0
+      ]
+    ]
+  },
+  "guide_right.stl": {
+    "components": 1,
+    "non_manifold_edges": 0,
+    "bounds_mm": [
+      [
+        0.1,
+        125.0
+      ],
+      [
+        0.0,
+        20.0
+      ],
+      [
+        0.0,
+        29.0
+      ]
+    ]
+  },
+  "idler_mount.stl": {
+    "components": 1,
+    "non_manifold_edges": 0,
+    "bounds_mm": [
+      [
+        0.0,
+        54.0
+      ],
+      [
+        0.0,
+        86.0
+      ],
+      [
+        0.0,
+        48.0
+      ]
+    ]
+  }
+}

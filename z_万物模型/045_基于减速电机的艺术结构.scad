@@ -21,7 +21,7 @@
   耳孔距、输出轴偏置、导孔与配合间隙为可调设计值，打印前测量实物。
 */
 $fn = 96;
-part = "print_layout"; // [assembly,print_layout,base,frame,pendulum]
+part = "assembly"; // [assembly,print_layout,base,frame,pendulum]
 show_hardware = true;
 swing_amplitude = 20; // degrees; start physical test at 10 degrees
 manual_angle = 0;
