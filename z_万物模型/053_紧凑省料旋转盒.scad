@@ -8,7 +8,7 @@
  */
 include <BOSL2/std.scad>
 include <BOSL2/gears.scad>
-$fn=96;
+$fn=256;
 part="exploded"; // [assembly,exploded,print_layout,base,platter,pinion,cable_clamp]
 show_hardware=true;
 cutaway=false;
