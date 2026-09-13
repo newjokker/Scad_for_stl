@@ -1,0 +1,47 @@
+[
+  {
+    "test": "tt_collision_4.2",
+    "empty": true,
+    "log": "ECHO: envelope_mm = [120, 120, 35.6], ratio = 4, gear_center_mm = 37.5\nECHO: arad = 51.5625\nECHO: arad = 13.75\nCurrent top level object is empty.\n"
+  },
+  {
+    "test": "tt_collision_0",
+    "empty": true,
+    "log": "ECHO: envelope_mm = [120, 120, 35.6], ratio = 4, gear_center_mm = 37.5\nECHO: arad = 51.5625\nECHO: arad = 13.75\nCurrent top level object is empty.\n"
+  },
+  {
+    "test": "tt_collision_2.4",
+    "empty": true,
+    "log": "ECHO: envelope_mm = [120, 120, 35.6], ratio = 4, gear_center_mm = 37.5\nECHO: arad = 51.5625\nECHO: arad = 13.75\nCurrent top level object is empty.\n"
+  },
+  {
+    "test": "tt_collision_3.6",
+    "empty": true,
+    "log": "ECHO: envelope_mm = [120, 120, 35.6], ratio = 4, gear_center_mm = 37.5\nECHO: arad = 51.5625\nECHO: arad = 13.75\nCurrent top level object is empty.\n"
+  },
+  {
+    "test": "tt_collision_1.8",
+    "empty": true,
+    "log": "ECHO: envelope_mm = [120, 120, 35.6], ratio = 4, gear_center_mm = 37.5\nECHO: arad = 51.5625\nECHO: arad = 13.75\nCurrent top level object is empty.\n"
+  },
+  {
+    "test": "tt_collision_1.2",
+    "empty": true,
+    "log": "ECHO: envelope_mm = [120, 120, 35.6], ratio = 4, gear_center_mm = 37.5\nECHO: arad = 51.5625\nECHO: arad = 13.75\nCurrent top level object is empty.\n"
+  },
+  {
+    "test": "tt_collision_0.6",
+    "empty": true,
+    "log": "ECHO: envelope_mm = [120, 120, 35.6], ratio = 4, gear_center_mm = 37.5\nECHO: arad = 51.5625\nECHO: arad = 13.75\nCurrent top level object is empty.\n"
+  },
+  {
+    "test": "tt_collision_3",
+    "empty": true,
+    "log": "ECHO: envelope_mm = [120, 120, 35.6], ratio = 4, gear_center_mm = 37.5\nECHO: arad = 51.5625\nECHO: arad = 13.75\nCurrent top level object is empty.\n"
+  },
+  {
+    "test": "tt_fixed",
+    "empty": true,
+    "log": "ECHO: envelope_mm = [120, 120, 35.6], ratio = 4, gear_center_mm = 37.5\nECHO: arad = 51.5625\nCurrent top level object is empty.\n"
+  }
+]

@@ -1,0 +1,46 @@
+[
+  {
+    "part": "base",
+    "volume_mm3": 43681.09,
+    "watertight": true,
+    "bodies": 1,
+    "size_mm": [
+      120.0,
+      120.0,
+      34.0
+    ]
+  },
+  {
+    "part": "cable_clamp",
+    "volume_mm3": 199.9,
+    "watertight": true,
+    "bodies": 1,
+    "size_mm": [
+      20.0,
+      6.0,
+      2.0
+    ]
+  },
+  {
+    "part": "pinion",
+    "volume_mm3": 2673.32,
+    "watertight": true,
+    "bodies": 1,
+    "size_mm": [
+      27.491,
+      27.491,
+      6.0
+    ]
+  },
+  {
+    "part": "platter",
+    "volume_mm3": 29929.99,
+    "watertight": true,
+    "bodies": 1,
+    "size_mm": [
+      120.0,
+      120.0,
+      11.3
+    ]
+  }
+]
